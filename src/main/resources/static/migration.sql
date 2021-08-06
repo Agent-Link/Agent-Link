@@ -22,7 +22,7 @@ CREATE TABLE users (
 INSERT INTO users (username, first_name, last_name, user_email, user_pass, is_listing_agent, phone, team)
 VALUES ('jimbo', 'Jim', 'Bob', 'jimbob@jimbob.com', '12345', false, '210-555-5555', 'Home Sellerz');
 
-CREATE TABLE homes (
+CREATE TABLE houses (
                         id INT UNSIGNED NOT NULL AUTO_INCREMENT,
                         listing_agent_id INT UNSIGNED NOT NULL,
                         address VARCHAR(150) NOT NULL,

@@ -35,7 +35,7 @@ public class User {
     private boolean isListingAgent;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Home> homes;
+    private List<House> houses;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<OpenHouseEvent> openHouseEvents;
@@ -61,7 +61,7 @@ public class User {
         this.isListingAgent = isListingAgent;
     }
 
-    public User(long id, String userName, String email, String password, String firstName, String lastName, String phone, String team, boolean isListingAgent, List<Home> homes, List<OpenHouseEvent> openHouseEvents, List<Application> applications, List<Review> reviews) {
+    public User(long id, String userName, String email, String password, String firstName, String lastName, String phone, String team, boolean isListingAgent, List<House> houses, List<OpenHouseEvent> openHouseEvents, List<Application> applications, List<Review> reviews) {
         this.id = id;
         this.userName = userName;
         this.email = email;
@@ -71,7 +71,7 @@ public class User {
         this.phone = phone;
         this.team = team;
         this.isListingAgent = isListingAgent;
-        this.homes = homes;
+        this.houses = houses;
         this.openHouseEvents = openHouseEvents;
         this.applications = applications;
         this.reviews = reviews;
@@ -149,12 +149,12 @@ public class User {
         isListingAgent = listingAgent;
     }
 
-    public List<Home> getHomes() {
-        return homes;
+    public List<House> getHouses() {
+        return houses;
     }
 
-    public void setHomes(List<Home> homes) {
-        this.homes = homes;
+    public void setHouses(List<House> houses) {
+        this.houses = houses;
     }
 
     public List<OpenHouseEvent> getOpenHouseEvents() {
