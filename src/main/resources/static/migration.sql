@@ -22,7 +22,7 @@ CREATE TABLE users (
 INSERT INTO users (username, first_name, last_name, user_email, user_pass, is_listing_agent, phone, team)
 VALUES ('jimbo', 'Jim', 'Bob', 'jimbob@jimbob.com', '12345', false, '210-555-5555', 'Home Sellerz');
 
-CREATE TABLE properties (
+CREATE TABLE homes (
                         id INT UNSIGNED NOT NULL AUTO_INCREMENT,
                         listing_agent_id INT UNSIGNED NOT NULL,
                         address VARCHAR(150) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE properties (
 INSERT INTO properties (listing_agent_id, address, city, state, zipcode, title, description, date_of_event)
 VALUES (1, '555 randy st', 'san antonio', 'tx', '78218', 'great home', 'woo wow wee wow', '2021-08-8');
 
-CREATE TABLE events (
+CREATE TABLE open_house_events (
                         id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 #                       default host is listing agent
                         host_agent_id INT UNSIGNED NOT NULL,
