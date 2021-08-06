@@ -35,29 +35,29 @@ CREATE TABLE houses (
 );
 
 # Testing insert
-INSERT INTO properties (listing_agent_id, address, city, state, zipcode, title, description, date_of_event)
-VALUES (1, '555 randy st', 'san antonio', 'tx', '78218', 'great home', 'woo wow wee wow', '2021-08-8');
+INSERT INTO houses (listing_agent_id, address, city, state, zipcode, description)
+VALUES (1, '555 randy st', 'san antonio', 'tx', '78218', 'woo wow wee wow');
 
 CREATE TABLE open_house_events (
                         id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 #                       default host is listing agent
                         host_agent_id INT UNSIGNED NOT NULL,
-                        property_id INT UNSIGNED NOT NULL,
+                        house_id INT UNSIGNED NOT NULL,
                         date_of_event DATE NOT NULL,
                         feedback TEXT,
                         FOREIGN KEY (host_agent_id) REFERENCES users (id),
-                        FOREIGN KEY (property_id) REFERENCES properties (id),
+                        FOREIGN KEY (house_id) REFERENCES houses (id),
                         PRIMARY KEY (id)
 );
 
 CREATE TABLE applications (
                         id INT UNSIGNED NOT NULL AUTO_INCREMENT,
                         buying_agent_id INT UNSIGNED NOT NULL,
-                        event_id INT UNSIGNED NOT NULL,
+                        open_house_event_id INT UNSIGNED NOT NULL,
                         date_of_application DATE NOT NULL,
                         inquiry TEXT,
                         FOREIGN KEY (buying_agent_id) REFERENCES users (id),
-                        FOREIGN KEY (event_id) REFERENCES open_house_events (id),
+                        FOREIGN KEY (open_house_event_id) REFERENCES open_house_events (id),
                         PRIMARY KEY (id)
 );
 
