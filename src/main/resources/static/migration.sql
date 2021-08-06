@@ -1,3 +1,7 @@
+CREATE USER agentlink_user@localhost IDENTIFIED BY 'p@$$w0rd';
+GRANT ALL ON agentlink_db.* TO agentlink_user@localhost;
+
+
 DROP DATABASE agentlink_db;
 
 CREATE DATABASE IF NOT EXISTS agentlink_db;
