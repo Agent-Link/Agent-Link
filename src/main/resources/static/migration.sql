@@ -57,7 +57,7 @@ CREATE TABLE applications (
                         date_of_application DATE NOT NULL,
                         inquiry TEXT,
                         FOREIGN KEY (buying_agent_id) REFERENCES users (id),
-                        FOREIGN KEY (event_id) REFERENCES events (id),
+                        FOREIGN KEY (event_id) REFERENCES open_house_events (id),
                         PRIMARY KEY (id)
 );
 
