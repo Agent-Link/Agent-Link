@@ -1,6 +1,9 @@
 package com.agentlink.agentlink.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -21,14 +24,19 @@ public class Application {
     @Column(nullable = false, length = 500)
     private String inquiry;
 
+    @Column(nullable = false)
+    @CreationTimestamp
+    private Date date;
+
     public Application() {
     }
 
-    public Application(long id, User user, OpenHouseEvent openHouseEvent, String inquiry) {
+    public Application(long id, User user, OpenHouseEvent openHouseEvent, String inquiry, Date date) {
         this.id = id;
         this.user = user;
         this.openHouseEvent = openHouseEvent;
         this.inquiry = inquiry;
+        this.date = date;
     }
 
     public long getId() {
@@ -61,5 +69,13 @@ public class Application {
 
     public void setInquiry(String inquiry) {
         this.inquiry = inquiry;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
