@@ -43,8 +43,11 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Application> applications;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Review> reviews;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "listingUser")
+    private List<Review> reviewsMade;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "buyingUser")
+    private List<Review> reviewsReceived;
 
     public User() {
     }
@@ -61,7 +64,7 @@ public class User {
         this.isListingAgent = isListingAgent;
     }
 
-    public User(long id, String userName, String email, String password, String firstName, String lastName, String phone, String team, boolean isListingAgent, List<House> houses, List<OpenHouseEvent> openHouseEvents, List<Application> applications, List<Review> reviews) {
+    public User(long id, String userName, String email, String password, String firstName, String lastName, String phone, String team, boolean isListingAgent, List<House> houses, List<OpenHouseEvent> openHouseEvents, List<Application> applications, List<Review> reviewsMade, List<Review> reviewsReceived) {
         this.id = id;
         this.userName = userName;
         this.email = email;
@@ -74,7 +77,8 @@ public class User {
         this.houses = houses;
         this.openHouseEvents = openHouseEvents;
         this.applications = applications;
-        this.reviews = reviews;
+        this.reviewsMade = reviewsMade;
+        this.reviewsReceived = reviewsReceived;
     }
 
     public long getId() {
@@ -173,11 +177,19 @@ public class User {
         this.applications = applications;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
+    public List<Review> getReviewsMade() {
+        return reviewsMade;
     }
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
+    public void setReviewsMade(List<Review> reviewsMade) {
+        this.reviewsMade = reviewsMade;
+    }
+
+    public List<Review> getReviewsReceived() {
+        return reviewsReceived;
+    }
+
+    public void setReviewsReceived(List<Review> reviewsReceived) {
+        this.reviewsReceived = reviewsReceived;
     }
 }
