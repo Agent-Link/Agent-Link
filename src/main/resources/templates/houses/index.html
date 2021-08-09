@@ -7,11 +7,11 @@
 <body>
 <h1>Houses</h1>
 <div th:each="house : ${houses}">
-    <p th:text="${houses.address}" />
-    <p th:text="${houses.city}" />
-    <p th:text="${houses.description}" />
-    <p th:text="${houses.state}" />
-    <p th:text="${houses.zipcode}" />
+    <p th:text="${house.address}" />
+    <p th:text="${house.city}" />
+    <p th:text="${house.description}" />
+    <p th:text="${house.state}" />
+    <p th:text="${house.zipcode}" />
 
 
 
