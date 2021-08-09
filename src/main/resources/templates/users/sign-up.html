@@ -9,10 +9,6 @@
 <h1>Create an account</h1>
 <form class="container" th:action="@{/sign-up}" method="POST" th:object="${user}">
     <div class="form-group">
-        <label for="isListingAgent">Are you a listing agent?</label>
-        <input type="checkbox" id="isListingAgent" name="isListingAgent" value="1">
-    </div>
-    <div class="form-group">
         <label for="username">Username</label>
         <input class="form-control" id="username" th:field="*{username}" />
         <p th:if = "${#fields.hasErrors('username')}" th:errors="*{username}"></p>
@@ -41,6 +37,10 @@
         <label for="team">Team Name</label>
         <input class="form-control" id="team" th:field="*{team}" />
         <p th:if = "${#fields.hasErrors('team')}" th:errors="*{team}"></p>
+    </div>
+    <div class="form-group">
+        <label for="isListingAgent">Are you a listing agent?</label>
+        <input type="checkbox" id="isListingAgent" name="isListingAgent" value="1">
     </div>
     <div class="form-group">
         <label for="phone">Phone Number</label>
