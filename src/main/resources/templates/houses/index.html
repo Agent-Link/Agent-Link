@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Houses</title>
-</head>
+<head th:replace="partials/head :: head('Index')"/>
 <body>
 <h1>Houses</h1>
 <div th:each="house : ${houses}">
@@ -14,8 +11,7 @@
     <p th:text="${house.zipcode}" />
 
 
-
-
+    <a th:href="@{/houses/{id}(id=${house.id})}" class="btn btn-primary">More Details</a>
 
 </div>
 
