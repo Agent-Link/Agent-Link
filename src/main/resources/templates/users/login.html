@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="partials/head.html :: head('Login')">
     <meta charset="UTF-8">
     <title>Login</title>
-<!--    <th:block th:include="partials/styles.html :: styles"/>-->
 </head>
 <body>
-<!--    <nav th:replace="partials/navbar.html :: navbar"/>-->
-<!--    <header th:include="partials/header.html :: header"/>-->
+<nav th:replace="partials/navbar.html :: navbar"/>
     <h1>Log In</h1>
     <div th:if="${param.error}">
         Invalid Username and Password.
@@ -26,7 +24,7 @@
         </div>
         <input type="submit" class="btn btn-block btn-info">
     </form>
-<!--    <footer th:include="partials/footer.html :: footer"/>-->
-<!--    <th:block th:include="partials/scripts.html :: scripts"/>-->
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
