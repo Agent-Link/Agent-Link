@@ -11,7 +11,7 @@ public class User {
     private long id;
 
     @Column(nullable = false, length = 25, unique = true)
-    private String userName;
+    private String username;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -52,9 +52,9 @@ public class User {
     public User() {
     }
 
-    public User(long id, String userName, String email, String password, String firstName, String lastName, String phone, String team, boolean isListingAgent) {
+    public User(long id, String username, String email, String password, String firstName, String lastName, String phone, String team, boolean isListingAgent) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -64,9 +64,9 @@ public class User {
         this.isListingAgent = isListingAgent;
     }
 
-    public User(long id, String userName, String email, String password, String firstName, String lastName, String phone, String team, boolean isListingAgent, List<House> houses, List<OpenHouseEvent> openHouseEvents, List<Application> applications, List<Review> reviewsMade, List<Review> reviewsReceived) {
+    public User(long id, String username, String email, String password, String firstName, String lastName, String phone, String team, boolean isListingAgent, List<House> houses, List<OpenHouseEvent> openHouseEvents, List<Application> applications, List<Review> reviewsMade, List<Review> reviewsReceived) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -81,6 +81,13 @@ public class User {
         this.reviewsReceived = reviewsReceived;
     }
 
+    public User(User copy) {
+        id = copy.id;
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+    }
+
     public long getId() {
         return id;
     }
@@ -89,12 +96,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
