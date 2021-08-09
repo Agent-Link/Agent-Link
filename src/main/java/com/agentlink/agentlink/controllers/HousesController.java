@@ -74,6 +74,14 @@ public class HousesController {
         return "redirect:/houses";
     }
 
+    @GetMapping("/houses/delete/{id}")
+    public String deletePost(@PathVariable("id") long id, Model model) {
+        House house = housesDao.getById(id);
+        housesDao.delete(house);
+        return "redirect:/houses";
+    }
+
+
 
 
 
