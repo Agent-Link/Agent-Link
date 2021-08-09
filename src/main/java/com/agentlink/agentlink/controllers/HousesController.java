@@ -59,10 +59,19 @@ public class HousesController {
     }
 
     @GetMapping("/houses/edit/{id}")
-    public String updateHousesForm(@PathVariable("id") long id, Model model) {
+    public String editHousesForm(@PathVariable("id") long id, Model model) {
         House house = housesDao.getById((id));
         model.addAttribute("houses", house);
         return "/houses/edit";
+    }
+
+    @PostMapping("/houses/edit")
+    public String saveEditedPost(@ModelAttribute House house){
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        house.setUser(currentUser);
+//            System.out.println(post.getId());
+        housesDao.save(house);
+        return "redirect:/houses";
     }
 
 
