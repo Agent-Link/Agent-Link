@@ -4,6 +4,7 @@ GRANT ALL ON agentlink_db.* TO agentlink_user@localhost;
 
 DROP DATABASE agentlink_db;
 
+
 CREATE DATABASE IF NOT EXISTS agentlink_db;
 
 # USE agentlink_db;

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Houses</title>
+</head>
+<body>
+<h1>Houses</h1>
+<div th:each="house : ${houses}">
+    <p th:text="${houses.address}" />
+    <p th:text="${houses.city}" />
+    <p th:text="${houses.description}" />
+    <p th:text="${houses.state}" />
+    <p th:text="${houses.zipcode}" />
+
+
+
+
+
+</div>
+
+
+</body>
+</html>
