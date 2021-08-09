@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Title')"/>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+
+<h1>Single House Listing</h1>
+<div>
+    <p th:text="${house.address}" />
+    <p th:text="${house.city}" />
+    <p th:text="${house.description}" />
+    <p th:text="${house.state}" />
+    <p th:text="${house.zipcode}" />
+
+    <div th:if="${isHouseOwner}">
+        <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn">Edit</a>
+        <a th:href="@{/houses/delete/{id}(id=${house.id})}" class="btn">Delete</a>
+    </div>
+
+</div>
+
+<th:block th:include="partials/scripts.html :: scripts"></th:block>
+</body>
+<footer th:replace="partials/footer.html :: footer"></footer>
+</html>

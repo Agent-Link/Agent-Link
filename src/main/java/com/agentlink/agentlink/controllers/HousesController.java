@@ -30,6 +30,7 @@ public class HousesController {
         return "houses/index";
     }
 
+    @GetMapping("/houses/{id}")
     public String singleHouse(@PathVariable long id, Model model){
         House house = housesDao.getById(id);
         boolean isHouseOwner = false;
@@ -39,7 +40,7 @@ public class HousesController {
         }
         model.addAttribute("house", house);
         model.addAttribute("isHouseOwner", isHouseOwner);
-        return "single house";
+        return "houses/show";
     }
 
     @GetMapping("/houses/create")
@@ -50,11 +51,18 @@ public class HousesController {
 
     @PostMapping("/houses/create")
     public String createHouse(@ModelAttribute House house) {
-//        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        house.setUser(currentUser);
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        house.setUser(currentUser);
 //        emailSvc.prepareAndSend(post.getUser().getEmail(), "title", "body");
         housesDao.save(house);
         return "redirect:/houses";
+    }
+
+    @GetMapping("/houses/edit/{id}")
+    public String updateHousesForm(@PathVariable("id") long id, Model model) {
+        House house = housesDao.getById((id));
+        model.addAttribute("houses", house);
+        return "/houses/edit";
     }
 
 
