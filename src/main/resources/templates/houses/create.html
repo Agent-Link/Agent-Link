@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Create House')"/>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+<h1>Create a listing!</h1>
+<br>
+
+<form action="/houses/create" th:action="@{/houses/create}" method="post" th:object="${house}">
+    <div class="input-field ">
+        <input id="address" name="address" type="text" class="" th:field="*{address}"/>
+        <label for="address">Address</label>
+    </div>
+<br>
+    <div class="input-field ">
+        <input id="city" name="city" type="text" class="" th:field="*{city}"/>
+        <label for="city">City</label>
+    </div>
+<br>
+    <div class="input-field ">
+        <input id="state" name="state" type="text" class="" th:field="*{state}"/>
+        <label for="state">State</label>
+    </div>
+<br>
+    <div class="input-field ">
+        <input id="zipcode" name="zipcode" type="text" class="" th:field="*{zipcode}"/>
+        <label for="zipcode">Zipcode</label>
+    </div>
+<br>
+    <div class="input-field ">
+        <textarea id="description" name="description" class="materialize-textarea" th:field="*{description}"></textarea>
+        <label for="description">Description</label>
+    </div>
+
+
+    <button type="submit" value="submit" class="btn-small" >Submit</button>
+</form>
+
+
+
+
+<th:block th:include="partials/scripts.html :: scripts"></th:block>
+</body>
+<footer th:replace="partials/footer.html :: footer"></footer>
+</html>
