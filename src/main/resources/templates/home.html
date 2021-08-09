@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Landing Page</title>
-</head>
+    <head th:replace="partials/head :: head('Login Page')">
+
+    </head>
+
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
 
 <h1>This is the Agent-Link landing page!</h1>
 
+<footer th:replace="partials/footer :: footer"></footer>
+<div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>
