@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Title')"/>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+
+<h1>Single Event Listing</h1>
+<div>
+    <p th:text="${openHouseEvent.date}" />
+    <p th:text="${openHouseEvent.house_id}" />
+    <p th:text="${openHouseEvent.host_agent_id}" />
+
+
+<!--    <div th:if="${isEventCreator}">-->
+<!--        <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>-->
+<!--        <a th:href="@{/houses/delete/{id}(id=${house.id})}" class="btn btn-primary">Delete</a>-->
+<!--    </div>-->
+
+</div>
+
+<th:block th:include="partials/scripts.html :: scripts"></th:block>
+</body>
+<footer th:replace="partials/footer.html :: footer"></footer>
+</html>

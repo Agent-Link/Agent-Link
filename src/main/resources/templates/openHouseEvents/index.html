@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Open House Events')"/>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+
+<h1>Open House events</h1>
+<div th:each="openHouseEvents : ${openHouseEvents}">
+    <p th:text="${openHouseEvents.date}" />
+    <p th:text="${openHouseEvents.house_id}" />
+    <p th:text="${openHouseEvents.host_agent_id}" />
+    <p th:text="${openHouseEvents.house_id}" />
+
+
+
+    <a th:href="@{/houses/{id}(id=${house.id})}" class="btn btn-primary">More Details</a>
+
+
+</div>
+
+
+<th:block th:include="partials/scripts.html :: scripts"></th:block>
+</body>
+<footer th:replace="partials/footer.html :: footer"></footer>
+</html>
