@@ -3,6 +3,7 @@ package com.agentlink.agentlink.models;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.util.Date;
 
 @Entity
@@ -21,8 +22,10 @@ public class OpenHouseEvent {
     private User user;
 
     @Column(nullable = false)
-    @CreationTimestamp
     private Date date;
+
+    @Column(nullable = false)
+    private Time time;
 
     @Column(length = 500)
     private String feedback;
@@ -30,11 +33,12 @@ public class OpenHouseEvent {
     public OpenHouseEvent() {
     }
 
-    public OpenHouseEvent(long id, House house, User user, Date date, String feedback) {
+    public OpenHouseEvent(long id, House house, User user, Date date, Time time, String feedback) {
         this.id = id;
         this.house = house;
         this.user = user;
         this.date = date;
+        this.time = time;
         this.feedback = feedback;
     }
 
@@ -68,6 +72,14 @@ public class OpenHouseEvent {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 
     public String getFeedback() {
