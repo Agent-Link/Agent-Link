@@ -32,6 +32,12 @@ public class UserController {
     @PostMapping("/sign-up")
     public String saveUser(@Valid @ModelAttribute User user, BindingResult result, @RequestParam(defaultValue = "false") boolean isListingAgent){
         String hash = passwordEncoder.encode(user.getPassword());
+        if (users.existsByEmail(user.getEmail())) {
+            result.rejectValue("email", "user.email", "This email already exists");
+        }
+        if (users.existsByUsername(user.getUsername())) {
+            result.rejectValue("username", "user.username", "This username already exists");
+        }
         if (result.hasErrors()) {
             return "users/sign-up";
         }
@@ -40,14 +46,6 @@ public class UserController {
         }
         user.setPassword(hash);
         users.save(user);
-        // working on validation
-//        if (!users.existsByEmail(user.getEmail()) && Verify.userNameNotExist(users, user.getUsername())) {
-//            user.setPassword(hash);
-//            users.save(user);
-//            return "redirect:/login";
-//        } else {
-//            return "users/sign-up";
-//        }
         return "redirect:/login";
     }
 }
