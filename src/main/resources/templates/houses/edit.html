@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/head :: head('Title')"/>
+<head th:replace="partials/head :: head('Edit listing')"/>
 <body>
-<nav th:replace="partials/navbar.html :: navbar"></nav>
-
-<h1>Update your house listing!</h1>
-
+<nav th:replace="partials/navbar.html :: navbar"/>
+<h1>Edit your house listing!</h1>
 <div>
-    <form action="#" th:action="@{/houses/edit}" th:object="${houses}" method="post">
-        <label>Address: </label>
-        <input type="text" th:field="*{address}">
-<br>
-        <label>City: </label>
-        <input type="text" th:field="*{city}">
-<br>
-        <label>State: </label>
-        <input type="text" th:field="*{state}">
-<br>
-        <label>Zipcode: </label>
-        <input type="text" th:field="*{zipcode}">
-<br>
-        <label>Description: </label>
-        <input type="text" th:field="*{description}">
-<br>
-        <input type="hidden" th:field="*{id}" th:value="${houses.id}">
-        <button type="submit" class="btn btn-primary">Update</button>
+    <form class="container" th:action="@{/houses/edit/{id} (id = ${house.id})}" th:object="${house}" method="post">
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input id="address" name="address" type="text" class="form-control" th:field="*{address}"/>
+            <p th:if = "${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input id="city" name="city" type="text" class="form-control" th:field="*{city}"/>
+            <p th:if = "${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+        </div>
+        <div class="form-group">
+            <label for="state">State</label>
+            <select name="state" id="state">
+                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="zipcode">Zipcode</label>
+            <input id="zipcode" name="zipcode" type="text" class="form-control" th:field="*{zipcode}"/>
+            <p th:if = "${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"></textarea>
+            <p th:if = "${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+        </div>
+        <input type="submit" value="Edit listing" class="btn btn-block btn-info" />
     </form>
 </div>
-
-<th:block th:include="partials/scripts.html :: scripts"></th:block>
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
-<footer th:replace="partials/footer.html :: footer"></footer>
 </html>
