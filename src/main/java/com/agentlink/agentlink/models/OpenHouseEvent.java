@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -25,7 +26,7 @@ public class OpenHouseEvent {
     private String address;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @Column(nullable = false)
     private Time startTime;
@@ -39,7 +40,7 @@ public class OpenHouseEvent {
     public OpenHouseEvent() {
     }
 
-    public OpenHouseEvent(long id, House house, User user, String address, Date date, Time startTime, Time endTime, String feedback) {
+    public OpenHouseEvent(long id, House house, User user, String address, LocalDate date, Time startTime, Time endTime, String feedback) {
         this.id = id;
         this.house = house;
         this.user = user;
@@ -82,11 +83,11 @@ public class OpenHouseEvent {
         this.address = address;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

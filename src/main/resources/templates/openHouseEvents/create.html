@@ -21,7 +21,7 @@
     </div>
     <br>
     <select id="housesDropdown" name="housesDropdown" th:field="*{house}">
-        <option th:each="house: ${houses}" th:value="${house}" th:text="${house.address}"/>
+        <option th:each="house: ${houses}" th:value="${house.id}" th:text="${house.address}"/>
 
     </select>
     <br>
@@ -32,6 +32,9 @@
 
 
 <th:block th:include="partials/scripts.html :: scripts"></th:block>
+<script>
+    console.log(document.getElementById("eventDate").value)
+</script>
 </body>
 <footer th:replace="partials/footer.html :: footer"></footer>
 </html>
