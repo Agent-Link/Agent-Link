@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Title')"/>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+
+<form action="/events/create" th:action="@{/events/create}" method="post" th:object="${openHouseEvent}">
+    <div class="input-field ">
+        <input id="eventDate" name="eventDate" type="date" class="" placeholder="YYYY-MM-DD"/>
+        <label for="eventDate">Date of event</label>
+    </div>
+    <br>
+    <div class="input-field ">
+        <input id="startTime" name="startTime" type="text" class="" th:field="*{startTime}" placeholder="24hr clock format. e.g hh:mm:ss"/>
+        <label for="startTime">Event Start Time</label>
+    </div>
+    <br>
+    <div class="input-field ">
+        <input id="endTime" name="endTime" type="text" class="" th:field="*{endTime}" placeholder="24hr clock format. e.g hh:mm:ss"/>
+        <label for="endTime">End Time</label>
+    </div>
+    <br>
+    <select id="housesDropdown" name="housesDropdown" th:field="*{house}">
+        <option th:each="house: ${houses}" th:value="${house.id}" th:text="${house.address}"/>
+
+    </select>
+    <br>
+
+
+    <button type="submit" value="submit" class="btn-small" >Submit</button>
+</form>
+
+
+<th:block th:include="partials/scripts.html :: scripts"></th:block>
+<script>
+    console.log(document.getElementById("eventDate").value)
+</script>
+</body>
+<footer th:replace="partials/footer.html :: footer"></footer>
+</html>
