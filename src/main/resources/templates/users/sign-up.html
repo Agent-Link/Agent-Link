@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head th:replace="partials/head.html :: head('Sign up')">
-    <meta charset="UTF-8" />
-    <title>Sign up</title>
-</head>
+<head th:replace="partials/head.html :: head('Sign up')"/>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 <h1>Create an account</h1>
 <form class="container" th:action="@{/sign-up}" method="POST" th:object="${user}">
-    <div class="form-group">
-        <label for="isListingAgent">Are you a listing agent?</label>
-        <input type="checkbox" id="isListingAgent" name="isListingAgent" value="1">
-    </div>
     <div class="form-group">
         <label for="username">Username</label>
         <input class="form-control" id="username" th:field="*{username}" />
@@ -43,11 +36,15 @@
         <p th:if = "${#fields.hasErrors('team')}" th:errors="*{team}"></p>
     </div>
     <div class="form-group">
+        <label for="isListingAgent">Are you a listing agent?</label>
+        <input type="checkbox" id="isListingAgent" name="isListingAgent" value="1">
+    </div>
+    <div class="form-group">
         <label for="phone">Phone Number</label>
         <input class="form-control" id="phone" th:field="*{phone}" />
         <p th:if = "${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
     </div>
-    <input class="btn btn-block btn-info" alue="Sign me up!" type="submit" />
+    <input class="btn btn-block btn-info" value="Sign me up!" type="submit" />
 </form>
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
