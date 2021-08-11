@@ -10,10 +10,7 @@ import jdk.jfr.Event;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,5 +45,24 @@ public class EventsController {
         model.addAttribute("openHouseEvent", openHouseEvent);
         model.addAttribute("isEventCreator", isEventCreator);
         return "events/show";
+    }
+
+    @GetMapping("/events/create")
+    public String createEventForm( Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<House> houses = housesDao.findByUser(currentUser);
+
+        model.addAttribute("houses", houses);
+        model.addAttribute("openHouseEvent", new OpenHouseEvent());
+        return "/openHouseEvents/create";
+    }
+
+    @PostMapping("/events/create")
+    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        openHouseEvent.setUser(currentUser);
+
+        eventsDao.save(openHouseEvent);
+        return "redirect:/houses";
     }
 }
