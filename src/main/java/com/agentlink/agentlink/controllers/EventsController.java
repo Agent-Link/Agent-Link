@@ -10,11 +10,13 @@ import jdk.jfr.Event;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -48,5 +50,27 @@ public class EventsController {
         model.addAttribute("openHouseEvent", openHouseEvent);
         model.addAttribute("isEventCreator", isEventCreator);
         return "events/show";
+    }
+
+    @GetMapping("/events/create")
+    public String createEventForm(Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<House> houses = housesDao.findByUser(currentUser);
+
+        model.addAttribute("houses", houses);
+        model.addAttribute("openHouseEvent", new OpenHouseEvent());
+        return "/openHouseEvents/create";
+    }
+
+    @PostMapping("/events/create")
+    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String eventDate) throws ParseException {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        openHouseEvent.setUser(currentUser);
+//        String sDate1="eventDate";
+        System.out.println(LocalDate.parse(eventDate));
+
+        openHouseEvent.setDate(LocalDate.parse(eventDate));
+        eventsDao.save(openHouseEvent);
+        return "redirect:/houses";
     }
 }

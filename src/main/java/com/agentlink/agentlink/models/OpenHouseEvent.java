@@ -3,6 +3,7 @@ package com.agentlink.agentlink.models;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,10 +22,16 @@ public class OpenHouseEvent {
     private User user;
 
     @Column(nullable = false)
-    private Date date;
+    private String address;
 
     @Column(nullable = false)
-    private Time time;
+    private LocalDate date;
+
+    @Column(nullable = false)
+    private Time startTime;
+
+    @Column(nullable = false)
+    private Time endTime;
 
     @Column(length = 500)
     private String feedback;
@@ -32,12 +39,14 @@ public class OpenHouseEvent {
     public OpenHouseEvent() {
     }
 
-    public OpenHouseEvent(long id, House house, User user, Date date, Time time, String feedback) {
+    public OpenHouseEvent(long id, House house, User user, String address, LocalDate date, Time startTime, Time endTime, String feedback) {
         this.id = id;
         this.house = house;
         this.user = user;
         this.date = date;
-        this.time = time;
+        this.address = address;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.feedback = feedback;
     }
 
@@ -65,20 +74,36 @@ public class OpenHouseEvent {
         this.user = user;
     }
 
-    public Date getDate() {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getTime() {
-        return time;
+    public Time getStartTime() {
+        return startTime;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
     }
 
     public String getFeedback() {
