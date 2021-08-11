@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('Index')"/>
 <body>
-<nav th:replace="partials/navbar.html :: navbar"/>
+
 <h1>Houses</h1>
 <div th:each="house : ${houses}">
     <p th:text="${house.address}" />
@@ -17,7 +17,6 @@
 
 </div>
 
-<footer th:replace="partials/footer.html :: footer"/>
-<div th:replace="partials/scripts.html :: scripts"/>
+
 </body>
 </html>
