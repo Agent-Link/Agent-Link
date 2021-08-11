@@ -44,4 +44,11 @@ public class ReviewController {
         return "reviews/create";
     }
 
+    @PostMapping("/reviews/create")
+    public String createHouse(@ModelAttribute Review review) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        review.setListingUser(currentUser);
+        reviewsDao.save(review);
+        return "redirect:/houses";
+    }
 }

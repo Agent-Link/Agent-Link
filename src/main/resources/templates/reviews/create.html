@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Create Review')"/>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"/>
+<h1>Leave a review of a Buying Agent!</h1>
+<form class="container" action="/reviews/create" th:action="@{/reviews/create}" method="post" th:object="${review}">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" class="form-control" th:field="*{title}"/>
+    </div>
+    <div class="form-group">
+        <label for="description">Review</label>
+        <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"></textarea>
+    </div>
+    <label  class="radio-inline">
+        <input type="radio" name="radioName" id="Rating1"  value="1" />1
+    </label>
+    <label  class="radio-inline">
+        <input  type="radio" name="radioName"  id="Rating2" value="2"/>2
+    </label>
+    <label  class="radio-inline">
+        <input  type="radio" name="radioName"  id="Rating3" value="3"/>3
+    </label>
+    <label  class="radio-inline">
+        <input  type="radio" name="radioName"  id="Rating4" value="4"/>4
+    </label>
+    <label  class="radio-inline">
+        <input  type="radio" name="radioName"  id="Rating5" value="5" checked="checked"/>5
+    </label>
+    <input type="submit" value="Create listing" class="btn btn-block btn-info" />
+</form>
+
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
+</body>
+</html>
