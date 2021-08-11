@@ -6,7 +6,7 @@
 
 <form action="/events/create" th:action="@{/events/create}" method="post" th:object="${openHouseEvent}">
     <div class="input-field ">
-        <input id="eventDate" name="eventDate" type="date" class="" th:field="*{date}" placeholder="YYYY-MM-DD"/>
+        <input id="eventDate" name="eventDate" type="date" class="" placeholder="YYYY-MM-DD"/>
         <label for="eventDate">Date of event</label>
     </div>
     <br>
