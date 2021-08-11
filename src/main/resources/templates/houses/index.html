@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/head :: head('Index')"/>
+<head th:replace="partials/head :: head('All listings')"/>
 <body>
+<nav th:replace="partials/navbar.html :: navbar"/>
 <h1>Houses</h1>
 <div th:each="house : ${houses}">
     <p th:text="${house.address}" />
@@ -10,12 +11,10 @@
     <p th:text="${house.state}" />
     <p th:text="${house.zipcode}" />
 
-
     <a th:href="@{/houses/{id}(id=${house.id})}" class="btn btn-primary">More Details</a>
 
-
 </div>
-
-
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
