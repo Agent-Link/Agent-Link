@@ -4,32 +4,37 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 <h1>Leave a review of a Buying Agent!</h1>
-<form class="container" action="/reviews/create" th:action="@{/reviews/create}" method="post" th:object="${review}">
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input id="title" name="title" type="text" class="form-control" th:field="*{title}"/>
-    </div>
-    <div class="form-group">
-        <label for="description">Review</label>
-        <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"></textarea>
-    </div>
-    <label  class="radio-inline">
-        <input type="radio" name="radioName" id="Rating1"  value="1" />1
-    </label>
-    <label  class="radio-inline">
-        <input  type="radio" name="radioName"  id="Rating2" value="2"/>2
-    </label>
-    <label  class="radio-inline">
-        <input  type="radio" name="radioName"  id="Rating3" value="3"/>3
-    </label>
-    <label  class="radio-inline">
-        <input  type="radio" name="radioName"  id="Rating4" value="4"/>4
-    </label>
-    <label  class="radio-inline">
-        <input  type="radio" name="radioName"  id="Rating5" value="5" checked="checked"/>5
-    </label>
-    <input type="submit" value="Create listing" class="btn btn-block btn-info" />
-</form>
+<div class="form">
+    <form class="container" action="/reviews/create" th:action="@{/reviews/create}" method="post" th:object="${review}">
+
+            <div th:each="buyinguser : ${users}">
+                <p th:text="${Review.buyingUser}"/>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Title</label>
+                <input id="address" name="address" type="text" class="form-control" th:field="*{title}"/>
+            </div>
+
+            <div class="rate">
+                <input type="radio" th:field="*{rating}" id="star5" name="rate" value="5"/>
+                <label for="star5" title="text">5 stars</label>
+                <input type="radio" th:field="*{rating}" id="star4" name="rate" value="4"/>
+                <label for="star4" title="text">4 stars</label>
+                <input type="radio" th:field="*{rating}" id="star3" name="rate" value="3"/>
+                <label for="star3" title="text">3 stars</label>
+                <input type="radio" th:field="*{rating}" id="star2" name="rate" value="2"/>
+                <label for="star2" title="text">2 stars</label>
+                <input type="radio" th:field="*{rating}" id="star1" name="rate" value="1"/>
+                <label for="star1" title="text">1 star</label>
+            </div>
+            <div class="rev-box form-group shadow-textarea">
+                <label class="review" for="review">Please leave a short review of your experience</label>
+                <textarea id="review" th:field="*{description}" class="review form-control" name="review"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Post</button>
+    </form>
+</div>
 
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
