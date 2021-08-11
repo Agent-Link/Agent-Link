@@ -1,6 +1,7 @@
 package com.agentlink.agentlink.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Entity
@@ -11,24 +12,34 @@ public class User {
     private long id;
 
     @Column(nullable = false, length = 25, unique = true)
+    @Pattern(regexp = "^[a-zA-Z]\\w{4,29}", message = "Usernames must be 5-30 chars long, start with a letter and may only contain A-z, 0-9 and underscore.")
     private String username;
 
     @Column(nullable = false, unique = true)
+    @Email
+    @NotBlank
     private String email;
 
     @Column(nullable = false)
+    @NotBlank
+    @Size(min = 8, max = 100, message = "Password must be at least 8 chars in length")
     private String password;
 
     @Column(nullable = false, length = 20)
+    @NotBlank
     private String firstName;
 
     @Column(nullable = false, length = 30)
+    @NotBlank
     private String lastName;
 
     @Column(nullable = false, length = 10)
+    @NotBlank
+    @Size(min = 10, max = 10, message = "Phone number must be ten digits long IE 2105551245")
     private String phone;
 
     @Column(nullable = false, length = 40)
+    @NotBlank
     private String team;
 
     @Column(nullable = false)
