@@ -1,6 +1,5 @@
 package com.agentlink.agentlink.models;
 
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Time;

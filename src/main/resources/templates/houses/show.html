@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/head :: head('Title')"/>
+<head th:replace="partials/head :: head('Property listing')"/>
 <body>
-<nav th:replace="partials/navbar.html :: navbar"></nav>
-
+<nav th:replace="partials/navbar.html :: navbar"/>
 <h1>Single House Listing</h1>
 <div>
     <p th:text="${house.address}" />
@@ -18,8 +17,8 @@
     </div>
 
 </div>
-
-<th:block th:include="partials/scripts.html :: scripts"></th:block>
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
-<footer th:replace="partials/footer.html :: footer"></footer>
+
 </html>
