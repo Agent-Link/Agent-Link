@@ -8,8 +8,10 @@ import com.agentlink.agentlink.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,9 +55,13 @@ public class HousesController {
     }
 
     @PostMapping("/houses/create")
-    public String createHouse(@ModelAttribute House house) {
+    public String createHouse(@Valid @ModelAttribute House house, BindingResult result, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         house.setUser(currentUser);
+        model.addAttribute("states", states);
+        if (result.hasErrors()) {
+            return "houses/create";
+        }
 //        emailSvc.prepareAndSend(post.getUser().getEmail(), "title", "body");
         housesDao.save(house);
         return "redirect:/houses";
@@ -75,9 +81,13 @@ public class HousesController {
     }
 
     @PostMapping("/houses/edit/{id}")
-    public String saveEditedHouse(@PathVariable long id, @ModelAttribute House house){
+    public String saveEditedHouse(@PathVariable long id, @Valid @ModelAttribute House house, BindingResult result, Model model){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         House houseFromDb = housesDao.getById(id);
+        model.addAttribute("states", states);
+        if (result.hasErrors()) {
+            return "houses/edit";
+        }
         if (currentUser.getId() == houseFromDb.getUser().getId()) {
             house.setUser(currentUser);
             housesDao.save(house);
