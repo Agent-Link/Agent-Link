@@ -7,6 +7,7 @@ import com.agentlink.agentlink.repositories.HouseRepository;
 import com.agentlink.agentlink.repositories.OpenHouseEventRepository;
 import com.agentlink.agentlink.repositories.UserRepository;
 import jdk.jfr.Event;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,9 +68,13 @@ public class EventsController {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         openHouseEvent.setUser(currentUser);
 //        String sDate1="eventDate";
-        System.out.println(LocalDate.parse(eventDate));
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-        openHouseEvent.setDate(LocalDate.parse(eventDate));
+        Date date = simpleDateFormat.parse(eventDate);
+        System.out.println(date);
+
+        openHouseEvent.setDate(date);
         eventsDao.save(openHouseEvent);
         return "redirect:/houses";
     }
