@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('ReviewsIndex')"/>
 <body>
+<nav th:replace="partials/navbar.html :: navbar"/>
 <h1>Reviews</h1>
 
 <div th:each="review : ${reviews}">
@@ -10,6 +11,7 @@
     <p th:text="${review.description}" />
 </div>
 
-
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
