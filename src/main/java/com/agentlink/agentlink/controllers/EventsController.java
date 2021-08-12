@@ -110,5 +110,12 @@ public class EventsController {
         return "redirect:/events";
     }
 
+    @GetMapping("/events/delete/{id}")
+    public String deleteEvent(@PathVariable("id") long id, Model model) {
+        OpenHouseEvent openHouseEvent = eventsDao.getById(id);
+        eventsDao.delete(openHouseEvent);
+        return "redirect:/events";
+    }
+
 
 }
