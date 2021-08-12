@@ -37,7 +37,7 @@ public class EventsController {
     public String getAllEvents(Model model) {
         List<OpenHouseEvent> openHouseEvents = eventsDao.findAll();
         model.addAttribute("openHouseEvents", openHouseEvents);
-        return "events/index";
+        return "openHouseEvents/index";
     }
 
     @GetMapping("/events/{id}")
@@ -50,7 +50,7 @@ public class EventsController {
         }
         model.addAttribute("openHouseEvent", openHouseEvent);
         model.addAttribute("isEventCreator", isEventCreator);
-        return "events/show";
+        return "openHouseEvents/show";
     }
 
     @GetMapping("/events/create")
@@ -78,4 +78,6 @@ public class EventsController {
         eventsDao.save(openHouseEvent);
         return "redirect:/houses";
     }
+
+
 }
