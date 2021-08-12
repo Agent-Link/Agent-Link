@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Apply to host')"/>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"/>
+<h1>Apply to host event!</h1>
+
+<form class="container" th:action="@{/events/apply/{id}}" method="post" th:object="${application}">
+    <div class="form-group">
+        <label for="inquiry">Description</label>
+        <textarea id="inquiry" name="inquiry" class="materialize-textarea form-control" th:field="*{inquiry}"></textarea>
+        <p th:if = "${#fields.hasErrors('inquiry')}" th:errors="*{inquiry}"></p>
+    </div>
+    <input type="submit" value="Apply to host" class="btn btn-block btn-info" />
+</form>
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
+</body>
+</html>
