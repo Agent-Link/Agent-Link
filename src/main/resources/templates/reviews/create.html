@@ -2,20 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('Create Review')"/>
 <body>
-<nav th:replace="partials/navbar.html :: navbar"/>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
 <h1>Leave a review of a Buying Agent!</h1>
-<div class="form">
     <form class="container" action="/reviews/create" th:action="@{/reviews/create}" method="post" th:object="${review}">
 
         <!--Stuck Here. How do we get a drop down of buying agents-->
-        <div th:each="buyinguser : ${users}">
-            <p th:text="${Review.buyingUser}"/>
-        </div>
+<!--        <div th:each="buyinguser : ${users}">-->
+<!--            <p th:text="${Review.buyingUser}"/>-->
+<!--        </div>-->
         <!--USER ENTERS DATE HERE-->
-        <div class="input-field ">
-            <input id="eventDate" name="eventDate" type="date" class="" th:field="*{date}" placeholder="YYYY-MM-DD"/>
-            <label for="eventDate">Date of event</label>
-        </div>
+<!--        <div class="input-field ">-->
+<!--            <input id="eventDate" name="eventDate" type="date" class="" th:field="*{date}" placeholder="YYYY-MM-DD"/>-->
+<!--            <label for="eventDate">Date of event</label>-->
+<!--        </div>-->
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" name="title" type="text" class="form-control" th:field="*{title}"/>
@@ -37,9 +36,9 @@
             <label class="review" for="review">Please leave a short review of your experience</label>
             <textarea id="review" th:field="*{description}" class="review form-control" name="review"></textarea>
         </div>
-        <button class="btn btn-primary" type="submit">Post</button>
+        <button class="btn btn-primary" type="submit">Post Review</button>
     </form>
-</div>
+
 
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>

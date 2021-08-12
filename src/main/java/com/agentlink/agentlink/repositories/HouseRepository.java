@@ -15,9 +15,5 @@ public interface HouseRepository extends JpaRepository<House, Long> {
     List<House> findByUser(User user);
 
     List<House> findAllByUser(User user);
-<<<<<<< HEAD
 }
 
-=======
-}
->>>>>>> 095e370b4f84071e4fd6f8331baeab1aa114ef09
