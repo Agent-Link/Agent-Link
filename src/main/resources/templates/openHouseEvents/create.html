@@ -1,40 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/head :: head('Title')"/>
+<head th:replace="partials/head :: head('Create event')"/>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"></nav>
-
-<form action="/events/create" th:action="@{/events/create}" method="post" th:object="${openHouseEvent}">
-    <div class="input-field ">
-        <input id="eventDate" name="eventDate" type="date" class="" placeholder="YYYY-MM-DD"/>
+<h1>Create open house event!</h1>
+<form class="container" action="/events/create" th:action="@{/events/create}" method="post" th:object="${openHouseEvent}">
+    <div class="form-group">
         <label for="eventDate">Date of event</label>
+        <input id="eventDate" name="eventDate" type="date" class="form-control" placeholder="YYYY-MM-DD"/>
     </div>
-    <br>
-    <div class="input-field ">
-        <input id="startTime" name="startTime" type="text" class="" th:field="*{startTime}" placeholder="24hr clock format. e.g hh:mm:ss"/>
+    <div class="form-group">
         <label for="startTime">Event Start Time</label>
+        <input id="startTime" name="startTime" type="text" class="form-control" th:field="*{startTime}" placeholder="24hr clock format. e.g hh:mm:ss"/>
     </div>
-    <br>
-    <div class="input-field ">
-        <input id="endTime" name="endTime" type="text" class="" th:field="*{endTime}" placeholder="24hr clock format. e.g hh:mm:ss"/>
+    <div class="form-group">
         <label for="endTime">End Time</label>
+        <input id="endTime" name="endTime" type="text" class="form-control" th:field="*{endTime}" placeholder="24hr clock format. e.g hh:mm:ss"/>
     </div>
-    <br>
     <select id="housesDropdown" name="housesDropdown" th:field="*{house}">
         <option th:each="house: ${houses}" th:value="${house.id}" th:text="${house.address}"/>
-
     </select>
-    <br>
-
-
-    <button type="submit" value="submit" class="btn-small" >Submit</button>
+    <input type="submit" value="Create event" class="btn btn-block btn-info" />
 </form>
-
-
-<th:block th:include="partials/scripts.html :: scripts"></th:block>
-<script>
-    console.log(document.getElementById("eventDate").value)
-</script>
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
-<footer th:replace="partials/footer.html :: footer"></footer>
+
 </html>
