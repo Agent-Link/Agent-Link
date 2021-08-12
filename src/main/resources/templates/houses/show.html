@@ -24,14 +24,26 @@
 <!--mapbox here-->
     <div id='map' style='width: 400px; height: 300px;'class=""></div>
     <script>
+        // simple display for map
         mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
         const map = new mapboxgl.Map({
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            center: [-74.5, 40], // starting position [lng, lat]
+            center: [-98.4936, 29.421], // starting position [lng, lat]
             zoom: 9 // starting zoom
         });
+        // end of display for map
+
+        //creation of marker
+        map.addControl(new mapboxgl.NavigationControl());
+
+        var marker = new mapboxgl.Marker({
+            draggable: true,
+            color: "red"
+        }).setLngLat([-98.4936, 29.421])
+            .addTo(map);
     </script>
+
 
 <!--    end of map box-->
 
