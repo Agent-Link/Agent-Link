@@ -37,7 +37,9 @@
 
     <div th:if="${isHouseOwner}">
         <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>
-        <a th:href="@{/houses/delete/{id}(id=${house.id})}" class="btn btn-primary">Delete</a>
+        <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post">
+            <input type="submit" class="btn btn-primary" value="Delete"/>
+        </form>
     </div>
 
 </div>

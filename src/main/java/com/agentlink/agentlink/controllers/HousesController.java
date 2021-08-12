@@ -81,7 +81,7 @@ public class HousesController {
     }
 
     @PostMapping("/houses/edit/{id}")
-    public String saveEditedHouse(@PathVariable long id, @Valid @ModelAttribute House house, BindingResult result, Model model){
+    public String saveEditedHouse(@PathVariable Long id, @Valid @ModelAttribute House house, BindingResult result, Model model){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         House houseFromDb = housesDao.getById(id);
         model.addAttribute("states", states);
@@ -95,10 +95,13 @@ public class HousesController {
         return "redirect:/houses/" + id;
     }
 
-    @GetMapping("/houses/delete/{id}")
-    public String deleteHouse(@PathVariable("id") long id, Model model) {
-        House house = housesDao.getById(id);
-        housesDao.delete(house);
+    @PostMapping("/houses/delete/{id}")
+    public String deleteHouse(@PathVariable Long id) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        House houseFromDb = housesDao.getById(id);
+        if (currentUser.getId() == houseFromDb.getUser().getId()) {
+            housesDao.deleteById(id);
+        }
         return "redirect:/houses";
     }
 
