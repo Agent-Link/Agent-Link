@@ -2,6 +2,7 @@ package com.agentlink.agentlink.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Table(name = "houses")
@@ -38,6 +39,9 @@ public class House {
     @JoinColumn(name = "listing_agent_id")
     private User user;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
+    private List<OpenHouseEvent> openHouseEvents;
+
     public House() {
     }
 
@@ -49,6 +53,17 @@ public class House {
         this.zipcode = zipcode;
         this.description = description;
         this.user = user;
+    }
+
+    public House(long id, String address, String city, String state, String zipcode, String description, User user, List<OpenHouseEvent> openHouseEvents) {
+        this.id = id;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+        this.description = description;
+        this.user = user;
+        this.openHouseEvents = openHouseEvents;
     }
 
     public long getId() {
@@ -105,5 +120,13 @@ public class House {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<OpenHouseEvent> getOpenHouseEvents() {
+        return openHouseEvents;
+    }
+
+    public void setOpenHouseEvents(List<OpenHouseEvent> openHouseEvents) {
+        this.openHouseEvents = openHouseEvents;
     }
 }
