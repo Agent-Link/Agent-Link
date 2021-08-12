@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('Property listing')"/>
+<head>
+    <script src="/keys.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css' rel='stylesheet' />
+
+</head>
+
+
+
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 <h1>Single House Listing</h1>
@@ -11,12 +20,33 @@
     <p th:text="${house.state}" />
     <p th:text="${house.zipcode}" />
 
+
+<!--mapbox here-->
+    <div id='map' style='width: 400px; height: 300px;'class=""></div>
+    <script>
+        mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [-74.5, 40], // starting position [lng, lat]
+            zoom: 9 // starting zoom
+        });
+    </script>
+
+<!--    end of map box-->
+
     <div th:if="${isHouseOwner}">
         <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>
         <a th:href="@{/houses/delete/{id}(id=${house.id})}" class="btn btn-primary">Delete</a>
     </div>
 
 </div>
+
+<!--mapbox scripts-->
+<!--<script src="/keys.js"></script>-->
+<!--<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js'></script>-->
+<!--<link href='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css' rel='stylesheet' />-->
+<!--mapbox end-->
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
