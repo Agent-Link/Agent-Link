@@ -37,7 +37,7 @@ public class EventsController {
     public String getAllEvents(Model model) {
         List<OpenHouseEvent> openHouseEvents = eventsDao.findAll();
         model.addAttribute("openHouseEvents", openHouseEvents);
-        return "events/index";
+        return "openHouseEvents/index";
     }
 
     @GetMapping("/events/{id}")
@@ -50,7 +50,7 @@ public class EventsController {
         }
         model.addAttribute("openHouseEvent", openHouseEvent);
         model.addAttribute("isEventCreator", isEventCreator);
-        return "events/show";
+        return "openHouseEvents/show";
     }
 
     @GetMapping("/events/create")
@@ -76,6 +76,39 @@ public class EventsController {
 
         openHouseEvent.setDate(date);
         eventsDao.save(openHouseEvent);
-        return "redirect:/houses";
+        return "redirect:/events";
     }
+
+    @GetMapping("/events/edit/{id}")
+    public String editEventsForm(@PathVariable long id, Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        OpenHouseEvent openHouseEvent = eventsDao.getById(id);
+        if (currentUser.getId() == openHouseEvent.getUser().getId()) {
+            model.addAttribute("openHouseEvent", openHouseEvent);
+            return "/openHouseEvents/edit";
+        } else {
+            return "redirect:/events";
+        }
+    }
+
+    @PostMapping("/events/edit/{id}")
+    public String saveEditedEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String eventDate) throws ParseException {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        OpenHouseEvent eventFromDb = eventsDao.getById(openHouseEvent.getId());
+//        String sDate1="eventDate";
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        Date date = simpleDateFormat.parse(eventDate);
+        openHouseEvent.setDate(date);
+        openHouseEvent.setHouse(eventFromDb.getHouse());
+        System.out.println(date);
+        if (currentUser.getId() == eventFromDb.getUser().getId()) {
+            openHouseEvent.setUser(currentUser);
+            eventsDao.save(openHouseEvent);
+        }
+        return "redirect:/events";
+    }
+
+
 }

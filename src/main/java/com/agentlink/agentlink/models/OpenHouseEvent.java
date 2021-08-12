@@ -21,8 +21,6 @@ public class OpenHouseEvent {
     @JoinColumn(name = "host_agent_id")
     private User user;
 
-    @Column
-    private String address;
 
     @Column(nullable = false)
     private Date date;
@@ -39,12 +37,11 @@ public class OpenHouseEvent {
     public OpenHouseEvent() {
     }
 
-    public OpenHouseEvent(long id, House house, User user, String address, Date date, Time startTime, Time endTime, String feedback) {
+    public OpenHouseEvent(long id, House house, User user, Date date, Time startTime, Time endTime, String feedback) {
         this.id = id;
         this.house = house;
         this.user = user;
         this.date = date;
-        this.address = address;
         this.startTime = startTime;
         this.endTime = endTime;
         this.feedback = feedback;
@@ -74,13 +71,6 @@ public class OpenHouseEvent {
         this.user = user;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public Date getDate() {
         return date;

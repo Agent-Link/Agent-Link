@@ -10,14 +10,17 @@
 <h1>Single Event Listing</h1>
 <div>
     <p th:text="${openHouseEvent.date}" />
-    <p th:text="${openHouseEvent.house_id}" />
-    <p th:text="${openHouseEvent.host_agent_id}" />
+    <p th:text="${openHouseEvent.house.address}" />
+    <p th:text="${openHouseEvent.house.user.firstName}"></p>
+    <p th:text="${openHouseEvent.house.user.lastName}" />
 
+    <div th:if="${isEventCreator}">
+        <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Edit</a>
+        <a th:href="@{/events/delete/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Delete</a>
+    </div>
 
-<!--    <div th:if="${isEventCreator}">-->
-<!--        <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>-->
-<!--        <a th:href="@{/houses/delete/{id}(id=${house.id})}" class="btn btn-primary">Delete</a>-->
-<!--    </div>-->
+    <a th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Apply</a>
+
 
 </div>
 
