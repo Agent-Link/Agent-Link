@@ -7,13 +7,13 @@
 <h1>Open House events</h1>
 <div th:each="openHouseEvents : ${openHouseEvents}">
     <p th:text="${openHouseEvents.date}" />
-    <p th:text="${openHouseEvents.house_id}" />
-    <p th:text="${openHouseEvents.host_agent_id}" />
-    <p th:text="${openHouseEvents.house_id}" />
+    <p th:text="${openHouseEvents.house.address}" />
 
 
 
-    <a th:href="@{/houses/{id}(id=${house.id})}" class="btn btn-primary">More Details</a>
+
+
+    <a th:href="@{/events/{id}(id=${openHouseEvents.id})}" class="btn btn-primary">More Details</a>
 
 
 </div>
