@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/head :: head('Title')"/>
+<head th:replace="partials/head :: head('Edit event')"/>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"></nav>
 
@@ -26,7 +26,8 @@
     <button type="submit" value="submit" class="btn-small" >Submit</button>
 </form>
 
-<th:block th:include="partials/scripts.html :: scripts"></th:block>
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
-<footer th:replace="partials/footer.html :: footer"></footer>
+
 </html>
