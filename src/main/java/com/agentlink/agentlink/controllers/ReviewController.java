@@ -45,22 +45,22 @@ public class ReviewController {
         return"reviews/show";
     }
 
-    @GetMapping("/reviews/create")
-    public String createReview(Model model){
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<OpenHouseEvent> openHouseEvents = openhouseDao.findAll();
-
-        model.addAttribute("openHouseEvent", openHouseEvents);
-        model.addAttribute("createReview", new Review());
+    @GetMapping("/reviews/{id}/create")
+    public String createReview(Model model, @PathVariable long id){
+        OpenHouseEvent event = openhouseDao.getById(id);
+        model.addAttribute("openHouseEvent", event);
+        model.addAttribute("review", new Review());
         return "reviews/create";
     }
 
-    @PostMapping("/reviews/create")
-    public String createHouse(@ModelAttribute Review review, @RequestParam String eventDate) throws ParseException {
+    @PostMapping("/profile/reviews")
+    public String createHouse(@ModelAttribute Review review, @RequestParam String eventDate, @RequestParam long eventId) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         review.setListingUser(currentUser);
+        User buyingAgent = openhouseDao.getById(eventId).getUser();
+        review.setBuyingUser(buyingAgent);
 
-        //DATE INFO
+        //DATE INFO-Need current date not date of event
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         Date date = simpleDateFormat.parse(eventDate);

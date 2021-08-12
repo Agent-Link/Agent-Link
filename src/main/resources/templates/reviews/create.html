@@ -4,12 +4,9 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"></nav>
 <h1>Leave a review of a Buying Agent!</h1>
-    <form class="container" action="/reviews/create" th:action="@{/reviews/create}" method="post" th:object="${review}">
+    <form class="container" action="/profile/reviews" th:action="@{/profile/reviews}" method="post" th:object="${review}">
 
-        <!--Stuck Here. How do we get a drop down of buying agents-->
-<!--        <div th:each="buyinguser : ${users}">-->
-<!--            <p th:text="${Review.buyingUser}"/>-->
-<!--        </div>-->
+
         <!--USER ENTERS DATE HERE-->
 <!--        <div class="input-field ">-->
 <!--            <input id="eventDate" name="eventDate" type="date" class="" th:field="*{date}" placeholder="YYYY-MM-DD"/>-->
