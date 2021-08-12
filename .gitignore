@@ -34,4 +34,4 @@ build/
 
 src/main/resources/application.properties
 
-keys.js
+src/main/resources/static/keys.js
