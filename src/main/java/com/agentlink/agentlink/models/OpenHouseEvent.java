@@ -3,7 +3,6 @@ package com.agentlink.agentlink.models;
 
 import javax.persistence.*;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -43,13 +42,16 @@ public class OpenHouseEvent {
     public OpenHouseEvent() {
     }
 
+
     public OpenHouseEvent(long id, House house, User user, Date date,  String feedback) {
+
         this.id = id;
         this.house = house;
         this.user = user;
         this.date = date;
 
         this.feedback = feedback;
+        this.applications = applications;
     }
 
     public long getId() {
@@ -93,5 +95,13 @@ public class OpenHouseEvent {
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+
+    public List<Application> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
     }
 }

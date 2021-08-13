@@ -55,6 +55,17 @@ public class House {
         this.user = user;
     }
 
+    public House(long id, String address, String city, String state, String zipcode, String description, User user, List<OpenHouseEvent> openHouseEvents) {
+        this.id = id;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+        this.description = description;
+        this.user = user;
+        this.openHouseEvents = openHouseEvents;
+    }
+
     public long getId() {
         return id;
     }
@@ -109,5 +120,13 @@ public class House {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<OpenHouseEvent> getOpenHouseEvents() {
+        return openHouseEvents;
+    }
+
+    public void setOpenHouseEvents(List<OpenHouseEvent> openHouseEvents) {
+        this.openHouseEvents = openHouseEvents;
     }
 }
