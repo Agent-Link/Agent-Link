@@ -54,7 +54,7 @@ public class ReviewController {
     }
 
     @PostMapping("/profile/reviews")
-    public String createHouse(@ModelAttribute Review review, @RequestParam String eventDate, @RequestParam long eventId) throws ParseException {
+    public String getAllUserReviews(@ModelAttribute Review review, @RequestParam String eventDate, @RequestParam long eventId) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         review.setListingUser(currentUser);
         User buyingAgent = openhouseDao.getById(eventId).getUser();
