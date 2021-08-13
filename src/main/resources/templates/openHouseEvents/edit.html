@@ -2,28 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('Edit event')"/>
 <body>
-<nav th:replace="partials/navbar.html :: navbar"></nav>
-
-<form action="/events/create" th:action="@{/events/edit/{id}(id=${openHouseEvent.id})}" method="post" th:object="${openHouseEvent}">
-    <div class="input-field ">
-        <input id="eventDate" name="eventDate" type="date" class="" placeholder="YYYY-MM-DD"/>
-        <label for="eventDate">Date of event</label>
+<nav th:replace="partials/navbar.html :: navbar"/>
+<h1>Edit event date/time</h1>
+<form class="container" action="/events/create" th:action="@{/events/edit/{id}(id=${openHouseEvent.id})}" method="post" th:object="${openHouseEvent}">
+    <div class="form-group">
+        <p>Previous event start date <span th:text="${openHouseEvent.dateStart}"/></p>
+        <label for="startDate">New Start time/date of event</label>
+        <input id="startDate" name="startDate" type="datetime-local" class="form-control"/>
     </div>
-    <br>
-    <div class="input-field ">
-        <input id="startTime" name="startTime" type="text" class="" th:field="*{startTime}" placeholder="24hr clock format. e.g hh:mm:ss"/>
-        <label for="startTime">Event Start Time</label>
+    <div class="form-group">
+        <p>Previous event end date <span th:text="${openHouseEvent.dateEnd}"/></p>
+        <label for="endDate">New End time/date of event</label>
+        <input id="endDate" name="endDate" type="datetime-local" class="form-control"/>
     </div>
-    <br>
-    <div class="input-field ">
-        <input id="endTime" name="endTime" type="text" class="" th:field="*{endTime}" placeholder="24hr clock format. e.g hh:mm:ss"/>
-        <label for="endTime">End Time</label>
-    </div>
-    <br>
-
-
-
-    <button type="submit" value="submit" class="btn-small" >Submit</button>
+    <input type="submit" value="Edit event" class="btn btn-block btn-info" />
 </form>
 
 <footer th:replace="partials/footer.html :: footer"/>

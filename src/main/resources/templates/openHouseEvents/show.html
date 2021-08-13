@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('Title')"/>
 <body>
-<nav th:replace="partials/navbar.html :: navbar"></nav>
+<nav th:replace="partials/navbar.html :: navbar"/>
 
 <h1>Single Event Listing</h1>
 <div>
-    <p th:text="${openHouseEvent.date}" />
-    <p th:text="${openHouseEvent.house.address}" />
-    <p th:text="${openHouseEvent.house.user.firstName}"></p>
-    <p th:text="${openHouseEvent.house.user.lastName}" />
+    <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
+    <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
+    <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
+    <p>Listing agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></p>
 
     <div th:if="${isEventCreator}">
         <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Edit</a>
@@ -21,7 +21,7 @@
 
 </div>
 
-<th:block th:include="partials/scripts.html :: scripts"></th:block>
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
-<footer th:replace="partials/footer.html :: footer"></footer>
 </html>
