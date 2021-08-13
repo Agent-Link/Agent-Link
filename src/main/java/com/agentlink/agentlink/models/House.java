@@ -2,6 +2,7 @@ package com.agentlink.agentlink.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Table(name = "houses")
@@ -37,6 +38,9 @@ public class House {
     @ManyToOne
     @JoinColumn(name = "listing_agent_id")
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
+    private List<OpenHouseEvent> openHouseEvents;
 
     public House() {
     }

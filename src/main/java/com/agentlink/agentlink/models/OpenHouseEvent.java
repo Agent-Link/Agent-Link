@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "open_house_events")
@@ -21,15 +22,20 @@ public class OpenHouseEvent {
     @JoinColumn(name = "host_agent_id")
     private User user;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "openHouseEvent")
+    private List<Application> applications;
+
 
     @Column(nullable = false)
     private Date date;
 
-    @Column(nullable = false)
-    private Time startTime;
 
-    @Column(nullable = false)
-    private Time endTime;
+
+//    @Column(nullable = false)
+//    private Time startTime;
+//
+//    @Column(nullable = false)
+//    private Time endTime;
 
     @Column(length = 500)
     private String feedback;
@@ -37,13 +43,12 @@ public class OpenHouseEvent {
     public OpenHouseEvent() {
     }
 
-    public OpenHouseEvent(long id, House house, User user, Date date, Time startTime, Time endTime, String feedback) {
+    public OpenHouseEvent(long id, House house, User user, Date date,  String feedback) {
         this.id = id;
         this.house = house;
         this.user = user;
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
+
         this.feedback = feedback;
     }
 
@@ -80,21 +85,7 @@ public class OpenHouseEvent {
         this.date = date;
     }
 
-    public Time getStartTime() {
-        return startTime;
-    }
 
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public Time getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
 
     public String getFeedback() {
         return feedback;
