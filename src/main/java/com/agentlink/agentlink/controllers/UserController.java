@@ -62,8 +62,8 @@ public class UserController {
     public String userProfile(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<OpenHouseEvent> openHouseEvents = eventsDao.findAllByUser(user);
-        model.addAttribute("houses",housesDao.findAllByUser(user));
-        model.addAttribute("openHouseEvents",openHouseEvents);
+        model.addAttribute("houses",housesDao.findAllByUser(user)); //This produces all user houses on their profile
+        model.addAttribute("openHouseEvents",openHouseEvents); //This code produces all user events on their profile
         return "users/profile";
     }
 
