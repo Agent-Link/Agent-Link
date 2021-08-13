@@ -64,17 +64,18 @@ public class EventsController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate) throws ParseException {
+    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         openHouseEvent.setUser(currentUser);
-//        String sDate1="eventDate";
-        String pattern = "yyyy-MM-dd'T'HH:mm";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-        Date test = simpleDateFormat.parse(startDate);
-        System.out.println(test);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
-        openHouseEvent.setDate(test);
+        Date startDateFormatted = simpleDateFormat.parse(startDate);
+        Date endDateFormatted = simpleDateFormat.parse(endDate);
+
+
+        openHouseEvent.setDateStart(startDateFormatted);
+        openHouseEvent.setDateEnd(endDateFormatted);
         eventsDao.save(openHouseEvent);
         return "redirect:/events";
     }
@@ -92,17 +93,19 @@ public class EventsController {
     }
 
     @PostMapping("/events/edit/{id}")
-    public String saveEditedEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String eventDate) throws ParseException {
+    public String saveEditedEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         OpenHouseEvent eventFromDb = eventsDao.getById(openHouseEvent.getId());
-//        String sDate1="eventDate";
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-        Date date = simpleDateFormat.parse(eventDate);
-        openHouseEvent.setDate(date);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+        Date startDateFormatted = simpleDateFormat.parse(startDate);
+        Date endDateFormatted = simpleDateFormat.parse(endDate);
+
+        openHouseEvent.setDateStart(startDateFormatted);
+        openHouseEvent.setDateEnd(endDateFormatted);
         openHouseEvent.setHouse(eventFromDb.getHouse());
-        System.out.println(date);
+
         if (currentUser.getId() == eventFromDb.getUser().getId()) {
             openHouseEvent.setUser(currentUser);
             eventsDao.save(openHouseEvent);
