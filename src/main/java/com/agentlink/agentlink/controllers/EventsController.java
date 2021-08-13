@@ -64,17 +64,17 @@ public class EventsController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String eventDate) throws ParseException {
+    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         openHouseEvent.setUser(currentUser);
 //        String sDate1="eventDate";
-        String pattern = "yyyy-MM-dd";
+        String pattern = "yyyy-MM-dd'T'HH:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-        Date date = simpleDateFormat.parse(eventDate);
-        System.out.println(date);
+        Date test = simpleDateFormat.parse(startDate);
+        System.out.println(test);
 
-        openHouseEvent.setDate(date);
+        openHouseEvent.setDate(test);
         eventsDao.save(openHouseEvent);
         return "redirect:/events";
     }

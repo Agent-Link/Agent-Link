@@ -24,14 +24,17 @@ public class OpenHouseEvent {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "openHouseEvent")
     private List<Application> applications;
 
+
     @Column(nullable = false)
     private Date date;
 
-    @Column(nullable = false)
-    private Time startTime;
 
-    @Column(nullable = false)
-    private Time endTime;
+
+//    @Column(nullable = false)
+//    private Time startTime;
+//
+//    @Column(nullable = false)
+//    private Time endTime;
 
     @Column(length = 500)
     private String feedback;
@@ -39,13 +42,14 @@ public class OpenHouseEvent {
     public OpenHouseEvent() {
     }
 
-    public OpenHouseEvent(long id, House house, User user, Date date, Time startTime, Time endTime, String feedback, List<Application> applications) {
+
+    public OpenHouseEvent(long id, House house, User user, Date date,  String feedback) {
+
         this.id = id;
         this.house = house;
         this.user = user;
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
+
         this.feedback = feedback;
         this.applications = applications;
     }
@@ -83,21 +87,7 @@ public class OpenHouseEvent {
         this.date = date;
     }
 
-    public Time getStartTime() {
-        return startTime;
-    }
 
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public Time getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
 
     public String getFeedback() {
         return feedback;
