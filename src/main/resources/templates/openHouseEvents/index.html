@@ -5,13 +5,13 @@
 <nav th:replace="partials/navbar.html :: navbar"/>
 
 <h1>Open House events</h1>
-<div th:each="openHouseEvents : ${openHouseEvents}">
-    <p>Address: <span th:text="${openHouseEvents.house.address}" />, <span th:text="${openHouseEvents.house.city}" />, <span th:text="${openHouseEvents.house.state}" /> <span th:text="${openHouseEvents.house.zipcode}" /></p>
-    <p>Start time: <span th:text="${openHouseEvents.dateStart}" /></p>
-    <p>End time: <span th:text="${openHouseEvents.dateEnd}" /></p>
+<div th:each="openHouseEvent : ${openHouseEvents}">
+    <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
+    <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
+    <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
 
 
-    <a th:href="@{/events/{id}(id=${openHouseEvents.id})}" class="btn btn-primary">More Details</a>
+    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
 </div>
 
 <footer th:replace="partials/footer.html :: footer"/>
