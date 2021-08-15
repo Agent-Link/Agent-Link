@@ -1,8 +1,10 @@
 package com.agentlink.agentlink.controllers;
 
+import com.agentlink.agentlink.models.Application;
 import com.agentlink.agentlink.models.House;
 import com.agentlink.agentlink.models.OpenHouseEvent;
 import com.agentlink.agentlink.models.User;
+import com.agentlink.agentlink.repositories.ApplicationRepository;
 import com.agentlink.agentlink.repositories.HouseRepository;
 import com.agentlink.agentlink.repositories.OpenHouseEventRepository;
 import com.agentlink.agentlink.repositories.UserRepository;
@@ -26,11 +28,13 @@ public class EventsController {
     private final HouseRepository housesDao;
     private final UserRepository usersDao;
     private final OpenHouseEventRepository eventsDao;
+    private final ApplicationRepository applicationDao;
 
-    public EventsController(HouseRepository housesDao, UserRepository usersDao, OpenHouseEventRepository eventsDao) {
+    public EventsController(HouseRepository housesDao, UserRepository usersDao, OpenHouseEventRepository eventsDao, ApplicationRepository applicationDao) {
         this.housesDao = housesDao;
         this.usersDao = usersDao;
         this.eventsDao = eventsDao;
+        this.applicationDao = applicationDao;
     }
 
     @RequestMapping(path = "/events", method = RequestMethod.GET)
@@ -43,11 +47,17 @@ public class EventsController {
     @GetMapping("/events/{id}")
     public String singleEvent(@PathVariable long id, Model model){
         OpenHouseEvent openHouseEvent = eventsDao.getById(id);
+
+        // Create boolean to check if user has already applied to event, then use to show/not show apply button
         boolean isEventCreator = false;
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            // I think we need to refactor this check, as the "user" on the open house event is
+            // the host and not the owner of the event posting
             isEventCreator = currentUser.getId() == openHouseEvent.getUser().getId();
         }
+        List<Application> applications = applicationDao.findApplicationsByOpenHouseEventId(id);
+        model.addAttribute("applications", applications);
         model.addAttribute("openHouseEvent", openHouseEvent);
         model.addAttribute("isEventCreator", isEventCreator);
         return "openHouseEvents/show";
