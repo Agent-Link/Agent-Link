@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Controller
 public class ApplicationController {
@@ -42,9 +43,11 @@ public class ApplicationController {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         application.setUser(currentUser);
         application.setOpenHouseEvent(eventsDao.getById(id));
+        application.setDate(new Date());
         if (result.hasErrors()) {
             return "applications/create";
         }
+        // Applying currently overwrites last the applicants application so we only have one applicant per event with this bug
         applicationDao.save(application);
         // will redirect to applicants profile or an applied to page
         return "redirect:/";
