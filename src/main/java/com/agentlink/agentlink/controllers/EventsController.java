@@ -1,8 +1,10 @@
 package com.agentlink.agentlink.controllers;
 
+import com.agentlink.agentlink.models.Application;
 import com.agentlink.agentlink.models.House;
 import com.agentlink.agentlink.models.OpenHouseEvent;
 import com.agentlink.agentlink.models.User;
+import com.agentlink.agentlink.repositories.ApplicationRepository;
 import com.agentlink.agentlink.repositories.HouseRepository;
 import com.agentlink.agentlink.repositories.OpenHouseEventRepository;
 import com.agentlink.agentlink.repositories.UserRepository;
@@ -26,11 +28,13 @@ public class EventsController {
     private final HouseRepository housesDao;
     private final UserRepository usersDao;
     private final OpenHouseEventRepository eventsDao;
+    private final ApplicationRepository applicationDao;
 
-    public EventsController(HouseRepository housesDao, UserRepository usersDao, OpenHouseEventRepository eventsDao) {
+    public EventsController(HouseRepository housesDao, UserRepository usersDao, OpenHouseEventRepository eventsDao, ApplicationRepository applicationDao) {
         this.housesDao = housesDao;
         this.usersDao = usersDao;
         this.eventsDao = eventsDao;
+        this.applicationDao = applicationDao;
     }
 
     @RequestMapping(path = "/events", method = RequestMethod.GET)
@@ -43,11 +47,17 @@ public class EventsController {
     @GetMapping("/events/{id}")
     public String singleEvent(@PathVariable long id, Model model){
         OpenHouseEvent openHouseEvent = eventsDao.getById(id);
+
+        // Create boolean to check if user has already applied to event, then use to show/not show apply button
         boolean isEventCreator = false;
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            // I think we need to refactor this check, as the "user" on the open house event is
+            // the host and not the owner of the event posting
             isEventCreator = currentUser.getId() == openHouseEvent.getUser().getId();
         }
+        List<Application> applications = applicationDao.findApplicationsByOpenHouseEventId(id);
+        model.addAttribute("applications", applications);
         model.addAttribute("openHouseEvent", openHouseEvent);
         model.addAttribute("isEventCreator", isEventCreator);
         return "openHouseEvents/show";
@@ -64,17 +74,18 @@ public class EventsController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String eventDate) throws ParseException {
+    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         openHouseEvent.setUser(currentUser);
-//        String sDate1="eventDate";
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-        Date date = simpleDateFormat.parse(eventDate);
-        System.out.println(date);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
-        openHouseEvent.setDate(date);
+        Date startDateFormatted = simpleDateFormat.parse(startDate);
+        Date endDateFormatted = simpleDateFormat.parse(endDate);
+
+
+        openHouseEvent.setDateStart(startDateFormatted);
+        openHouseEvent.setDateEnd(endDateFormatted);
         eventsDao.save(openHouseEvent);
         return "redirect:/events";
     }
@@ -92,17 +103,19 @@ public class EventsController {
     }
 
     @PostMapping("/events/edit/{id}")
-    public String saveEditedEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String eventDate) throws ParseException {
+    public String saveEditedEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         OpenHouseEvent eventFromDb = eventsDao.getById(openHouseEvent.getId());
-//        String sDate1="eventDate";
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-        Date date = simpleDateFormat.parse(eventDate);
-        openHouseEvent.setDate(date);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+        Date startDateFormatted = simpleDateFormat.parse(startDate);
+        Date endDateFormatted = simpleDateFormat.parse(endDate);
+
+        openHouseEvent.setDateStart(startDateFormatted);
+        openHouseEvent.setDateEnd(endDateFormatted);
         openHouseEvent.setHouse(eventFromDb.getHouse());
-        System.out.println(date);
+
         if (currentUser.getId() == eventFromDb.getUser().getId()) {
             openHouseEvent.setUser(currentUser);
             eventsDao.save(openHouseEvent);

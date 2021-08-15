@@ -19,7 +19,8 @@
         <div class="form-group">
             <label for="state">State</label>
             <select name="state" id="state">
-                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
+                <option th:each="state: ${states}" th:value="${state}" th:text="${state}" th:if="${house.state == state}" selected></option>
+                <option th:each="state: ${states}" th:value="${state}" th:text="${state}" th:unless="${house.state == state}"></option>
             </select>
         </div>
         <div class="form-group">

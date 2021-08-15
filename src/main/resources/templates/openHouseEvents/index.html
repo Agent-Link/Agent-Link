@@ -2,24 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('Open House Events')"/>
 <body>
-<nav th:replace="partials/navbar.html :: navbar"></nav>
+<nav th:replace="partials/navbar.html :: navbar"/>
 
 <h1>Open House events</h1>
-<div th:each="openHouseEvents : ${openHouseEvents}">
-    <p th:text="${openHouseEvents.date}" />
-    <p th:text="${openHouseEvents.house.address}" />
+<div th:each="openHouseEvent : ${openHouseEvents}">
+    <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
+    <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
+    <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
 
 
-
-
-
-    <a th:href="@{/events/{id}(id=${openHouseEvents.id})}" class="btn btn-primary">More Details</a>
-
-
+    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
 </div>
 
-
-<th:block th:include="partials/scripts.html :: scripts"></th:block>
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
-<footer th:replace="partials/footer.html :: footer"></footer>
 </html>

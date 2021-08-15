@@ -2,7 +2,6 @@ package com.agentlink.agentlink.models;
 
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -25,13 +24,10 @@ public class OpenHouseEvent {
     private List<Application> applications;
 
     @Column(nullable = false)
-    private Date date;
+    private Date dateStart;
 
     @Column(nullable = false)
-    private Time startTime;
-
-    @Column(nullable = false)
-    private Time endTime;
+    private Date dateEnd;
 
     @Column(length = 500)
     private String feedback;
@@ -39,15 +35,14 @@ public class OpenHouseEvent {
     public OpenHouseEvent() {
     }
 
-    public OpenHouseEvent(long id, House house, User user, Date date, Time startTime, Time endTime, String feedback, List<Application> applications) {
+    public OpenHouseEvent(long id, House house, User user, List<Application> applications, Date dateStart, Date dateEnd, String feedback) {
         this.id = id;
         this.house = house;
         this.user = user;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.feedback = feedback;
         this.applications = applications;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.feedback = feedback;
     }
 
     public long getId() {
@@ -75,28 +70,20 @@ public class OpenHouseEvent {
     }
 
 
-    public Date getDate() {
-        return date;
+    public Date getDateStart() {
+        return dateStart;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public Date getDateEnd() {
+        return dateEnd;
     }
 
-    public Time getStartTime() {
-        return startTime;
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public Time getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
     }
 
     public String getFeedback() {
