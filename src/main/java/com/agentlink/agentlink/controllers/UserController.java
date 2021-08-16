@@ -91,24 +91,24 @@ public class UserController {
     }
 
     //EDIT PASSWORD
-    @GetMapping("/users/editPassword/{id}")
-    public String showEditPassword(@PathVariable long id){
-        return "users/editPassword";
-    }
-
-    @PostMapping("/users/editPassword/{id}")
-    public String editPassword(@ModelAttribute("user") @PathVariable long id, @RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirm){
+//    @GetMapping("/users/editPassword/{id}")
+//    public String showEditPassword(@PathVariable long id){
+//        return "users/editPassword";
+//    }
+//
+//    @PostMapping("/users/editPassword/{id}")
+//    public String editPassword(@ModelAttribute("user") @PathVariable long id, @RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirm){
 //        if(!confirm.equals(newPassword)){
 //            return "users/editPassword";
 //        }
-        User user = users.getById(id);
-        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt()); //Generates a hash from plaintext password
-
-        //This checks that given plaintext password matches a known hash
-        if(BCrypt.checkpw(oldPassword, user.getPassword())){
-            user.setPassword(hashedPassword);
-            users.save(user);
-        }
-        return "users/passwordChangeSuccess";
-    }
+//        User user = users.getById(id);
+//        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt()); //Generates a hash from plaintext password
+//
+//        This checks that given plaintext password matches a known hash
+//        if(BCrypt.checkpw(oldPassword, user.getPassword())){
+//            user.setPassword(hashedPassword);
+//            users.save(user);
+//        }
+//        return "users/passwordChangeSuccess";
+//    }
 }
