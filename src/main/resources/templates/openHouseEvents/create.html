@@ -6,11 +6,11 @@
 <h1>Create open house event!</h1>
 <form class="container" action="/events/create" th:action="@{/events/create}" method="post" th:object="${openHouseEvent}">
     <div class="form-group">
-        <label for="startDate">Date of event</label>
+        <label for="startDate">Start date / time</label>
         <input id="startDate" name="startDate" type="datetime-local" class="form-control" placeholder="YYYY-MM-DD"/>
     </div>
     <div class="form-group">
-        <label for="endDate">Date of event</label>
+        <label for="endDate">End date / time</label>
         <input id="endDate" name="endDate" type="datetime-local" class="form-control" placeholder="YYYY-MM-DD"/>
     </div>
     <select id="housesDropdown" name="housesDropdown" th:field="*{house}">
