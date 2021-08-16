@@ -6,12 +6,13 @@
 
 <h1>Open House events</h1>
 <div th:each="openHouseEvent : ${openHouseEvents}">
-    <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
-    <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
-    <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
+    <div th:if="${openHouseEvent.user == openHouseEvent.house.user}">
+        <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
+        <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
+        <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
 
-
-    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+        <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+    </div>
 </div>
 
 <footer th:replace="partials/footer.html :: footer"/>

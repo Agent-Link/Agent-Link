@@ -5,7 +5,7 @@
 <nav th:replace="partials/navbar.html :: navbar"/>
 <h1>Apply to host event!</h1>
 
-<form class="container" th:action="@{/events/apply/{id} (id = ${id})}" method="post" th:object="${application}">
+<form class="container" th:action="@{/events/apply/{id} (id = ${openHouseId})}" method="post" th:object="${app}">
     <div class="form-group">
         <label for="inquiry">Description</label>
         <textarea id="inquiry" name="inquiry" class="materialize-textarea form-control" th:field="*{inquiry}"></textarea>
