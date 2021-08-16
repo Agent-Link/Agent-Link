@@ -77,7 +77,7 @@ public class UserController {
 
     // Need to add validation to user edit
     @PostMapping("/profile/edit")
-    public String updateUser(@ModelAttribute("user") User user, Model model) {
+    public String updateUser(@ModelAttribute("user") User user, Model model,  @RequestParam(defaultValue = "false") boolean isListingAgent) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User updatedUser = usersDao.getById(currentUser.getId());
 
@@ -87,7 +87,9 @@ public class UserController {
         updatedUser.setUsername(user.getUsername());
         updatedUser.setPhone(user.getPhone());
         updatedUser.setTeam(user.getTeam());
-        updatedUser.setListingAgent(user.isListingAgent());//Still need to work on this line. Not saving to database.
+        if (isListingAgent) {
+            updatedUser.setListingAgent(true);
+        }
         usersDao.save(updatedUser);
         return "redirect:/profile";
     }
