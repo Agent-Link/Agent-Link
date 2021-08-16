@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class UserController {
@@ -91,24 +92,28 @@ public class UserController {
     }
 
     //EDIT PASSWORD
-//    @GetMapping("/users/editPassword/{id}")
-//    public String showEditPassword(@PathVariable long id){
-//        return "users/editPassword";
-//    }
-//
-//    @PostMapping("/users/editPassword/{id}")
-//    public String editPassword(@ModelAttribute("user") @PathVariable long id, @RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirm){
-//        if(!confirm.equals(newPassword)){
-//            return "users/editPassword";
-//        }
-//        User user = users.getById(id);
-//        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt()); //Generates a hash from plaintext password
-//
+    @GetMapping("/users/editPassword")
+    public String showEditPassword(){
+        return "users/editPassword";
+    }
+
+    @PostMapping("/users/editPassword")
+    public String editPassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirm){
+        if(!confirm.equals(newPassword)){
+            return "users/editPassword";
+        }
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = users.getById(currentUser.getId());
+
+        //FOLLOWING 2 LINES DID NOT WORK
+        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(10)); //Generates a hash from plaintext password
+        //String hashedPassword = passwordEncoder.encode(newPassword);
+
 //        This checks that given plaintext password matches a known hash
-//        if(BCrypt.checkpw(oldPassword, user.getPassword())){
-//            user.setPassword(hashedPassword);
-//            users.save(user);
-//        }
-//        return "users/passwordChangeSuccess";
-//    }
+        if(BCrypt.checkpw(oldPassword, user.getPassword())){
+            user.setPassword(hashedPassword);
+            users.save(user);
+        }
+        return "users/passwordChangeSuccess";
+    }
 }
