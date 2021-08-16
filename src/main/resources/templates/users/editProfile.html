@@ -20,13 +20,13 @@
         <input id="email" type="text" th:field="*{email}" th:value="${user.email}"/>
         <label for="team">Real Estate Team</label>
         <input id="team" type="text" th:field="*{team}" th:value="${user.team}">
-        <label for="phoneNumber">Real Estate Team</label>
+        <label for="phoneNumber">Phone Number</label>
         <input id="phoneNumber" type="text" th:field="*{phone}" th:value="${user.phone}">
         <label for="isListingAgent">Are you a listing agent?</label>
         <input type="checkbox" id="isListingAgent" name="isListingAgent" value="1">
         <button class="btn btn-primary" type="submit">Submit Changes</button>
         <p>Want to change your password?</p>
-        <p> <a th:href="@{/users/editPassword/{id} (id = ${user.id})}">Change Account Password</a></p>
+        <p> <a th:href="@{/users/editPassword}">Change Account Password</a></p>
     </form>
 </div>
 
