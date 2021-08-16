@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head.html :: head('Results')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"/>
+
+<div class="card-body" th:each="openHouseEvent : ${openHouseEvents}">
+    <h5 th:text="${openHouseEvent.house.address}" class="card-title"></h5>
+    <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
+    <p>Open House Event Day and Time</p>
+    <p th:text="${openHouseEvent.dateStart}" class="card-text"></p>
+    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+</div>
+
+
+
+
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
+</body>
+</html>

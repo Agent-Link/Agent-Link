@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/head :: head('Title')"/>
+<head th:replace="partials/head :: head('Single Event')"/>
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css' rel='stylesheet'/>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
 <h1>Single Event Listing</h1>
 <div>
-    <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
+    <p id="houseAddress">Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
     <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
     <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
     <p>Listing agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></p>
@@ -14,7 +16,9 @@
     <div th:if="${isEventCreator}">
         <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Edit</a>
         <a th:href="@{/events/delete/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Delete</a>
-
+      
+      
+      
         <h3 th:if="${!applications.isEmpty()}">Applicants</h3>
         <div style="width: 30rem;" class="card" th:each="app : ${applications}">
             <div class="card-body">
