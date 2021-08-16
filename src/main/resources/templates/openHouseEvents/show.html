@@ -17,15 +17,12 @@
         <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Edit</a>
         <a th:href="@{/events/delete/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Delete</a>
 
-<<<<<<< HEAD
     <!--mapbox here-->
     <div id='map' style='width: 400px; height: 300px;' class=""></div>
     <!--    end of map box-->
 
     <a th:if="${!isEventCreator}" th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Apply</a>
     <div th:if="${isEventCreator}">
-=======
->>>>>>> fbc8265ef8e9ee8780a2452712927404fb7039ac
         <h3 th:if="${!applications.isEmpty()}">Applicants</h3>
         <div style="width: 30rem;" class="card" th:each="app : ${applications}">
             <div class="card-body">
