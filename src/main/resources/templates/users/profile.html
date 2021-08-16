@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <head th:replace="partials/head :: head('Profile')"></head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css">
+
+
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -17,18 +20,70 @@
 </div>
 
 <div>Here are your Open House Events:</div>
-<div class="card-body" th:each="openHouseEvents : ${openHouseEvents}">
-    <h5 th:text="${openHouseEvents.house.address}" class="card-title"></h5>
+<div class="card-body event" th:each="openHouseEvents : ${openHouseEvents}">
+    <h5 th:text="${openHouseEvents.house.address}" class="card-title event-title"></h5>
     <p th:text="${openHouseEvents.house.description}" class="card-text"></p>
     <p>Open House Event Day and Time</p>
-    <p th:text="${openHouseEvents.dateStart}" class="card-text"></p>
+    <p th:text="${openHouseEvents.dateStart}" class="card-text event-start"></p>
+    <p th:text="${openHouseEvents.dateEnd}" class="card-text event-end"></p>
     <a th:href="@{'/events/edit/' + ${openHouseEvents.id}}" class="btn btn-primary">Edit</a>
     <a th:href="@{'/events/delete/' + ${openHouseEvents.id}}" class="btn btn-danger">Delete</a>
 </div>
 
 <p> <a th:href="@{/profile/edit}">Edit Your Profile</a></p>
 
+<div id='calendar'></div>
+
 <footer th:replace="partials/footer :: footer"></footer>
 <div th:replace="partials/scripts :: scripts"></div>
+<script th:src='@{/fullcalendar/main.js}'></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/locales-all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js"></script>
+<script>
+     var events = [];
+     $('.event').each(function (i){
+        var title, start, end;
+
+
+             title = $(this).children().first().text();
+            start = $(this).children('.event-start').first().text();
+            end = $(this).children('.event-end').first().text();
+            events.push({title, start, end})
+
+
+    });
+
+
+    console.log(events)
+
+</script>
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                aspectRatio: 2,
+                height: 550,
+                eventSources: [
+
+                    // your event source
+                    {
+                        events,
+                        color: 'black',     // an option!
+                        textColor: 'yellow' // an option!
+                    }
+
+                    // any other event sources...
+
+                ]
+            });
+            calendar.render();
+        });
+
+    </script>
+
+
 </body>
 </html>
