@@ -18,12 +18,14 @@
 
 <div>Here are your Open House Events:</div>
 <div class="card-body" th:each="openHouseEvents : ${openHouseEvents}">
-    <h5 th:text="${openHouseEvents.house.address}" class="card-title"></h5>
-    <p th:text="${openHouseEvents.house.description}" class="card-text"></p>
-    <p>Open House Event Day and Time</p>
-    <p th:text="${openHouseEvents.dateStart}" class="card-text"></p>
-    <a th:href="@{'/events/edit/' + ${openHouseEvents.id}}" class="btn btn-primary">Edit</a>
-    <a th:href="@{'/events/delete/' + ${openHouseEvents.id}}" class="btn btn-danger">Delete</a>
+    <div th:if="${userId == openHouseEvents.house.user.id}">
+        <h5 th:text="${openHouseEvents.house.address}" class="card-title"></h5>
+        <p th:text="${openHouseEvents.house.description}" class="card-text"></p>
+        <p>Open House Event Day and Time</p>
+        <p th:text="${openHouseEvents.dateStart}" class="card-text"></p>
+        <a th:href="@{'/events/edit/' + ${openHouseEvents.id}}" class="btn btn-primary">Edit</a>
+        <a th:href="@{'/events/delete/' + ${openHouseEvents.id}}" class="btn btn-danger">Delete</a>
+    </div>
 </div>
 
 <p> <a th:href="@{/profile/edit}">Edit Your Profile</a></p>
