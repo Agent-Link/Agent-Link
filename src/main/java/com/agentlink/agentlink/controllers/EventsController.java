@@ -52,9 +52,7 @@ public class EventsController {
         boolean isEventCreator = false;
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            // I think we need to refactor this check, as the "user" on the open house event is
-            // the host and not the owner of the event posting
-            isEventCreator = currentUser.getId() == openHouseEvent.getUser().getId();
+            isEventCreator = currentUser.getId() == openHouseEvent.getHouse().getUser().getId();
         }
         List<Application> applications = applicationDao.findApplicationsByOpenHouseEventId(id);
         model.addAttribute("applications", applications);
@@ -94,7 +92,7 @@ public class EventsController {
     public String editEventsForm(@PathVariable long id, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         OpenHouseEvent openHouseEvent = eventsDao.getById(id);
-        if (currentUser.getId() == openHouseEvent.getUser().getId()) {
+        if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId()) {
             model.addAttribute("openHouseEvent", openHouseEvent);
             return "/openHouseEvents/edit";
         } else {
@@ -116,8 +114,8 @@ public class EventsController {
         openHouseEvent.setDateEnd(endDateFormatted);
         openHouseEvent.setHouse(eventFromDb.getHouse());
 
-        if (currentUser.getId() == eventFromDb.getUser().getId()) {
-            openHouseEvent.setUser(currentUser);
+        if (currentUser.getId() == eventFromDb.getHouse().getUser().getId()) {
+            openHouseEvent.setUser(eventFromDb.getUser());
             eventsDao.save(openHouseEvent);
         }
         return "redirect:/events";

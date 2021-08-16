@@ -20,13 +20,13 @@ import java.util.Objects;
 
 @Controller
 public class UserController {
-    private UserRepository users;
+    private UserRepository usersDao;
     private PasswordEncoder passwordEncoder;
     private HouseRepository housesDao;
     private OpenHouseEventRepository eventsDao;
 
     public UserController(UserRepository users, PasswordEncoder passwordEncoder, HouseRepository housesDao, OpenHouseEventRepository eventsDao) {
-        this.users = users;
+        this.usersDao = users;
         this.passwordEncoder = passwordEncoder;
         this.housesDao = housesDao;
         this.eventsDao = eventsDao;
@@ -41,10 +41,10 @@ public class UserController {
     @PostMapping("/sign-up")
     public String saveUser(@Valid @ModelAttribute User user, BindingResult result, @RequestParam(defaultValue = "false") boolean isListingAgent) {
         String hash = passwordEncoder.encode(user.getPassword());
-        if (users.existsByEmail(user.getEmail())) {
+        if (usersDao.existsByEmail(user.getEmail())) {
             result.rejectValue("email", "user.email", "This email already exists");
         }
-        if (users.existsByUsername(user.getUsername())) {
+        if (usersDao.existsByUsername(user.getUsername())) {
             result.rejectValue("username", "user.username", "This username already exists");
         }
         if (result.hasErrors()) {
@@ -54,16 +54,16 @@ public class UserController {
             user.setListingAgent(true);
         }
         user.setPassword(hash);
-        users.save(user);
+        usersDao.save(user);
         return "redirect:/login";
     }
 
     @GetMapping("/profile")
     public String userProfile(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<OpenHouseEvent> openHouseEvents = eventsDao.findAllByUser(user);
         model.addAttribute("houses", housesDao.findAllByUser(user)); //This produces all user houses on their profile
-        model.addAttribute("openHouseEvents", openHouseEvents); //This code produces all user events on their profile
+        model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
+        model.addAttribute("userId", user.getId());
         return "users/profile";
     }
 
@@ -71,14 +71,15 @@ public class UserController {
     @GetMapping("/profile/edit")
     public String editUserProfile(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", users.getOne(user.getId()));
+        model.addAttribute("user", usersDao.getById(user.getId()));
         return "users/editProfile";
     }
 
+    // Need to add validation to user edit
     @PostMapping("/profile/edit")
     public String updateUser(@ModelAttribute("user") User user, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User updatedUser = users.getOne(currentUser.getId());
+        User updatedUser = usersDao.getById(currentUser.getId());
 
         updatedUser.setEmail(user.getEmail());
         updatedUser.setFirstName(user.getFirstName());
@@ -87,7 +88,7 @@ public class UserController {
         updatedUser.setPhone(user.getPhone());
         updatedUser.setTeam(user.getTeam());
         updatedUser.setListingAgent(user.isListingAgent());//Still need to work on this line. Not saving to database.
-        users.save(updatedUser);
+        usersDao.save(updatedUser);
         return "redirect:/profile";
     }
 
@@ -103,7 +104,7 @@ public class UserController {
             return "users/editPassword";
         }
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = users.getById(currentUser.getId());
+        User user = usersDao.getById(currentUser.getId());
 
         //FOLLOWING 2 LINES DID NOT WORK
         String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(10)); //Generates a hash from plaintext password
@@ -112,7 +113,7 @@ public class UserController {
 //        This checks that given plaintext password matches a known hash
         if(BCrypt.checkpw(oldPassword, user.getPassword())){
             user.setPassword(hashedPassword);
-            users.save(user);
+            usersDao.save(user);
         }
         return "users/passwordChangeSuccess";
     }

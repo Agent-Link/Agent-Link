@@ -9,15 +9,20 @@
 
 
 <body>
-<nav th:replace="partials/navbar.html :: navbar"/>
-<h1>Single House Listing</h1>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+<h1 class="text-center" >Single House Listing</h1>
 <div>
-    <p id="houseAddress" th:text="${house.address}"/>
-    <p id="houseCity" th:text="${house.city}"/>
-    <p th:text="${house.description}"/>
-    <p id="houseState" th:text="${house.state}"/>
-    <p id="houseZipcode" th:text="${house.zipcode}"/>
-
+    <div class="card border border-dark mb-1" style="width: auto;">
+            <div class="card-header">
+                 <h6 id="houseAddress" th:text="${house.address}"></h6>
+            </div>
+        <div class="card-body text-dark">
+    <p id="houseCity" th:text="${house.city}"></p>
+    <p th:text="${house.description}"></p>
+    <p id="houseState" th:text="${house.state}"></p>
+    <p id="houseZipcode" th:text="${house.zipcode}"></p>
+        </div>
+    </div>
 
     <!--mapbox here-->
     <div id='map' style='width: 400px; height: 300px;' class=""></div>
@@ -37,8 +42,8 @@
 <!--<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js'></script>-->
 <!--<link href='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css' rel='stylesheet' />-->
 <!--mapbox end-->
-<footer th:replace="partials/footer.html :: footer"/>
-<div th:replace="partials/scripts.html :: scripts"/>
+<footer th:replace="partials/footer.html :: footer"></footer>
+<div th:replace="partials/scripts.html :: scripts"></div>
 </body>
 
 </html>
