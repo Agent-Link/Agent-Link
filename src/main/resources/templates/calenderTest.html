@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Title')">  <link href='fullcalendar/main.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css">
+<script src='fullcalendar/main.js'></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            aspectRatio: 2,
+            height: 550,
+            events: [
+                {
+                    title  : 'event1',
+                    start  : '2021-08-20'
+                },
+                {
+                    title  : 'event2',
+                    start  : '2021-08-21',
+                    end    : '2021-08-21'
+                },
+                {
+                    title  : 'event3',
+                    start  : '2021-08-23T12:30:00',
+                    allDay : false // will make the time show
+                }
+            ]
+        });
+        calendar.render();
+    });
+
+</script>
+</head>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+<div id='calendar'></div>
+
+<th:block th:include="partials/scripts.html :: scripts"></th:block>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/locales-all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js"></script>
+</body>
+<footer th:replace="partials/footer.html :: footer"></footer>
+</html>
