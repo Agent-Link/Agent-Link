@@ -2,6 +2,7 @@ package com.agentlink.agentlink.controllers;
 
 import com.agentlink.agentlink.models.Application;
 import com.agentlink.agentlink.models.House;
+import com.agentlink.agentlink.models.OpenHouseEvent;
 import com.agentlink.agentlink.models.User;
 import com.agentlink.agentlink.repositories.ApplicationRepository;
 import com.agentlink.agentlink.repositories.HouseRepository;
@@ -22,34 +23,42 @@ public class ApplicationController {
     private final HouseRepository housesDao;
     private final UserRepository usersDao;
     private final OpenHouseEventRepository eventsDao;
-    private final ApplicationRepository applicationDao;
+    private final ApplicationRepository applicationsDao;
 
-    public ApplicationController(ApplicationRepository applicationDao, HouseRepository housesDao, UserRepository usersDao, OpenHouseEventRepository eventsDao) {
+    public ApplicationController(ApplicationRepository applicationsDao, HouseRepository housesDao, UserRepository usersDao, OpenHouseEventRepository eventsDao) {
         this.housesDao = housesDao;
         this.usersDao = usersDao;
         this.eventsDao = eventsDao;
-        this.applicationDao = applicationDao;
+        this.applicationsDao = applicationsDao;
     }
 
-    @GetMapping("/events/apply/{id}")
-    public String applicationForm(@PathVariable Long id, Model model) {
+    @GetMapping("/events/apply/{openHouseId}")
+    public String applicationForm(@PathVariable Long openHouseId, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("application", new Application());
+        model.addAttribute("app", new Application());
         return "applications/create";
     }
 
-    @PostMapping("/events/apply/{id}")
-    public String submitApplication(@PathVariable Long id, @Valid @ModelAttribute Application application, BindingResult result, Model model){
+    @PostMapping("/events/apply/{openHouseId}")
+    public String submitApplication(@PathVariable Long openHouseId, @Valid @ModelAttribute Application app, BindingResult result, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        application.setUser(currentUser);
-        application.setOpenHouseEvent(eventsDao.getById(id));
-        application.setDate(new Date());
+        app.setUser(currentUser);
+        app.setOpenHouseEvent(eventsDao.getById(openHouseId));
+        app.setDate(new Date());
         if (result.hasErrors()) {
             return "applications/create";
         }
-        // Applying currently overwrites last the applicants application so we only have one applicant per event with this bug
-        applicationDao.save(application);
+        applicationsDao.save(app);
         // will redirect to applicants profile or an applied to page
         return "redirect:/";
+    }
+
+    @PostMapping("/events/apply/host/{openHouseId}/{userId}")
+    public String setApplicantToEventHost(@PathVariable Long openHouseId, @PathVariable Long userId) {
+        User applicant = usersDao.getById(userId);
+        OpenHouseEvent openHouseEvent = eventsDao.getById(openHouseId);
+        openHouseEvent.setUser(applicant);
+        eventsDao.save(openHouseEvent);
+        return "redirect:/events";
     }
 }

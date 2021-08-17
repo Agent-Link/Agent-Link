@@ -16,10 +16,13 @@
     <h5 th:text="${house.address}" class="card-title"></h5>
     <p th:text="${house.description}" class="card-text"></p>
     <a th:href="@{'/houses/edit/' + ${house.id}}" class="btn btn-primary">Edit</a>
-    <a th:href="@{'/houses/delete/' + ${house.id}}" class="btn btn-danger">Delete</a>
+    <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post">
+        <input type="submit" class="btn btn-danger" value="Delete"/>
+    </form>
 </div>
 
 <div>Here are your Open House Events:</div>
+
 <div class="card-body event" th:each="openHouseEvents : ${openHouseEvents}">
     <h5 th:text="${openHouseEvents.house.address}" class="card-title event-title"></h5>
     <p th:text="${openHouseEvents.house.description}" class="card-text"></p>
@@ -28,6 +31,7 @@
     <p th:text="${openHouseEvents.dateEnd}" class="card-text event-end"></p>
     <a th:href="@{'/events/edit/' + ${openHouseEvents.id}}" class="btn btn-primary">Edit</a>
     <a th:href="@{'/events/delete/' + ${openHouseEvents.id}}" class="btn btn-danger">Delete</a>
+
 </div>
 
 <p> <a th:href="@{/profile/edit}">Edit Your Profile</a></p>
