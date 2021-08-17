@@ -16,7 +16,9 @@
     <h5 th:text="${house.address}" class="card-title"></h5>
     <p th:text="${house.description}" class="card-text"></p>
     <a th:href="@{'/houses/edit/' + ${house.id}}" class="btn btn-primary">Edit</a>
-    <a th:href="@{'/houses/delete/' + ${house.id}}" class="btn btn-danger">Delete</a>
+    <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post">
+        <input type="submit" class="btn btn-danger" value="Delete"/>
+    </form>
 </div>
 
 <div>Here are your Open House Events:</div>
