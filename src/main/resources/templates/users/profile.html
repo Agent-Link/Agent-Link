@@ -81,7 +81,14 @@
 
                     // any other event sources...
 
-                ]
+                ],
+                eventClick: function(info) {
+                    alert('Event Address: ' + info.event.title + "\n" + ' Event Start: ' + info.event.start + "\n" + ' Event End: ' + info.event.end);
+
+
+                    // change the border color just for fun
+                    info.el.style.borderColor = 'red';
+                }
             });
             calendar.render();
         });
