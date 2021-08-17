@@ -34,7 +34,7 @@
         <a th:href="@{'/events/edit/' + ${openHouseEvent.id}}" class="btn btn-primary">Edit</a>
         <a th:href="@{'/events/delete/' + ${openHouseEvent.id}}" class="btn btn-danger">Delete</a>
         <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
-        <a th:if="${currentDateTime.after(openHouseEvent.dateEnd)}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
+        <a th:if="${currentDateTime.after(openHouseEvent.dateEnd) && reviewsDao.findReviewWhere(openHouseEvent.id) == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
     </div>
 
 </div>
