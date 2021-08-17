@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,6 +65,7 @@ public class UserController {
         model.addAttribute("houses", housesDao.findAllByUser(user)); //This produces all user houses on their profile
         model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
         model.addAttribute("userId", user.getId());
+        model.addAttribute("currentDateTime", new Date());
         return "users/profile";
     }
 
