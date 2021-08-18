@@ -4,7 +4,6 @@
 <head>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css' rel='stylesheet'/>
-
 </head>
 
 <body>
@@ -26,7 +25,7 @@
 
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
-
+<script src="/map2.js"></script>
 <script>
 
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
@@ -48,40 +47,42 @@ function plotMarkers () {
 
         var address = adressMulti+" "+ cityMulti+" "+stateMulti;
 
-        allMarkers.push({address})
+        allMarkers.push({address});
 
     });
 
     $('document').ready(function(){
         var setMarkers = $("address").val();
-        settingMarkers ()
-    });
-    // // function settingMarkers () {(
-    //     // geocode(allMarkers,MAPBOX_ACCESS_TOKEN).then(function (results){
-    //     //     marker = new mapboxgl.Marker()
-    //     //     .setLngLat(results)
-    //     //     .addTo(map);
-    //     //
-    //     //  })
+        // settingMarkers()
+    // function settingMarkers () {(
+    //     geocode(allMarkers,MAPBOX_ACCESS_TOKEN).then(function (results){
+    //         marker = new mapboxgl.Marker()
+    //         .setLngLat(results)
+    //         .addTo(map2);
+    //
+    //      })
     //     )}
     allMarkers.forEach(function (houseMarker){
-        geocode(houseMarker,MAPBOX_ACCESS_TOKEN).then(function (results){
-            var marker = new mapboxgl.Marker ()
-                .addTo(map2);
+        geocode(houseMarker.address,MAPBOX_ACCESS_TOKEN).then(function (results){
+            console.log(results)
             var lngLat = {
                 lng: results[0],
                 lat: results[1]
             };
-            marker.setLngLat(lngLat)
+            var marker = new mapboxgl.Marker ()
+            .setLngLat(lngLat)
+                .addTo(map2);
 
 
         })
     })
-
+    });
     console.log(allMarkers);
+
+
 // end
 }
-
+    plotMarkers();
 
 
 
