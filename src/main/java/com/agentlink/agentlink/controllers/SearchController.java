@@ -19,7 +19,7 @@ public class SearchController {
 
     @GetMapping("/search")
     public String searchOpenHouses(@RequestParam String search, Model model) {
-        model.addAttribute("openHouseEvents", openHouseDao.findAllQuery(search));
+        model.addAttribute("openHouseEventsSearch", openHouseDao.findAllQuery(search));
         return "/results";
     }
 }

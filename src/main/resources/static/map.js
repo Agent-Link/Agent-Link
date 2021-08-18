@@ -43,6 +43,7 @@ geocode(singleHouseAddress +" "+singleHouseCity, MAPBOX_ACCESS_TOKEN).then(funct
         lng: info[0],
         lat: info[1]
     };
+    map.setCenter([info[0], info[1]]);
     marker.setLngLat(singleHouseMarker1);
     popup.setHTML("<h3>" + singleHouseAddress + "</h3>");
 });

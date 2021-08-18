@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <head th:replace="partials/head :: head('Profile')"></head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css">
+
+
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -13,24 +16,54 @@
     <h5 th:text="${house.address}" class="card-title"></h5>
     <p th:text="${house.description}" class="card-text"></p>
     <a th:href="@{'/houses/edit/' + ${house.id}}" class="btn btn-primary">Edit</a>
-    <a th:href="@{'/houses/delete/' + ${house.id}}" class="btn btn-danger">Delete</a>
+    <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post">
+        <input type="submit" class="btn btn-danger" value="Delete"/>
+    </form>
 </div>
 
 <div>Here are your Open House Events:</div>
-<div class="card-body" th:each="openHouseEvents : ${openHouseEvents}">
-    <div th:if="${userId == openHouseEvents.house.user.id}">
-        <h5 th:text="${openHouseEvents.house.address}" class="card-title"></h5>
-        <p th:text="${openHouseEvents.house.description}" class="card-text"></p>
+
+
+<div class="card-body event" th:each="openHouseEvents : ${openHouseEvents}">
+    <h5 th:text="${openHouseEvents.house.address}" class="card-title event-title"></h5>
+    <p th:text="${openHouseEvents.house.description}" class="card-text"></p>
+    <p>Open House Event Day and Time</p>
+
+    <p th:text="${#dates.format(openHouseEvents.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
+    <p th:text="${#dates.format(openHouseEvents.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
+    <p hidden th:text="${openHouseEvents.dateStart}" class="card-text event-start"></p>
+    <p hidden th:text="${openHouseEvents.dateEnd}" class="card-text event-end"></p>
+    <a th:href="@{'/events/edit/' + ${openHouseEvents.id}}" class="btn btn-primary">Edit</a>
+    <a th:href="@{'/events/delete/' + ${openHouseEvents.id}}" class="btn btn-danger">Delete</a>
+
+<div class="card-body event" th:each="openHouseEvent : ${openHouseEvents}">
+
+    <div th:if="${userId == openHouseEvent.house.user.id}">
+        <h5 th:text="${openHouseEvent.house.address}" class="card-title event-title"></h5>
+        <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
         <p>Open House Event Day and Time</p>
-        <p th:text="${openHouseEvents.dateStart}" class="card-text"></p>
-        <a th:href="@{'/events/edit/' + ${openHouseEvents.id}}" class="btn btn-primary">Edit</a>
-        <a th:href="@{'/events/delete/' + ${openHouseEvents.id}}" class="btn btn-danger">Delete</a>
+         <p th:text="${#dates.format(openHouseEvents.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
+    <p th:text="${#dates.format(openHouseEvents.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
+    <p hidden th:text="${openHouseEvents.dateStart}" class="card-text event-start"></p>
+    <p hidden th:text="${openHouseEvents.dateEnd}" class="card-text event-end"></p>
+    <a th:href="@{'/events/edit/' + ${openHouseEvents.id}}" class="btn btn-primary">Edit</a>
+    <a th:href="@{'/events/delete/' + ${openHouseEvents.id}}" class="btn btn-danger">Delete</a>
+        <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+        <a th:if="${currentDateTime.after(openHouseEvent.dateEnd) && reviewsDao.findReviewWhere(openHouseEvent.id) == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
     </div>
+
 </div>
 
 <p> <a th:href="@{/profile/edit}">Edit Your Profile</a></p>
 
+<div id='calendar'></div>
+
 <footer th:replace="partials/footer :: footer"></footer>
 <div th:replace="partials/scripts :: scripts"></div>
+<script th:src='@{/fullcalendar/main.js}'></script>
+<script src="/calender.js"></script>
+
+
+
 </body>
 </html>

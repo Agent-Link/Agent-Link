@@ -7,7 +7,7 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
-<div class="card-body" th:each="openHouseEvent : ${openHouseEvents}">
+<div class="card-body" th:each="openHouseEvent : ${openHouseEventsSearch}">
     <h5 th:text="${openHouseEvent.house.address}" class="card-title"></h5>
     <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
     <p>Open House Event Day and Time</p>

@@ -4,7 +4,7 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"></nav>
 <h1>Leave a review of a Buying Agent!</h1>
-    <form class="container" action="/profile/reviews" th:action="@{/profile/reviews}" method="post" th:object="${review}">
+    <form class="container" th:action="@{/reviews/{eventId}/create (eventId=${eventId})}" method="post" th:object="${review}">
 
 
         <!--USER ENTERS DATE HERE-->
@@ -12,6 +12,13 @@
 <!--            <input id="eventDate" name="eventDate" type="date" class="" th:field="*{date}" placeholder="YYYY-MM-DD"/>-->
 <!--            <label for="eventDate">Date of event</label>-->
 <!--        </div>-->
+
+        <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
+        <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
+        <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
+
+        <p>Event host: <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></p>
+
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" name="title" type="text" class="form-control" th:field="*{title}"/>

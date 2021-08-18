@@ -45,28 +45,28 @@ public class ReviewController {
         return"reviews/show";
     }
 
-    @GetMapping("/reviews/{id}/create")
-    public String createReview(Model model, @PathVariable long id){
-        OpenHouseEvent event = openhouseDao.getById(id);
-        model.addAttribute("openHouseEvent", event);
+    @GetMapping("/reviews/{eventId}/create")
+    public String createReviewForm(Model model, @PathVariable long eventId){
+        model.addAttribute("openHouseEvent", openhouseDao.getById(eventId));
         model.addAttribute("review", new Review());
         return "reviews/create";
     }
 
-    @PostMapping("/profile/reviews")
-    public String getAllUserReviews(@ModelAttribute Review review, @RequestParam String eventDate, @RequestParam long eventId) throws ParseException {
+    @PostMapping("/reviews/{eventId}/create")
+    public String submitReview(@ModelAttribute Review review, @PathVariable long eventId, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        review.setListingUser(currentUser);
-        User buyingAgent = openhouseDao.getById(eventId).getUser();
-        review.setBuyingUser(buyingAgent);
+        OpenHouseEvent openHouseEvent = openhouseDao.getById(eventId);
 
-        //DATE INFO-Need current date not date of event
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        Date date = simpleDateFormat.parse(eventDate);
-        review.setDate(date);
-
-        reviewsDao.save(review);
+        // This verifies that the current user should have permission to leave a review on the host of the event
+        if(openHouseEvent.getHouse().getUser().getId() == currentUser.getId() && new Date().after(openHouseEvent.getDateEnd()) && reviewsDao.findReviewWhere(eventId) == null) {
+            User buyingAgent = openhouseDao.getById(eventId).getUser();
+            review.setOpenHouseEvent(openHouseEvent);
+            review.setListingUser(currentUser);
+            review.setBuyingUser(buyingAgent);
+            reviewsDao.save(review);
+        } else {
+            return "redirect:/";
+        }
         return "redirect:/reviews";
     }
 }

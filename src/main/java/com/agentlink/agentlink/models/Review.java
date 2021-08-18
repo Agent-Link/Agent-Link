@@ -20,6 +20,9 @@ public class Review{
     @JoinColumn(name = "buying_agent_id")
     private User buyingUser;
 
+    @OneToOne
+    private OpenHouseEvent openHouseEvent;
+
     @Column(nullable = false)
     @CreationTimestamp
     private Date date;
@@ -51,10 +54,12 @@ public class Review{
 //        this.reviewDefault = reviewDefault;
 //    }
 
-    public Review(long id, User listingUser, User buyingUser, Date date, String title, String description, int rating) {
+
+    public Review(long id, User listingUser, User buyingUser, OpenHouseEvent openHouseEvent, Date date, String title, String description, int rating) {
         this.id = id;
         this.listingUser = listingUser;
         this.buyingUser = buyingUser;
+        this.openHouseEvent = openHouseEvent;
         this.date = date;
         this.title = title;
         this.description = description;
@@ -83,6 +88,14 @@ public class Review{
 
     public void setBuyingUser(User buyingUser) {
         this.buyingUser = buyingUser;
+    }
+
+    public OpenHouseEvent getOpenHouseEvent() {
+        return openHouseEvent;
+    }
+
+    public void setOpenHouseEvent(OpenHouseEvent openHouseEvent) {
+        this.openHouseEvent = openHouseEvent;
     }
 
     public Date getDate() {
