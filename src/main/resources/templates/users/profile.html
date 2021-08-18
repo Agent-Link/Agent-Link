@@ -27,8 +27,11 @@
     <h5 th:text="${openHouseEvents.house.address}" class="card-title event-title"></h5>
     <p th:text="${openHouseEvents.house.description}" class="card-text"></p>
     <p>Open House Event Day and Time</p>
-    <p th:text="${openHouseEvents.dateStart}" class="card-text event-start"></p>
-    <p th:text="${openHouseEvents.dateEnd}" class="card-text event-end"></p>
+
+    <p th:text="${#dates.format(openHouseEvents.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
+    <p th:text="${#dates.format(openHouseEvents.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
+    <p hidden th:text="${openHouseEvents.dateStart}" class="card-text event-start"></p>
+    <p hidden th:text="${openHouseEvents.dateEnd}" class="card-text event-end"></p>
     <a th:href="@{'/events/edit/' + ${openHouseEvents.id}}" class="btn btn-primary">Edit</a>
     <a th:href="@{'/events/delete/' + ${openHouseEvents.id}}" class="btn btn-danger">Delete</a>
 
