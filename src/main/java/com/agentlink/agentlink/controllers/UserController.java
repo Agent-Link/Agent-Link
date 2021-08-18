@@ -5,6 +5,7 @@ import com.agentlink.agentlink.models.OpenHouseEvent;
 import com.agentlink.agentlink.models.User;
 import com.agentlink.agentlink.repositories.HouseRepository;
 import com.agentlink.agentlink.repositories.OpenHouseEventRepository;
+import com.agentlink.agentlink.repositories.ReviewRepository;
 import com.agentlink.agentlink.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,12 +26,14 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     private HouseRepository housesDao;
     private OpenHouseEventRepository eventsDao;
+    private ReviewRepository reviewsDao;
 
-    public UserController(UserRepository users, PasswordEncoder passwordEncoder, HouseRepository housesDao, OpenHouseEventRepository eventsDao) {
-        this.usersDao = users;
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, HouseRepository housesDao, OpenHouseEventRepository eventsDao, ReviewRepository reviewsDao) {
+        this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.housesDao = housesDao;
         this.eventsDao = eventsDao;
+        this.reviewsDao = reviewsDao;
     }
 
     @GetMapping("/sign-up")
@@ -64,6 +68,9 @@ public class UserController {
         model.addAttribute("houses", housesDao.findAllByUser(user)); //This produces all user houses on their profile
         model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
         model.addAttribute("userId", user.getId());
+        model.addAttribute("currentDateTime", new Date());
+        // Not sure if this is the only way/best way to check if a review exists on the profile page
+        model.addAttribute("reviewsDao", reviewsDao);
         return "users/profile";
     }
 

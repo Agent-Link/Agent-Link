@@ -6,12 +6,22 @@
 
 <h1>Open House events</h1>
 <div th:each="openHouseEvent : ${openHouseEvents}">
-    <div th:if="${openHouseEvent.user == openHouseEvent.house.user}">
+
+    <div class="card">
+        <div class="card-header">
+            <h3><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span
+                    th:text="${openHouseEvent.house.address}"></span></a></h3>
+        </div>
+        <div class="card-body">
+       <div th:if="${openHouseEvent.user == openHouseEvent.house.user}">
         <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
         <p>Start time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" /></p>
         <p>End time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" /></p>
 
         <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+            </div>
+        </div>
+
     </div>
 </div>
 
