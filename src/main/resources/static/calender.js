@@ -7,12 +7,13 @@ $('.event').each(function (i){
 
 
     title = $(this).children().first().text();
-    start = $(this).children('.event-start').first().text();
-    end = $(this).children('.event-end').first().text();
+    start = $(this).children('.event-start').first().text().toLocaleString('en-US');
+    end = $(this).children('.event-end').first().text().toLocaleString('en-US');
     events.push({title, start, end})
 
 
 });
+console.log(events);
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         ],
         eventClick: function(info) {
-            alert('Event Address: ' + info.event.title + "\n" + ' Event Start: ' + info.event.start + "\n" + ' Event End: ' + info.event.end);
+            alert('Event Address: ' + info.event.title + "\n" + ' Event Start: ' + info.event.start.toLocaleString('en-US') + "\n" + ' Event End: ' + info.event.end.toLocaleString('en-US'));
 
 
             // change the border color just for fun
@@ -43,4 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     calendar.render();
 });
+
+
+
 
