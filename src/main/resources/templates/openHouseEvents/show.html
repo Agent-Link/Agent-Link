@@ -23,8 +23,14 @@
     <!--mapbox here-->
     <div id='map' style='width: 400px; height: 300px;' class=""></div>
     <!--    end of map box-->
-
-    <div th:if="${isEventCreator}">
+    <div style="width: 30rem;" class="card" th:if="${isEventCreator && openHouseEvent.feedback != null}">
+        <h3>Event feedback:</h3>
+        <div class="card-body">
+            <p>Host name: <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></p>
+            <p>Feedback: <span th:text="${openHouseEvent.feedback}"/></p>
+        </div>
+    </div>
+    <div th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
         <h3 th:if="${!applications.isEmpty()}">Applicants</h3>
         <div style="width: 30rem;" class="card" th:each="app : ${applications}">
             <div class="card-body">
