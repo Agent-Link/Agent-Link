@@ -22,14 +22,15 @@
 </div>
 
 <h2 th:if="${!openHouseEvents.isEmpty()}">Here are your Open House Events:</h2>
-
 <div class="card-body event" th:each="openHouseEvent : ${openHouseEvents}">
     <div th:if="${userId == openHouseEvent.house.user.id || userId == openHouseEvent.user.id}">
         <h5 th:text="${openHouseEvent.house.address}" class="card-title event-title"></h5>
         <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
-        <p>Open House Event Day and Time</p>
-        <p th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
-        <p th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
+        <p>Open House Event Day and Time</p>       
+        <p th:text="${#dates.format(openHouseEvents.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
+        <p th:text="${#dates.format(openHouseEvents.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
+        <p hidden th:text="${openHouseEvents.dateStart}" class="card-text event-start"></p>
+        <p hidden th:text="${openHouseEvents.dateEnd}" class="card-text event-end"></p>
         <div th:if="${userId == openHouseEvent.house.user.id}">
             <a th:href="@{'/events/delete/' + ${openHouseEvent.id}}" class="btn btn-danger">Delete</a>
             <a th:if="${currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{'/events/edit/' + ${openHouseEvent.id}}" class="btn btn-primary">Edit</a>
@@ -48,8 +49,5 @@
 <div th:replace="partials/scripts :: scripts"></div>
 <script th:src='@{/fullcalendar/main.js}'></script>
 <script src="/calender.js"></script>
-
-
-
 </body>
 </html>
