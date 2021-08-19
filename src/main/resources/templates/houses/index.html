@@ -4,33 +4,71 @@
 <head>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css' rel='stylesheet'/>
-
 </head>
 
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
-<h2>Houses</h2>
-<div th:each="house : ${houses}">
-    <div class="card">
-        <div class="card-header">
-            <h3><a th:href="@{/houses/{id}(id=${house.id})}"><span th:text="${house.address}"></span></a></h3>
-        </div>
-        <div class="card-body">
-            <p th:text="${house.description}"/>
-            <p th:text="${house.city}"/>
-            <p th:text="${house.state}"/>
-            <p th:text="${house.zipcode}"/>
 
-        </div>
-    </div>
+<h1>Houses</h1>
+<div class="multiAddress" th:each="house : ${houses}">
+    <p class="address" th:text="${house.address}" />
+    <p class="city" th:text="${house.city}" />
+    <p th:text="${house.description}" />
+    <p class="state" th:text="${house.state}" />
+    <p th:text="${house.zipcode}" />
+
+    <a th:href="@{/houses/{id}(id=${house.id})}" class="btn btn-primary">More Details</a>
+
 
 </div>
 <!--mapbox here-->
-<div id='map' style='width: 800px; height: 800px;' class=""></div>
+<div id='map2' style='width: 800px; height: 800px;' class=""></div>
 <!--    end of map box-->
-
 
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
+<script>
+
+    /// making the map and centering it on SA
+
+    mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+    const map2 = new mapboxgl.Map({
+        container: 'map2', // container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // style URL
+        center: [-98.4936, 29.4241], // starting position [lng, lat]
+        zoom: 8.7 // starting zoom. This zoom covers 1604 loop
+    });
+
+
+    //plotting all markers
+function plotMarkers () {
+    var allMarkers = [];
+    $('.multiAddress').each(function (){
+        var adressMulti, cityMulti, stateMulti;
+        adressMulti = $(this).children('.address').first().text();
+        cityMulti = $(this).children('.city').first().text();
+       stateMulti = $(this).children('.state').first().text();
+        var address = adressMulti+" "+ cityMulti+" "+stateMulti;
+        allMarkers.push({address});
+    });
+    $('document').ready(function(){
+        var setMarkers = $("address").val();
+    allMarkers.forEach(function (houseMarker){
+        geocode(houseMarker.address,MAPBOX_ACCESS_TOKEN).then(function (results){
+            console.log(results)
+            var lngLat = {
+                lng: results[0],
+                lat: results[1]
+            };
+            var marker = new mapboxgl.Marker ()
+            .setLngLat(lngLat)
+                .addTo(map2);
+        })
+    })
+    });
+    console.log(allMarkers);
+}
+    plotMarkers();
+</script>
 </body>
 </html>

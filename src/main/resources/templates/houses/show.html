@@ -4,11 +4,11 @@
 <head>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css' rel='stylesheet'/>
-
 </head>
 
 
 <body>
+
 <nav th:replace="partials/navbar.html :: navbar"></nav>
 
 <div>
@@ -36,6 +36,7 @@
 <!--        <img th:each="image : ${house.images}" th:src="${image.imageUrl}" alt="House Picture 2">-->
 <!--    </div>-->
 
+
     <div th:if="${isHouseOwner}">
         <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>
         <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post">
@@ -51,6 +52,7 @@
 <!--mapbox end-->
 <footer th:replace="partials/footer.html :: footer"></footer>
 <div th:replace="partials/scripts.html :: scripts"></div>
+<script src="/map.js"></script>
 </body>
 
 </html>
