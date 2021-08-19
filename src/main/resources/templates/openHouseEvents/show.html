@@ -6,20 +6,23 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
-<h1>Single Event Listing</h1>
 <div>
-    <p id="houseAddress">Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
-    <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
-    <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
-    <p>Listing agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></p>
-
-    <div th:if="${isEventCreator}">
+    <div class="card border border-dark mb-1">
+        <div class="card-header text-dark text-center">
+    <h4 id="houseAddress"><span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></h4>
+    </div>
+        <div class="card-body text-dark text-center">
+    <p>Start Time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" /></p>
+    <p>End Time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" /></p>
+    <p>Listing Agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></p>
+    </div>
+    <div class="text-center" th:if="${isEventCreator}">
         <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Edit</a>
         <a th:href="@{/events/delete/{id}(id=${openHouseEvent.id})}" class="btn btn-danger">Delete</a>
     </div>
 
     <a th:if="${!isEventCreator}" th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Apply</a>
-
+    </div>
     <!--mapbox here-->
     <div id='map' style='width: 400px; height: 300px;' class=""></div>
     <!--    end of map box-->
