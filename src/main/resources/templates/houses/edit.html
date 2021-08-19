@@ -9,34 +9,63 @@
         <div class="form-group">
             <label for="address">Address</label>
             <input id="address" name="address" type="text" class="form-control" th:field="*{address}"/>
-            <p th:if = "${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
         </div>
         <div class="form-group">
             <label for="city">City</label>
             <input id="city" name="city" type="text" class="form-control" th:field="*{city}"/>
-            <p th:if = "${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
         </div>
         <div class="form-group">
             <label for="state">State</label>
             <select name="state" id="state">
-                <option th:each="state: ${states}" th:value="${state}" th:text="${state}" th:if="${house.state == state}" selected></option>
-                <option th:each="state: ${states}" th:value="${state}" th:text="${state}" th:unless="${house.state == state}"></option>
+                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"
+                        th:if="${house.state == state}" selected></option>
+                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"
+                        th:unless="${house.state == state}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="zipcode">Zipcode</label>
             <input id="zipcode" name="zipcode" type="text" class="form-control" th:field="*{zipcode}"/>
-            <p th:if = "${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
+            <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"></textarea>
-            <p th:if = "${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+            <textarea id="description" name="description" class="materialize-textarea form-control"
+                      th:field="*{description}"></textarea>
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
-        <input type="submit" value="Edit listing" class="btn btn-block btn-info" />
+
+        <div>
+            <h6>Upload a new picture:</h6>
+        </div>
+        <div class="form-group">
+            <input th:field="*{image_url}" type="hidden" class="form-control" id="image_url">
+        </div>
+        <div class="form-group">
+            <label for="filestack">Upload House Picture</label>
+            <button id="filestack" type="button">Select Image</button>
+        </div>
+        <input type="submit" value="Save Changes" class="btn btn-block btn-info"/>
     </form>
+
+    <div>
+        <h6> Here is your current house:</h6>
+        <div class="col-4 ">
+            <img th:src="${house.image_url}" alt="House Picture">
+        </div>
+    </div>
+    <div>
+        <form th:action="@{/houses/delete/{id}/image (id = ${house.id})}" th:object="${house}" method="post">
+            <input type="submit" class="btn btn-primary" value="Delete House Image"/>
+        </form>
+    </div>
+
+
 </div>
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 </body>
 </html>

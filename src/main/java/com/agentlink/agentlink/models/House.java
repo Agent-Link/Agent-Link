@@ -2,6 +2,7 @@ package com.agentlink.agentlink.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,6 +36,12 @@ public class House {
     @Size(max = 500, message = "Max size 500 chars")
     private String description;
 
+    @Column(length = 255)
+    private String image_url;
+
+    @OneToMany(mappedBy = "house")
+    private List<HouseImage> images = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "listing_agent_id")
     private User user;
@@ -55,13 +62,27 @@ public class House {
         this.user = user;
     }
 
-    public House(long id, String address, String city, String state, String zipcode, String description, User user, List<OpenHouseEvent> openHouseEvents) {
+    public House(long id, String address, String city, String state, String zipcode, String description, String image_url, List<HouseImage> images, User user, List<OpenHouseEvent> openHouseEvents) {
         this.id = id;
         this.address = address;
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
         this.description = description;
+        this.image_url = image_url;
+        this.images = images;
+        this.user = user;
+        this.openHouseEvents = openHouseEvents;
+    }
+
+    public House(String address, String city, String state, String zipcode, String description, String image_url, List<HouseImage> images, User user, List<OpenHouseEvent> openHouseEvents) {
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+        this.description = description;
+        this.image_url = image_url;
+        this.images = images;
         this.user = user;
         this.openHouseEvents = openHouseEvents;
     }
@@ -128,5 +149,21 @@ public class House {
 
     public void setOpenHouseEvents(List<OpenHouseEvent> openHouseEvents) {
         this.openHouseEvents = openHouseEvents;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public List<HouseImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<HouseImage> images) {
+        this.images = images;
     }
 }
