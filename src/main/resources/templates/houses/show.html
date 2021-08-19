@@ -28,13 +28,13 @@
     <div id='map' style='width: 400px; height: 300px;' class=""></div>
     <!--    end of map box-->
 
-    <div class="col-4 " >
-        <img  th:text="${house.image_url}" th:src="${house.image_url}" alt="House Picture">
+    <div th:if="${house.image_url != null}" class="col-4">
+        <img th:src="${house.image_url}" alt="House Picture">
     </div>
 
-    <div>
-        <img th:each="image : ${house.images}" th:src="${image.imageUrl}" alt="House Picture 2">
-    </div>
+<!--    <div>-->
+<!--        <img th:each="image : ${house.images}" th:src="${image.imageUrl}" alt="House Picture 2">-->
+<!--    </div>-->
 
     <div th:if="${isHouseOwner}">
         <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>
