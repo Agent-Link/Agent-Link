@@ -10,15 +10,15 @@
 
 <body>
 <nav th:replace="partials/navbar.html :: navbar"></nav>
-<h1 class="text-center" >Single House Listing</h1>
+
 <div>
     <div class="card border border-dark mb-1" style="width: auto;">
             <div class="card-header">
-                 <h6 id="houseAddress" th:text="${house.address}"></h6>
+                 <h4 id="houseAddress" class="text-center" th:text="${house.address}"></h4>
             </div>
-        <div class="card-body text-dark">
+        <div class="card-body text-dark text-center">
+            <p th:text="${house.description}"></p>
     <p id="houseCity" th:text="${house.city}"></p>
-    <p th:text="${house.description}"></p>
     <p id="houseState" th:text="${house.state}"></p>
     <p id="houseZipcode" th:text="${house.zipcode}"></p>
         </div>
