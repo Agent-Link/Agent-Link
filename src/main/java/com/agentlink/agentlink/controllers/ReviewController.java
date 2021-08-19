@@ -57,9 +57,10 @@ public class ReviewController {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         OpenHouseEvent openHouseEvent = openhouseDao.getById(eventId);
 
-        // This verifies that the current user should have permission to leave a review on the host of the event
-        if(openHouseEvent.getHouse().getUser().getId() == currentUser.getId() && new Date().after(openHouseEvent.getDateEnd()) && reviewsDao.findReviewWhere(eventId) == null) {
+        // This verifies that the current user should have permission to leave a review on the host of the event and that they're not able to review themselves if they were host
+        if(openHouseEvent.getHouse().getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEvent.getUser().getId() && new Date().after(openHouseEvent.getDateEnd()) && openHouseEvent.getReview() == null) {
             User buyingAgent = openhouseDao.getById(eventId).getUser();
+            openHouseEvent.setReview(review);
             review.setOpenHouseEvent(openHouseEvent);
             review.setListingUser(currentUser);
             review.setBuyingUser(buyingAgent);
