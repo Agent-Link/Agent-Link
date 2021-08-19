@@ -28,19 +28,20 @@
     <div id='map' style='width: 400px; height: 300px;' class=""></div>
     <!--    end of map box-->
 
+    <div class="col-4 " >
+        <img  th:text="${house.image_url}" th:src="${house.image_url}" alt="House Picture">
+    </div>
+
+    <div>
+        <img th:each="image : ${house.images}" th:src="${image.imageUrl}" alt="House Picture 2">
+    </div>
+
     <div th:if="${isHouseOwner}">
         <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>
         <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post">
             <input type="submit" class="btn btn-primary" value="Delete"/>
         </form>
     </div>
-
-    <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js">
-
-    const client = filestack.init(FILESTACK_TOKEN);
-    client.picker().open();
-
-    </script>
 </div>
 
 <!--mapbox scripts-->

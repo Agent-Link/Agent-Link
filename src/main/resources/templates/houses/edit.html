@@ -33,6 +33,10 @@
             <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"></textarea>
             <p th:if = "${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
+
+
+
+
         <input type="submit" value="Edit listing" class="btn btn-block btn-info" />
     </form>
 </div>

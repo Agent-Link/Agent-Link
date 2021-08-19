@@ -31,6 +31,16 @@
         <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"></textarea>
         <p th:if = "${#fields.hasErrors('description')}" th:errors="*{description}"></p>
     </div>
+
+    <div class="form-group">
+        <input th:field="*{image_url}" type="hidden" class="form-control" id="image_url">
+    </div>
+    <div class="form-group">
+        <label for="filestack">Upload House Picture</label>
+        <button id="filestack" type="button">Select Image</button>
+    </div>
+
+
     <input type="submit" value="Create listing" class="btn btn-block btn-info" />
 </form>
 <footer th:replace="partials/footer.html :: footer"/>
