@@ -20,15 +20,15 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        aspectRatio: 2,
-        height: 550,
+        aspectRatio: 4,
+        height: 700,
         eventSources: [
 
             // your event source
             {
                 events,
                 color: 'black',     // an option!
-                textColor: 'yellow' // an option!
+                textColor: 'black' // an option!
             }
 
             // any other event sources...
