@@ -6,47 +6,45 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
-<div>
-    <div class="card border border-dark mb-1">
-        <div class="card-header text-dark text-center">
-    <h4 id="houseAddress"><span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></h4>
+<div class="card border border-dark mb-1">
+    <div class="card-header text-dark text-center">
+        <h4 id="houseAddress"><span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></h4>
     </div>
-        <div class="card-body text-dark text-center">
-    <p>Start Time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" /></p>
-    <p>End Time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" /></p>
-    <p>Listing Agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></p>
+    <div class="card-body text-dark text-center">
+        <p>Start Time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" /></p>
+        <p>End Time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" /></p>
+        <p>Listing Agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></p>
     </div>
     <div class="text-center" th:if="${isEventCreator}">
         <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Edit</a>
         <a th:href="@{/events/delete/{id}(id=${openHouseEvent.id})}" class="btn btn-danger">Delete</a>
     </div>
-
     <a th:if="${!isEventCreator}" th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Apply</a>
+</div>
+<!--mapbox here-->
+<div id='map' style='width: 400px; height: 300px;' class=""></div>
+<!--    end of map box-->
+<div style="width: 30rem;" class="card" th:if="${isEventCreator && openHouseEvent.feedback != null}">
+    <h3>Event feedback:</h3>
+    <div class="card-body">
+        <p>Host name: <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></p>
+        <p>Feedback: <span th:text="${openHouseEvent.feedback}"/></p>
     </div>
-    <!--mapbox here-->
-    <div id='map' style='width: 400px; height: 300px;' class=""></div>
-    <!--    end of map box-->
-    <div style="width: 30rem;" class="card" th:if="${isEventCreator && openHouseEvent.feedback != null}">
-        <h3>Event feedback:</h3>
+</div>
+<div th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
+    <h3 th:if="${!applications.isEmpty()}">Applicants</h3>
+    <div style="width: 30rem;" class="card" th:each="app : ${applications}">
         <div class="card-body">
-            <p>Host name: <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></p>
-            <p>Feedback: <span th:text="${openHouseEvent.feedback}"/></p>
-        </div>
-    </div>
-    <div th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
-        <h3 th:if="${!applications.isEmpty()}">Applicants</h3>
-        <div style="width: 30rem;" class="card" th:each="app : ${applications}">
-            <div class="card-body">
-                <p>Application date: <span th:text="${app.date}"/></p>
-                <p>Applicant name: <span th:text="${app.user.firstName}"/> <span th:text="${app.user.lastName}"/></p>
-                <p>Inquiry: <span th:text="${app.inquiry}"/></p>
-                <form th:action="@{/events/apply/host/{eventId}/{userId} (eventId=${openHouseEvent.id}, userId=${app.user.id})}" method="post">
-                    <input type="submit" value="Set host" class="btn btn-primary" />
-                </form>
-            </div>
+            <p>Application date: <span th:text="${app.date}"/></p>
+            <p>Applicant name: <span th:text="${app.user.firstName}"/> <span th:text="${app.user.lastName}"/></p>
+            <p>Inquiry: <span th:text="${app.inquiry}"/></p>
+            <form th:action="@{/events/apply/host/{eventId}/{userId} (eventId=${openHouseEvent.id}, userId=${app.user.id})}" method="post">
+                <input type="submit" value="Set host" class="btn btn-primary" />
+            </form>
         </div>
     </div>
 </div>
+
 
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>

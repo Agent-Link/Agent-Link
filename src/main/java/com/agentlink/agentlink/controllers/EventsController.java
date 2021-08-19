@@ -138,12 +138,12 @@ public class EventsController {
     }
 
     @PostMapping("/event/feedback/{eventId}")
-    public String submitFeedback(@ModelAttribute OpenHouseEvent openHouseEvent, @PathVariable long eventId, @RequestParam String feedback, Model model) {
+    public String submitFeedback(@PathVariable long eventId, @RequestParam String feedback) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         OpenHouseEvent openHouseEventFromDb = openHouseEventsDao.getById(eventId);
 
-        // This verifies that the current user should have permission to leave feedback on the event
-        if(openHouseEventFromDb.getUser().getId() == currentUser.getId() && new Date().after(openHouseEventFromDb.getDateEnd()) && openHouseEventFromDb.getFeedback() == null) {
+        // This verifies that the current user should have permission to leave feedback on the event and cannot leave feedback on themself if they host the event
+        if(openHouseEventFromDb.getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEventFromDb.getHouse().getUser().getId() && new Date().after(openHouseEventFromDb.getDateEnd()) && openHouseEventFromDb.getFeedback() == null) {
             openHouseEventFromDb.setFeedback(feedback);
             openHouseEventsDao.save(openHouseEventFromDb);
         } else {
