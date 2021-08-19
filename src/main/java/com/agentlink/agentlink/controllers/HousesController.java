@@ -105,6 +105,16 @@ public class HousesController {
         return "redirect:/houses";
     }
 
+    @PostMapping("/houses/delete/{id}/image")
+    public String deleteHouseImage(@PathVariable Long id){
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        House houseFromDb = housesDao.getById(id);
+        if (currentUser.getId() == houseFromDb.getUser().getId()) {
+            houseFromDb.setImage_url(null);
+        }
+        housesDao.save(houseFromDb);
+        return "redirect:/houses";
+    }
 
 
 

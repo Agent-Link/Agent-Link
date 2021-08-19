@@ -8,6 +8,7 @@
 
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
+
 <h1>Houses</h1>
 <div class="multiAddress" th:each="house : ${houses}">
     <p class="address" th:text="${house.address}" />
@@ -17,6 +18,7 @@
     <p th:text="${house.zipcode}" />
 
     <a th:href="@{/houses/{id}(id=${house.id})}" class="btn btn-primary">More Details</a>
+
 
 </div>
 <!--mapbox here-->

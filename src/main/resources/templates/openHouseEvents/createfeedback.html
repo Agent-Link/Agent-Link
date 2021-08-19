@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Submit feedback')"/>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+<h1>Leave feedback on the event!</h1>
+<form class="container" th:action="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" method="post" th:object="${openHouseEvent}">
+
+    <h2>Event</h2>
+    <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
+    <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
+    <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
+
+    <p>Listing agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}"/></p>
+
+    <div class="rev-box form-group shadow-textarea">
+        <label class="feedback" for="feedback">Please leave a short summary of your experience</label>
+        <textarea id="feedback" class="review form-control" name="feedback"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
+</body>
+</html>

@@ -69,8 +69,6 @@ public class UserController {
         model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
         model.addAttribute("userId", user.getId());
         model.addAttribute("currentDateTime", new Date());
-        // Not sure if this is the only way/best way to check if a review exists on the profile page
-        model.addAttribute("reviewsDao", reviewsDao);
         return "users/profile";
     }
 
