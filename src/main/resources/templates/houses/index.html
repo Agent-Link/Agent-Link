@@ -25,8 +25,9 @@
 
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
-<script src="/map2.js"></script>
 <script>
+
+    /// making the map and centering it on SA
 
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
     const map2 = new mapboxgl.Map({
@@ -36,32 +37,20 @@
         zoom: 8.7 // starting zoom. This zoom covers 1604 loop
     });
 
+
+    //plotting all markers
 function plotMarkers () {
     var allMarkers = [];
     $('.multiAddress').each(function (){
         var adressMulti, cityMulti, stateMulti;
-
         adressMulti = $(this).children('.address').first().text();
         cityMulti = $(this).children('.city').first().text();
        stateMulti = $(this).children('.state').first().text();
-
         var address = adressMulti+" "+ cityMulti+" "+stateMulti;
-
         allMarkers.push({address});
-
     });
-
     $('document').ready(function(){
         var setMarkers = $("address").val();
-        // settingMarkers()
-    // function settingMarkers () {(
-    //     geocode(allMarkers,MAPBOX_ACCESS_TOKEN).then(function (results){
-    //         marker = new mapboxgl.Marker()
-    //         .setLngLat(results)
-    //         .addTo(map2);
-    //
-    //      })
-    //     )}
     allMarkers.forEach(function (houseMarker){
         geocode(houseMarker.address,MAPBOX_ACCESS_TOKEN).then(function (results){
             console.log(results)
@@ -72,22 +61,12 @@ function plotMarkers () {
             var marker = new mapboxgl.Marker ()
             .setLngLat(lngLat)
                 .addTo(map2);
-
-//test
         })
     })
     });
     console.log(allMarkers);
-
-
-// end
 }
     plotMarkers();
-
-
-
 </script>
-
-
 </body>
 </html>

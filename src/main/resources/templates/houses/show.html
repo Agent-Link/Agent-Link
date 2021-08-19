@@ -4,8 +4,6 @@
 <head>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css' rel='stylesheet'/>
-
-
 </head>
 
 
@@ -29,14 +27,12 @@
     <!--mapbox here-->
     <div id='map' style='width: 400px; height: 300px;' class=""></div>
     <!--    end of map box-->
-
     <div th:if="${isHouseOwner}">
         <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>
         <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post">
             <input type="submit" class="btn btn-primary" value="Delete"/>
         </form>
     </div>
-
 </div>
 
 <!--mapbox scripts-->
