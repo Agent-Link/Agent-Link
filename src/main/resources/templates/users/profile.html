@@ -35,9 +35,10 @@
     <div th:if="${userId == openHouseEvent.house.user.id}">
         <a th:href="@{'/events/delete/' + ${openHouseEvent.id}}" class="btn btn-danger">Delete</a>
         <a th:if="${currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{'/events/edit/' + ${openHouseEvent.id}}" class="btn btn-primary">Edit</a>
-        <a th:if="${currentDateTime.after(openHouseEvent.dateEnd) && reviewsDao.findReviewWhere(openHouseEvent.id) == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
+        <a th:if="${userId != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
     </div>
-    <a th:if="${userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
+    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+    <a th:if="${userId != openHouseEvent.house.user.id && userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
 </div>
 
 <p> <a th:href="@{/profile/edit}">Edit Your Profile</a></p>

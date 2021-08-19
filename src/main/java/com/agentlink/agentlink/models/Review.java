@@ -20,7 +20,7 @@ public class Review{
     @JoinColumn(name = "buying_agent_id")
     private User buyingUser;
 
-    @OneToOne
+    @OneToOne(mappedBy = "review")
     private OpenHouseEvent openHouseEvent;
 
     @Column(nullable = false)

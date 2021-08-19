@@ -23,6 +23,10 @@ public class OpenHouseEvent {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "openHouseEvent")
     private List<Application> applications;
 
+    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "review_id", referencedColumnName = "id")
+    private Review review;
+
     @Column(nullable = false)
     private Date dateStart;
 
@@ -35,11 +39,12 @@ public class OpenHouseEvent {
     public OpenHouseEvent() {
     }
 
-    public OpenHouseEvent(long id, House house, User user, List<Application> applications, Date dateStart, Date dateEnd, String feedback) {
+    public OpenHouseEvent(long id, House house, User user, List<Application> applications, Review review, Date dateStart, Date dateEnd, String feedback) {
         this.id = id;
         this.house = house;
         this.user = user;
         this.applications = applications;
+        this.review = review;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.feedback = feedback;
@@ -69,6 +74,21 @@ public class OpenHouseEvent {
         this.user = user;
     }
 
+    public List<Application> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
 
     public Date getDateStart() {
         return dateStart;
@@ -94,11 +114,4 @@ public class OpenHouseEvent {
         this.feedback = feedback;
     }
 
-    public List<Application> getApplications() {
-        return applications;
-    }
-
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
-    }
 }
