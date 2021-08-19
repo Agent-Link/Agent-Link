@@ -34,6 +34,17 @@
             <p th:if = "${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
 
+        <div>
+            <h6>Upload a new picture:</h6>
+        </div>
+        <div class="form-group">
+            <input th:field="*{image_url}" type="hidden" class="form-control" id="image_url">
+        </div>
+        <div class="form-group">
+            <label for="filestack">Upload House Picture</label>
+            <button id="filestack" type="button">Select Image</button>
+        </div>
+
 
 
 
