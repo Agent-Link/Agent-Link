@@ -7,12 +7,22 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
+<h6>Here are your search results for events:</h6>
 <div class="card-body" th:each="openHouseEvent : ${openHouseEventsSearch}">
     <h5 th:text="${openHouseEvent.house.address}" class="card-title"></h5>
     <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
     <p>Open House Event Day and Time</p>
     <p th:text="${openHouseEvent.dateStart}" class="card-text"></p>
     <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+</div>
+
+<h6>Here are your search results for agents:</h6>
+<div class="card-body" th:each="user : ${usersSearch}">
+    <h5 th:text="${user.username}" class="card-title"></h5>
+    <p th:text="${user.firstName}" class="card-text"></p>
+    <p th:text="${user.lastName}" class="card-text"></p>
+    <p th:text="${user.email}" class="card-text"></p>
+    <p th:text="${user.team}" class="card-text"></p>
 </div>
 
 
