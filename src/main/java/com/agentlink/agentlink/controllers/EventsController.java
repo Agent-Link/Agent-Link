@@ -75,13 +75,23 @@ public class EventsController {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
+        SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyyMMdd");
+
+
         Date startDateFormatted = simpleDateFormat.parse(startDate);
         Date endDateFormatted = simpleDateFormat.parse(endDate);
 
 
-        openHouseEvent.setDateStart(startDateFormatted);
-        openHouseEvent.setDateEnd(endDateFormatted);
-        openHouseEventsDao.save(openHouseEvent);
+        // Verifies start/end date are on the same day and that the time is set in the future and that the start time is before the end time along
+        // with checking if the user trying to create the event is actually the listing agent of the house they are trying to create an event for.
+        if (sdfYMD.format(startDateFormatted).equals(sdfYMD.format(endDateFormatted)) && startDateFormatted.after(new Date()) && startDateFormatted.before(endDateFormatted) && currentUser.getId() == openHouseEvent.getHouse().getUser().getId()) {
+            openHouseEvent.setDateStart(startDateFormatted);
+            openHouseEvent.setDateEnd(endDateFormatted);
+            openHouseEventsDao.save(openHouseEvent);
+        } else {
+            // If verification is not met redirect; we should eventually add an error message/page here
+            return "redirect:/";
+        }
         return "redirect:/events";
     }
 
@@ -104,16 +114,24 @@ public class EventsController {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
+        SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyyMMdd");
+
         Date startDateFormatted = simpleDateFormat.parse(startDate);
         Date endDateFormatted = simpleDateFormat.parse(endDate);
 
-        openHouseEvent.setDateStart(startDateFormatted);
-        openHouseEvent.setDateEnd(endDateFormatted);
-        openHouseEvent.setHouse(openHouseEventFromDb.getHouse());
         /// need to disallow editing event once it has passed
-        if (currentUser.getId() == openHouseEventFromDb.getHouse().getUser().getId()) {
+
+        // Verifies the event has not started/passed, verifies the new event start/end day are on the same day and the time is set in the future and that
+        // the start time is before the end time along with checking if the user editing the event is actually the listing agent of the event house
+        if (sdfYMD.format(startDateFormatted).equals(sdfYMD.format(endDateFormatted)) && openHouseEventFromDb.getDateStart().after(new Date()) && startDateFormatted.after(new Date()) && startDateFormatted.before(endDateFormatted) && currentUser.getId() == openHouseEventFromDb.getHouse().getUser().getId()) {
+            openHouseEvent.setDateStart(startDateFormatted);
+            openHouseEvent.setDateEnd(endDateFormatted);
+            openHouseEvent.setHouse(openHouseEventFromDb.getHouse());
             openHouseEvent.setUser(openHouseEventFromDb.getUser());
             openHouseEventsDao.save(openHouseEvent);
+        } else {
+            // If verification is not met redirect; we should eventually add an error message/page here
+            return "redirect:/";
         }
         return "redirect:/events";
     }
