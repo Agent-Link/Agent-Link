@@ -13,7 +13,7 @@
     <div class="card-body text-dark text-center">
         <p>Start Time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" /></p>
         <p>End Time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" /></p>
-        <p>Listing Agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></p>
+        <p>Listing Agent: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"><span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></a></p>
     </div>
     <div class="text-center" th:if="${isEventCreator}">
         <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Edit</a>
@@ -35,7 +35,7 @@
     <h3 th:if="${!applications.isEmpty()}">Applicants</h3>
     <div style="width: 30rem;" class="card" th:each="app : ${applications}">
         <div class="card-body">
-            <p>Application date: <span th:text="${app.date}"/></p>
+            <p>Application date: <span th:text="${#dates.format(app.date, 'MMM-dd-yyyy h:mm a')}"/></p>
             <p>Applicant name: <span th:text="${app.user.firstName}"/> <span th:text="${app.user.lastName}"/></p>
             <p>Inquiry: <span th:text="${app.inquiry}"/></p>
             <form th:action="@{/events/apply/host/{eventId}/{userId} (eventId=${openHouseEvent.id}, userId=${app.user.id})}" method="post">
