@@ -72,6 +72,13 @@ public class UserController {
         return "users/profile";
     }
 
+    @GetMapping("/profile/{id}")
+    public String userProfileInfo(@PathVariable long id, Model model){
+        User user = usersDao.getById(id);
+        model.addAttribute("user", user);
+        return "users/agentInfo";
+    }
+
     //This code allows users to edit their profile.
     @GetMapping("/profile/edit")
     public String editUserProfile(Model model) {

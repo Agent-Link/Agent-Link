@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Agent Info')"/>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+
+<div>
+    <div class="card border border-dark mb-1">
+        <div class="card-header text-dark text-center">
+            <h3 id="profileName"><span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/></h3>
+        </div>
+        <div class="card-body text-dark text-center">
+            <h5>Contact Info</h5>
+            <p>Email: <span th:text="${user.email}"/></p>
+            <p> Phone Number: <span th:text="${user.phone}"/></p>
+            <p>Agent Team: <span th:text="${user.team}"/></p>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+<th:block th:include="partials/scripts.html :: scripts"></th:block>
+</body>
+<footer th:replace="partials/footer.html :: footer"></footer>
+</html>
