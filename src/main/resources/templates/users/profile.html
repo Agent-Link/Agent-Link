@@ -12,20 +12,18 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 <h2 th:if="${!houses.isEmpty()}">Here are your Houses:</h2>
-<div class="card-body" th:each="house : ${houses}">
+<div class="card-body" th:each="house : ${houses}" th:if="${house.isListingActive() == true}">
     <h5 class="card-title"><a th:href="@{/houses/{id}(id=${house.id})}"><span th:text="${house.address}"></span></a></h5>
     <p th:text="${house.description}" class="card-text"></p>
     <a th:href="@{'/houses/edit/' + ${house.id}}" class="btn btn-primary">Edit</a>
-    <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post">
-        <input type="submit" class="btn btn-danger" value="Delete"/>
+    <form th:action="@{/houses/deactivate/{id}(id=${house.id})}" method="post">
+        <input type="submit" class="btn btn-danger" value="Deactivate"/>
     </form>
 </div>
 
 <h2 th:if="${!openHouseEvents.isEmpty()}">Here are your Open House Events:</h2>
 <div class="card-body event" th:each="openHouseEvent : ${openHouseEvents}" th:if="${userId == openHouseEvent.house.user.id || userId == openHouseEvent.user.id}">
-
-    <h5 class="card-title event-title"><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span
-            th:text="${openHouseEvent.house.address}"></span></a></h5>
+    <h5 class="card-title event-title"><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span th:text="${openHouseEvent.house.address}"></span></a></h5>
     <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
     <p>Open House Event Day and Time</p>
     <p th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
