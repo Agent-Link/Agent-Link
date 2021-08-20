@@ -65,7 +65,7 @@ public class UserController {
     @GetMapping("/profile")
     public String userProfile(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("houses", housesDao.findAllByUser(user)); //This produces all user houses on their profile
+        model.addAttribute("houses", housesDao.findAllByUserAndListingActive(user, true)); //This produces all active user houses on their profile
         model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
         model.addAttribute("userId", user.getId());
         model.addAttribute("currentDateTime", new Date());
