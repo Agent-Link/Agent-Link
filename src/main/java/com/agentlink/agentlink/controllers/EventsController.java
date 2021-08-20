@@ -61,7 +61,7 @@ public class EventsController {
     @GetMapping("/events/create")
     public String createEventForm(Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<House> houses = housesDao.findByUser(currentUser);
+        List<House> houses = housesDao.findAllByUserAndListingActive(currentUser, true);
 
         model.addAttribute("houses", houses);
         model.addAttribute("openHouseEvent", new OpenHouseEvent());
