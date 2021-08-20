@@ -69,7 +69,7 @@ public class EventsController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate) throws ParseException {
+    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate, @RequestParam Long house) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         openHouseEvent.setUser(currentUser);
 
@@ -77,10 +77,20 @@ public class EventsController {
 
         SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyyMMdd");
 
+        House selectedHouse = housesDao.getById(house);
+
+        List<OpenHouseEvent> houseEventList = selectedHouse.getOpenHouseEvents();
 
         Date startDateFormatted = simpleDateFormat.parse(startDate);
         Date endDateFormatted = simpleDateFormat.parse(endDate);
-
+        // Checks for existing events on a house for the input start date, if an event already exists you will be redirected.
+        if (houseEventList != null) {
+            for (OpenHouseEvent event : houseEventList) {
+                if (sdfYMD.format(event.getDateStart()).equals(sdfYMD.format(startDateFormatted))) {
+                    return "redirect:/";
+                }
+            }
+        }
 
         // Verifies start/end date are on the same day and that the time is set in the future and that the start time is before the end time along
         // with checking if the user trying to create the event is actually the listing agent of the house they are trying to create an event for.
@@ -118,6 +128,20 @@ public class EventsController {
 
         Date startDateFormatted = simpleDateFormat.parse(startDate);
         Date endDateFormatted = simpleDateFormat.parse(endDate);
+
+//        Need to test and probably refactor this code to be properly implemented on edit. This will probably currently have an issue with the current date selected if you're just trying to change the time
+        // Checks for existing events on a house for the input start date, if an event already exists you will be redirected.
+//        House selectedHouse = housesDao.getById(openHouseEventFromDb.getHouse().getId());
+//
+//        List<OpenHouseEvent> houseEventList = selectedHouse.getOpenHouseEvents();
+//
+//        if (houseEventList != null) {
+//            for (OpenHouseEvent event : houseEventList) {
+//                if (sdfYMD.format(event.getDateStart()).equals(sdfYMD.format(startDateFormatted))) {
+//                    return "redirect:/";
+//                }
+//            }
+//        }
 
         /// need to disallow editing event once it has passed
 
