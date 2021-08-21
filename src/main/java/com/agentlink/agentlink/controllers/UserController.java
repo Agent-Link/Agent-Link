@@ -2,6 +2,7 @@ package com.agentlink.agentlink.controllers;
 
 import com.agentlink.agentlink.models.House;
 import com.agentlink.agentlink.models.OpenHouseEvent;
+import com.agentlink.agentlink.models.Review;
 import com.agentlink.agentlink.models.User;
 import com.agentlink.agentlink.repositories.HouseRepository;
 import com.agentlink.agentlink.repositories.OpenHouseEventRepository;
@@ -75,6 +76,7 @@ public class UserController {
     @GetMapping("/profile/{id}")
     public String userProfileInfo(@PathVariable long id, Model model){
         User user = usersDao.getById(id);
+        List<Review> reviewRatings = reviewsDao.findAllByUser(user);
         model.addAttribute("user", user);
         return "users/agentInfo";
     }
