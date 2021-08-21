@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<nav th:replace="partials/navbar.html :: navbar"/>
 
 <div class="form">
     <div>Edit Profile Info</div>
@@ -28,9 +29,10 @@
         </div>
         <button class="btn btn-primary" type="submit">Submit Changes</button>
         <p>Want to change your password?</p>
-        <p> <a th:href="@{/users/editPassword}">Change Account Password</a></p>
+        <p><a th:href="@{/users/editPassword}">Change Account Password</a></p>
     </form>
 </div>
-
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
