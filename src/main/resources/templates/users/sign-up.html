@@ -18,35 +18,35 @@
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="email">Email</label>
-                            <input class="form-control" id="email" th:field="*{email}" placeholder="Enter Email"/>
+                            <input class="form-control" id="email" th:field="*{email}" placeholder="AgentTony@KellerWilliams.com"/>
                             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="signUpPassword">Password</label>
                             <input class="form-control" id="signUpPassword" name="signUpPassword" type="password"
-                                   th:field="*{password}"/>
+                                   th:field="*{password}" placeholder="Password"/>
                             <!--The th:field should still take password if they match. -->
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="signUpPassword-confirm">Confirm Password</label>
                             <input class="form-control" id="signUpPassword-confirm" name="signUpPasswordConfirm"
-                                   type="password"/>
+                                   type="password" placeholder="Confirm Password"/>
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="firstName">First Name</label>
-                            <input class="form-control" id="firstName" th:field="*{firstName}"/>
+                            <input class="form-control" id="firstName" th:field="*{firstName}" placeholder="First Name"/>
                             <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="lastName">Last Name</label>
-                            <input class="form-control" id="lastName" th:field="*{lastName}"/>
+                            <input class="form-control" id="lastName" th:field="*{lastName}" placeholder="Last Name"/>
                             <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="team">Team Name</label>
-                            <input class="form-control" id="team" th:field="*{team}"/>
+                            <input class="form-control" id="team" th:field="*{team}" placeholder="ReMax, Century 21, Keller Williams etc."/>
                             <p th:if="${#fields.hasErrors('team')}" th:errors="*{team}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
@@ -55,7 +55,7 @@
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="phone">Phone Number</label>
-                            <input class="form-control" id="phone" th:field="*{phone}"/>
+                            <input class="form-control" id="phone" th:field="*{phone}" placeholder="5123273070"/>
                             <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
                         </div>
                         <div class="form-group">
