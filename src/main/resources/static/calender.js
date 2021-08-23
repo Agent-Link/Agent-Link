@@ -15,8 +15,8 @@ $('.event').each(function (i){
 });
 console.log(events);
 
+const render = ()=>{
 
-document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -43,7 +43,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     calendar.render();
+
+}
+document.addEventListener('DOMContentLoaded', function() {
+    render();
 });
+
+document.getElementById("calendars").addEventListener("click", render);
 
 
 
