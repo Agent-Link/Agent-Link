@@ -3,67 +3,81 @@
 <head th:replace="partials/head :: head('Edit listing')"/>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
-<h1>Edit your house listing!</h1>
-<div>
-    <form class="container" th:action="@{/houses/edit/{id} (id = ${house.id})}" th:object="${house}" method="post">
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input id="address" name="address" type="text" class="form-control" th:field="*{address}"/>
-            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
-        </div>
-        <div class="form-group">
-            <label for="city">City</label>
-            <input id="city" name="city" type="text" class="form-control" th:field="*{city}"/>
-            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
-        </div>
-        <div class="form-group">
-            <label for="state">State</label>
-            <select name="state" id="state">
-                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"
-                        th:if="${house.state == state}" selected></option>
-                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"
-                        th:unless="${house.state == state}"></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="zipcode">Zipcode</label>
-            <input id="zipcode" name="zipcode" type="text" class="form-control" th:field="*{zipcode}"/>
-            <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" class="materialize-textarea form-control"
-                      th:field="*{description}"></textarea>
-            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-        </div>
 
-        <div>
-            <h6>Upload a new picture:</h6>
-        </div>
-        <div class="form-group">
-            <input th:field="*{image_url}" type="hidden" class="form-control" id="image_url">
-        </div>
-        <div class="form-group">
-            <label for="filestack">Upload House Picture</label>
-            <button id="filestack" type="button">Select Image</button>
-        </div>
-        <input type="submit" value="Save Changes" class="btn btn-block btn-info"/>
-    </form>
 
-    <div>
-        <h6> Here is your current house:</h6>
-        <div class="col-4 ">
-            <img th:src="${house.image_url}" alt="House Picture">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="edit-form">
+                <form class="mt-5 border p-4 bg-light shadow" th:action="@{/houses/edit/{id} (id = ${house.id})}"
+                      th:object="${house}" method="post">
+                    <div class="row">
+                        <h4 class="mb-5 text-secondary">Edit Your House</h4>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="address">Address</label>
+                            <input id="address" name="address" type="text" class="form-control" th:field="*{address}"/>
+                            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="city">City</label>
+                            <input id="city" name="city" type="text" class="form-control" th:field="*{city}"/>
+                            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="state">State</label>
+                            <br>
+                            <select name="state" id="state">
+                                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"
+                                        th:if="${house.state == state}" selected></option>
+                                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"
+                                        th:unless="${house.state == state}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="zipcode">Zipcode</label>
+                            <input id="zipcode" name="zipcode" type="text" class="form-control" th:field="*{zipcode}"/>
+                            <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" class="materialize-textarea form-control"
+                                      th:field="*{description}"></textarea>
+                            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                        </div>
+
+                        <div class="mb-3 col-md-12 form-group">
+                            <input th:field="*{image_url}" type="hidden" class="form-control" id="image_url">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="filestack">Upload New House Picture</label>
+                            <button id="filestack" type="button">Select Image</button>
+                        </div>
+                        <br>
+                        <div class="mb-3 col-md-12 form-group">
+                            <input type="submit" value="Save Changes" class="btn btn-block btn-info mt-2"/>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <h6> Here is your current house:</h6>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <img th:src="${house.image_url}" width="100%" height="100%"
+                                 alt="House Picture">
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <form th:action="@{/houses/delete/{id}/image (id = ${house.id})}"
+                                  th:object="${house}"
+                                  method="post">
+                                <input type="submit" class="btn btn-danger" value="Delete House Image"/>
+                            </form>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div>
-        <form th:action="@{/houses/delete/{id}/image (id = ${house.id})}" th:object="${house}" method="post">
-            <input type="submit" class="btn btn-primary" value="Delete House Image"/>
-        </form>
-    </div>
-
-
 </div>
+
+
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
