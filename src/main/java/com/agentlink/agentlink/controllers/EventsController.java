@@ -43,30 +43,27 @@ public class EventsController {
 
     @GetMapping("/events/{id}")
     public String singleEvent(@PathVariable long id, Model model){
-        // this current user check causes an error when trying to visit this page while not logged in.
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
-
-        boolean isEventCreator = false;
+        model.addAttribute("openHouseEvent", openHouseEvent);
+        boolean isEventCreator;
         boolean hasNotApplied = true;
-        boolean isMember = false;
-        List<Application> applications = applicationsDao.findApplicationsByOpenHouseEventId(id);
+        User currentUser;
 
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             isEventCreator = currentUser.getId() == openHouseEvent.getHouse().getUser().getId();
-            isMember = true;
+        } else {
+            return "openHouseEvents/show";
         }
 
+        List<Application> applications = applicationsDao.findApplicationsByOpenHouseEventId(id);
         for (Application application : applications) {
             if (application.getUser().getId() == currentUser.getId()) {
                 hasNotApplied = false;
                 break;
             }
         }
-        model.addAttribute("isMember", isMember);
         model.addAttribute("applications", applications);
-        model.addAttribute("openHouseEvent", openHouseEvent);
         model.addAttribute("isEventCreator", isEventCreator);
         model.addAttribute("hasNotApplied", hasNotApplied);
         model.addAttribute("currentDateTime", new Date());
@@ -175,10 +172,14 @@ public class EventsController {
         return "redirect:/events";
     }
 
-    @GetMapping("/events/delete/{id}")
-    public String deleteEvent(@PathVariable("id") long id, Model model) {
+    @PostMapping("/events/delete/{id}")
+    public String deleteEvent(@PathVariable long id) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
-        openHouseEventsDao.delete(openHouseEvent);
+        // Verifies the current user is the event creator and that the event has not started/passed.
+        if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId() && openHouseEvent.getDateStart().after(new Date())) {
+            openHouseEventsDao.delete(openHouseEvent);
+        }
         return "redirect:/events";
     }
 
