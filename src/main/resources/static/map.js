@@ -37,7 +37,7 @@ var popup = new mapboxgl.Popup()
 marker.setPopup(popup);
 
 // for a single house, a map search for info that is compared to lng lat for the mapbox api
-geocode(singleHouseAddress +" "+singleHouseCity, MAPBOX_ACCESS_TOKEN).then(function (info) {
+geocode(singleHouseAddress +" "+singleHouseCity+" "+singleHouseZipcode, MAPBOX_ACCESS_TOKEN).then(function (info) {
     console.log(info)
     var singleHouseMarker1 = {
         lng: info[0],
