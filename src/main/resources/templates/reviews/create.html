@@ -14,8 +14,8 @@
 <!--        </div>-->
 
         <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
-        <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
-        <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
+        <p>Start time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"/></p>
+        <p>End time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" /></p>
 
         <p>Event host: <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></p>
 
