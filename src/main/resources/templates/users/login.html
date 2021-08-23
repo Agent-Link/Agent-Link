@@ -9,7 +9,7 @@
 <div class="row justify-content-center">
     <div class="col-4 justify-content-center">
         <main class="form-signin">
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/login}" method="post" class="mt-5 border p-4 bg-light shadow">
                 <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="AGENT-LINK LOGO HERE" width="72" height="57">
                 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
                 <div th:if="${param.error}">
