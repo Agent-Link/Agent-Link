@@ -19,7 +19,7 @@
         <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Edit</a>
         <a th:href="@{/events/delete/{id}(id=${openHouseEvent.id})}" class="btn btn-danger">Delete</a>
     </div>
-    <a th:if="${!isEventCreator}" th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Apply</a>
+    <a th:if="${!isEventCreator && hasNotApplied && isMember && currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Apply</a>
 </div>
 <!--mapbox here-->
 <div id='map' style='width: 400px; height: 300px;' class=""></div>
