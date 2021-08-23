@@ -14,6 +14,7 @@
             <p>Email: <span th:text="${user.email}"/></p>
             <p> Phone Number: <span th:text="${user.phone}"/></p>
             <p>Agent Team: <span th:text="${user.team}"/></p>
+            <p th:if="${hasReviews}">Agent Rating: <span th:text="${userRating}"/> out of 5 </p>
 
         </div>
     </div>
