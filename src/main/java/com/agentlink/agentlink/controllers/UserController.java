@@ -81,7 +81,6 @@ public class UserController {
     @GetMapping("/profile/{id}")
     public String userProfileInfo(@PathVariable long id, Model model) {
         User user = usersDao.getById(id);
-        List<Review> reviewRatings = reviewsDao.findAllByUser(user);
         model.addAttribute("user", user);
         return "users/agentInfo";
     }
