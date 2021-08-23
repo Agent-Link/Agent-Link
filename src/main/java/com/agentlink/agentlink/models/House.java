@@ -42,9 +42,6 @@ public class House {
     @Column(length = 255)
     private String image_url;
 
-    @OneToMany(mappedBy = "house")
-    private List<HouseImage> images = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name = "listing_agent_id")
     private User user;
@@ -66,7 +63,7 @@ public class House {
 //        this.user = user;
 //    }
 
-    public House(long id, String address, String city, String state, String zipcode, String description, boolean listingActive, String image_url, List<HouseImage> images, User user, List<OpenHouseEvent> openHouseEvents) {
+    public House(long id, String address, String city, String state, String zipcode, String description, boolean listingActive, String image_url, User user, List<OpenHouseEvent> openHouseEvents) {
         this.id = id;
         this.address = address;
         this.city = city;
@@ -75,12 +72,11 @@ public class House {
         this.description = description;
         this.listingActive = listingActive;
         this.image_url = image_url;
-        this.images = images;
         this.user = user;
         this.openHouseEvents = openHouseEvents;
     }
 
-    public House(String address, String city, String state, String zipcode, String description, boolean listingActive, String image_url, List<HouseImage> images, User user, List<OpenHouseEvent> openHouseEvents) {
+    public House(String address, String city, String state, String zipcode, String description, boolean listingActive, String image_url, User user, List<OpenHouseEvent> openHouseEvents) {
         this.address = address;
         this.city = city;
         this.state = state;
@@ -88,7 +84,6 @@ public class House {
         this.description = description;
         this.listingActive = listingActive;
         this.image_url = image_url;
-        this.images = images;
         this.user = user;
         this.openHouseEvents = openHouseEvents;
     }
@@ -173,11 +168,4 @@ public class House {
         this.image_url = image_url;
     }
 
-    public List<HouseImage> getImages() {
-        return images;
-    }
-
-    public void setImages(List<HouseImage> images) {
-        this.images = images;
-    }
 }
