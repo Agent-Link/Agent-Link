@@ -36,6 +36,9 @@ public class House {
     @Size(max = 500, message = "Max size 500 chars")
     private String description;
 
+    @Column
+    private boolean listingActive = true;
+
     @Column(length = 255)
     private String image_url;
 
@@ -52,35 +55,38 @@ public class House {
     public House() {
     }
 
-    public House(long id, String address, String city, String state, String zipcode, String description, User user) {
-        this.id = id;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zipcode = zipcode;
-        this.description = description;
-        this.user = user;
-    }
+//    public House(long id, String address, String city, String state, String zipcode, String description, boolean listingActive, User user) {
+//        this.id = id;
+//        this.address = address;
+//        this.city = city;
+//        this.state = state;
+//        this.zipcode = zipcode;
+//        this.description = description;
+//        this.listingActive = listingActive;
+//        this.user = user;
+//    }
 
-    public House(long id, String address, String city, String state, String zipcode, String description, String image_url, List<HouseImage> images, User user, List<OpenHouseEvent> openHouseEvents) {
+    public House(long id, String address, String city, String state, String zipcode, String description, boolean listingActive, String image_url, List<HouseImage> images, User user, List<OpenHouseEvent> openHouseEvents) {
         this.id = id;
         this.address = address;
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
         this.description = description;
+        this.listingActive = listingActive;
         this.image_url = image_url;
         this.images = images;
         this.user = user;
         this.openHouseEvents = openHouseEvents;
     }
 
-    public House(String address, String city, String state, String zipcode, String description, String image_url, List<HouseImage> images, User user, List<OpenHouseEvent> openHouseEvents) {
+    public House(String address, String city, String state, String zipcode, String description, boolean listingActive, String image_url, List<HouseImage> images, User user, List<OpenHouseEvent> openHouseEvents) {
         this.address = address;
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
         this.description = description;
+        this.listingActive = listingActive;
         this.image_url = image_url;
         this.images = images;
         this.user = user;
@@ -133,6 +139,14 @@ public class House {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isListingActive() {
+        return listingActive;
+    }
+
+    public void setListingActive(boolean listingActive) {
+        this.listingActive = listingActive;
     }
 
     public User getUser() {

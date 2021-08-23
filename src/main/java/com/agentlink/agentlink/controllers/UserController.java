@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public String saveUser(@Valid @ModelAttribute User user, BindingResult result, @RequestParam(defaultValue = "false") boolean isListingAgent) {
+    public String saveUser(@Valid @ModelAttribute User user, BindingResult result, @RequestParam(defaultValue = "false") boolean isListingAgent, @RequestParam String signUpPasswordConfirm) {
         String hash = passwordEncoder.encode(user.getPassword());
         if (usersDao.existsByEmail(user.getEmail())) {
             result.rejectValue("email", "user.email", "This email already exists");
@@ -52,6 +52,11 @@ public class UserController {
         if (usersDao.existsByUsername(user.getUsername())) {
             result.rejectValue("username", "user.username", "This username already exists");
         }
+
+        if (!signUpPasswordConfirm.equals(user.getPassword())) {
+            result.rejectValue("password", "user.password", "Passwords do not match");
+        }
+
         if (result.hasErrors()) {
             return "users/sign-up";
         }
@@ -66,7 +71,7 @@ public class UserController {
     @GetMapping("/profile")
     public String userProfile(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("houses", housesDao.findAllByUser(user)); //This produces all user houses on their profile
+        model.addAttribute("houses", housesDao.findAllByUserAndListingActive(user, true)); //This produces all active user houses on their profile
         model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
         model.addAttribute("userId", user.getId());
         model.addAttribute("currentDateTime", new Date());
@@ -74,7 +79,7 @@ public class UserController {
     }
 
     @GetMapping("/profile/{id}")
-    public String userProfileInfo(@PathVariable long id, Model model){
+    public String userProfileInfo(@PathVariable long id, Model model) {
         User user = usersDao.getById(id);
         List<Review> reviewRatings = reviewsDao.findAllByUser(user);
         model.addAttribute("user", user);
@@ -91,7 +96,7 @@ public class UserController {
 
     // Need to add validation to user edit
     @PostMapping("/profile/edit")
-    public String updateUser(@ModelAttribute("user") User user, Model model,  @RequestParam(defaultValue = "false") boolean isListingAgent) {
+    public String updateUser(@ModelAttribute("user") User user, Model model, @RequestParam(defaultValue = "false") boolean isListingAgent) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User updatedUser = usersDao.getById(currentUser.getId());
 
@@ -110,13 +115,13 @@ public class UserController {
 
     //EDIT PASSWORD
     @GetMapping("/users/editPassword")
-    public String showEditPassword(){
+    public String showEditPassword() {
         return "users/editPassword";
     }
 
     @PostMapping("/users/editPassword")
-    public String editPassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirm){
-        if(!confirm.equals(newPassword)){
+    public String editPassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirm) {
+        if (!confirm.equals(newPassword)) {
             return "users/editPassword";
         }
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -127,7 +132,7 @@ public class UserController {
         //String hashedPassword = passwordEncoder.encode(newPassword);
 
 //        This checks that given plaintext password matches a known hash
-        if(BCrypt.checkpw(oldPassword, user.getPassword())){
+        if (BCrypt.checkpw(oldPassword, user.getPassword())) {
             user.setPassword(hashedPassword);
             usersDao.save(user);
         }

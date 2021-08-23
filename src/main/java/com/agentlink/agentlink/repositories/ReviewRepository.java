@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query("FROM Review r WHERE r.openHouseEvent.id = :eventId")
-    Review findReviewWhere(long eventId);
     List<Review> findAllByUser(User user);
+
 }

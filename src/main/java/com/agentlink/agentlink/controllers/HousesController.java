@@ -95,6 +95,18 @@ public class HousesController {
         return "redirect:/houses/" + id;
     }
 
+    @PostMapping("/houses/deactivate/{id}")
+    public String deactivateHouse(@PathVariable Long id) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        House houseFromDb = housesDao.getById(id);
+        if (currentUser.getId() == houseFromDb.getUser().getId()) {
+            houseFromDb.setListingActive(false);
+            housesDao.save(houseFromDb);
+        }
+        return "redirect:/profile";
+    }
+
+
     @PostMapping("/houses/delete/{id}")
     public String deleteHouse(@PathVariable Long id) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

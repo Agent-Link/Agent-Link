@@ -24,7 +24,6 @@ public class OpenHouseEvent {
     private List<Application> applications;
 
     @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "review_id", referencedColumnName = "id")
     private Review review;
 
     @Column(nullable = false)

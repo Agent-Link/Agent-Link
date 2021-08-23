@@ -43,17 +43,32 @@ public class EventsController {
 
     @GetMapping("/events/{id}")
     public String singleEvent(@PathVariable long id, Model model){
+        // this current user check causes an error when trying to visit this page while not logged in.
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
-        // Create boolean to check if user has already applied to event, then use to show/not show apply button
+
         boolean isEventCreator = false;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            isEventCreator = currentUser.getId() == openHouseEvent.getHouse().getUser().getId();
-        }
+        boolean hasNotApplied = true;
+        boolean isMember = false;
         List<Application> applications = applicationsDao.findApplicationsByOpenHouseEventId(id);
+
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            isEventCreator = currentUser.getId() == openHouseEvent.getHouse().getUser().getId();
+            isMember = true;
+        }
+
+        for (Application application : applications) {
+            if (application.getUser().getId() == currentUser.getId()) {
+                hasNotApplied = false;
+                break;
+            }
+        }
+        model.addAttribute("isMember", isMember);
         model.addAttribute("applications", applications);
         model.addAttribute("openHouseEvent", openHouseEvent);
         model.addAttribute("isEventCreator", isEventCreator);
+        model.addAttribute("hasNotApplied", hasNotApplied);
         model.addAttribute("currentDateTime", new Date());
         return "openHouseEvents/show";
     }
@@ -61,7 +76,7 @@ public class EventsController {
     @GetMapping("/events/create")
     public String createEventForm(Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<House> houses = housesDao.findByUser(currentUser);
+        List<House> houses = housesDao.findAllByUserAndListingActive(currentUser, true);
 
         model.addAttribute("houses", houses);
         model.addAttribute("openHouseEvent", new OpenHouseEvent());
@@ -69,7 +84,7 @@ public class EventsController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate) throws ParseException {
+    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate, @RequestParam Long house) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         openHouseEvent.setUser(currentUser);
 
@@ -77,10 +92,20 @@ public class EventsController {
 
         SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyyMMdd");
 
+        House selectedHouse = housesDao.getById(house);
+
+        List<OpenHouseEvent> houseEventList = selectedHouse.getOpenHouseEvents();
 
         Date startDateFormatted = simpleDateFormat.parse(startDate);
         Date endDateFormatted = simpleDateFormat.parse(endDate);
-
+        // Checks for existing events on a house for the input start date, if an event already exists you will be redirected.
+        if (houseEventList != null) {
+            for (OpenHouseEvent event : houseEventList) {
+                if (sdfYMD.format(event.getDateStart()).equals(sdfYMD.format(startDateFormatted))) {
+                    return "redirect:/";
+                }
+            }
+        }
 
         // Verifies start/end date are on the same day and that the time is set in the future and that the start time is before the end time along
         // with checking if the user trying to create the event is actually the listing agent of the house they are trying to create an event for.
@@ -118,6 +143,20 @@ public class EventsController {
 
         Date startDateFormatted = simpleDateFormat.parse(startDate);
         Date endDateFormatted = simpleDateFormat.parse(endDate);
+
+//        Need to test and probably refactor this code to be properly implemented on edit. This will probably currently have an issue with the current date selected if you're just trying to change the time
+        // Checks for existing events on a house for the input start date, if an event already exists you will be redirected.
+//        House selectedHouse = housesDao.getById(openHouseEventFromDb.getHouse().getId());
+//
+//        List<OpenHouseEvent> houseEventList = selectedHouse.getOpenHouseEvents();
+//
+//        if (houseEventList != null) {
+//            for (OpenHouseEvent event : houseEventList) {
+//                if (sdfYMD.format(event.getDateStart()).equals(sdfYMD.format(startDateFormatted))) {
+//                    return "redirect:/";
+//                }
+//            }
+//        }
 
         /// need to disallow editing event once it has passed
 
