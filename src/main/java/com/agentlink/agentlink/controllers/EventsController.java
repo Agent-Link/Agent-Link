@@ -43,17 +43,32 @@ public class EventsController {
 
     @GetMapping("/events/{id}")
     public String singleEvent(@PathVariable long id, Model model){
+        // this current user check causes an error when trying to visit this page while not logged in.
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
-        // Create boolean to check if user has already applied to event, then use to show/not show apply button
+
         boolean isEventCreator = false;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            isEventCreator = currentUser.getId() == openHouseEvent.getHouse().getUser().getId();
-        }
+        boolean hasNotApplied = true;
+        boolean isMember = false;
         List<Application> applications = applicationsDao.findApplicationsByOpenHouseEventId(id);
+
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            isEventCreator = currentUser.getId() == openHouseEvent.getHouse().getUser().getId();
+            isMember = true;
+        }
+
+        for (Application application : applications) {
+            if (application.getUser().getId() == currentUser.getId()) {
+                hasNotApplied = false;
+                break;
+            }
+        }
+        model.addAttribute("isMember", isMember);
         model.addAttribute("applications", applications);
         model.addAttribute("openHouseEvent", openHouseEvent);
         model.addAttribute("isEventCreator", isEventCreator);
+        model.addAttribute("hasNotApplied", hasNotApplied);
         model.addAttribute("currentDateTime", new Date());
         return "openHouseEvents/show";
     }
