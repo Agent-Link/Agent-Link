@@ -60,7 +60,7 @@ public class ApplicationController {
             }
         }
         // Verifies that the person trying to apply is actually an user that has not applied and is also not the event creator. And that the event has not started yet.
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser" && hasNotApplied && currentUser.getId() != openHouseEvent.getUser().getId() && openHouseEvent.getDateStart().before(new Date())) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser" && hasNotApplied && currentUser.getId() != openHouseEvent.getUser().getId() && openHouseEvent.getDateStart().after(new Date())) {
             applicationsDao.save(app);
         }
         // will redirect to applicants profile or an applied to page
