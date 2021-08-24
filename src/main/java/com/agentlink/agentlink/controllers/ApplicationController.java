@@ -36,6 +36,7 @@ public class ApplicationController {
     @GetMapping("/events/apply/{openHouseId}")
     public String applicationForm(@PathVariable Long openHouseId, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("openHouseEvent", eventsDao.getById(openHouseId));
         model.addAttribute("app", new Application());
         return "applications/create";
     }

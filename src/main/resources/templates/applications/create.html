@@ -5,16 +5,17 @@
 <nav th:replace="partials/navbar.html :: navbar"/>
 
 
-<div class="container">
+<div class="container mb-4">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="signup-form">
                 <form th:action="@{/events/apply/{id} (id = ${openHouseId})}" method="post" th:object="${app}"
-                      class="mt-5 border p-4 bg-light shadow">
-                    <h4 class="mb-5 text-secondary">Create Your Account</h4>
+                      class="mt-5 border p-4 bg-light shadow text-center">
+                    <h4 class="mb-5 text-secondary">Apply for the Open Event House Event at <br>
+                        <span th:text="${openHouseEvent.house.address}"></span></h4>
                     <div class="row">
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="inquiry">Description</label>
+                            <label for="inquiry">Please leave a short description of your event application</label>
                             <textarea id="inquiry" name="inquiry" class="materialize-textarea form-control"
                                       th:field="*{inquiry}"></textarea>
                             <p th:if="${#fields.hasErrors('inquiry')}" th:errors="*{inquiry}"></p>
