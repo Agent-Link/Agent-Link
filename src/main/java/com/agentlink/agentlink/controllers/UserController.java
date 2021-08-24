@@ -81,23 +81,21 @@ public class UserController {
     @GetMapping("/profile/{id}")
     public String userProfileInfo(@PathVariable long id, Model model) {
         User user = usersDao.getById(id);
-
-        List<Review> reviewRatings = reviewsDao.findAllByBuyingUser(user);
+        model.addAttribute("user", user);
+        List<Review> reviewsList = reviewsDao.findAllByBuyingUser(user);
         boolean hasReviews = false;
-        if(!reviewRatings.isEmpty()){
+        if(!reviewsList.isEmpty()){
            hasReviews = true;
             int rating = 0;
-            int length = reviewRatings.size();
+            int length = reviewsList.size();
             int sum = 0;
-            for (Review review : reviewRatings){
+            for (Review review : reviewsList){
                 sum += review.getRating();
             }
             rating = sum / length;
             model.addAttribute("hasReviews", hasReviews);
             model.addAttribute("userRating", rating);
-            model.addAttribute("user", user);
-        }else {
-            model.addAttribute("user", user);
+            model.addAttribute("reviewsList", reviewsList);
         }
         return "users/agentInfo";
     }
