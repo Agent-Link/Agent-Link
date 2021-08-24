@@ -54,8 +54,10 @@
     <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
     <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
     <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
-    <div th:if="${userId == openHouseEvent.house.user.id}">
-        <a th:href="@{'/events/delete/' + ${openHouseEvent.id}}" class="btn btn-danger">Delete</a>
+    <div th:if="${userId == openHouseEvent.house.user.id && currentDateTime.before(openHouseEvent.dateStart)}">
+        <form th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}" method="post">
+            <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
         <a th:if="${currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{'/events/edit/' + ${openHouseEvent.id}}" class="btn btn-primary">Edit</a>
         <a th:if="${userId != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
     </div>
