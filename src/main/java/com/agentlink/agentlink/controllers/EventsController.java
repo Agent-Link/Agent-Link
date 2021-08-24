@@ -37,6 +37,7 @@ public class EventsController {
     @RequestMapping(path = "/events", method = RequestMethod.GET)
     public String getAllEvents(Model model) {
         List<OpenHouseEvent> openHouseEvents = openHouseEventsDao.findAll();
+        model.addAttribute("house", housesDao);
         model.addAttribute("openHouseEvents", openHouseEvents);
         return "openHouseEvents/index";
     }
