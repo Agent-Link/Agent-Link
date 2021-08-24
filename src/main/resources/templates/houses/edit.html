@@ -4,11 +4,11 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
-
+<!--EDIT HOUSE-->
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <div class="edit-form">
+            <div class="houseEdit-form mb-4">
                 <form class="mt-5 border p-4 bg-light shadow" th:action="@{/houses/edit/{id} (id = ${house.id})}"
                       th:object="${house}" method="post">
                     <div class="row">
