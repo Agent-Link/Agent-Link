@@ -1,5 +1,7 @@
 body{margin-top:20px;
     background:#eee;
+    min-height: 100%;
+    overflow: auto;
 }
 .single_advisor_profile {
     position: relative;
