@@ -9,8 +9,11 @@
 
 <h6>Here are your search results for events:</h6>
 <div class="card-body" th:each="openHouseEvent : ${openHouseEventsSearch}">
+    <h5>Event Address:</h5>
     <h5 th:text="${openHouseEvent.house.address}" class="card-title"></h5>
+    <h6>Event Description:</h6>
     <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
+    <h6>Event Day and Time:</h6>
     <p>Open House Event Day and Time</p>
     <p th:text="${openHouseEvent.dateStart}" class="card-text"></p>
     <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
@@ -18,10 +21,15 @@
 
 <h6>Here are your search results for agents:</h6>
 <div class="card-body" th:each="user : ${usersSearch}">
+    <h5>Username:</h5>
     <h5 th:text="${user.username}" class="card-title"></h5>
+    <h6>First Name:</h6>
     <p th:text="${user.firstName}" class="card-text"></p>
+    <h6>Last Name</h6>
     <p th:text="${user.lastName}" class="card-text"></p>
+    <h6>Email:</h6>
     <p th:text="${user.email}" class="card-text"></p>
+    <h6>Real Estate Team:</h6>
     <p th:text="${user.team}" class="card-text"></p>
 </div>
 

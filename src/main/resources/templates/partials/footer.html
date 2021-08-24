@@ -5,46 +5,47 @@
     <title>Title</title>
 </head>
 <body>
+<div class="mt-4">
+    <footer th:fragment="footer" id="footer" class="bg-dark text-center text-white"> <!--This needs to be fixed-bottom but causes map to not work-->
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://www.facebook.com/" role="button"
+                ><i class="fab fa-facebook-f"></i
+                ></a>
 
-<footer th:fragment="footer" class="bg-dark text-center text-white">
-    <!-- Grid container -->
-    <div class="container p-4 pb-0">
-        <!-- Section: Social media -->
-        <section class="mb-4">
-            <!-- Facebook -->
-            <a class="btn btn-outline-light btn-floating m-1" href="https://www.facebook.com/" role="button"
-            ><i class="fab fa-facebook-f"></i
-            ></a>
+                <!-- Twitter -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://twitter.com/" role="button"
+                ><i class="fab fa-twitter"></i
+                ></a>
 
-            <!-- Twitter -->
-            <a class="btn btn-outline-light btn-floating m-1" href="https://twitter.com/" role="button"
-            ><i class="fab fa-twitter"></i
-            ></a>
+                <!-- Instagram -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/" role="button"
+                ><i class="fab fa-instagram"></i
+                ></a>
 
-            <!-- Instagram -->
-            <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/" role="button"
-            ><i class="fab fa-instagram"></i
-            ></a>
+                <!-- Linkedin -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/" role="button"
+                ><i class="fab fa-linkedin-in"></i
+                ></a>
 
-            <!-- Linkedin -->
-            <a class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/" role="button"
-            ><i class="fab fa-linkedin-in"></i
-            ></a>
-
-            <!-- Github -->
-            <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/Agent-Link/Agent-Link" role="button"
-            ><i class="fab fa-github"></i
-            ></a>
-        </section>
-        <!-- Section: Social media -->
-    </div>
-    <!-- Grid container -->
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2021 Copyright: Agent-Link
-    </div>
-    <!-- Copyright -->
-</footer>
-
+                <!-- Github -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/Agent-Link/Agent-Link"
+                   role="button"
+                ><i class="fab fa-github"></i
+                ></a>
+            </section>
+            <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright: Agent-Link
+        </div>
+        <!-- Copyright -->
+    </footer>
+</div>
 </body>
 </html>

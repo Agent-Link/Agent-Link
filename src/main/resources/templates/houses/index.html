@@ -24,13 +24,13 @@
 
 
 <!--START OF CARD ATTEMPT-->
-<div class="container">
+<div class="container mb-4">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-8 col-lg-6">
             <!-- Section Heading-->
             <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s"
                  style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                <h3>Property <span> Listings</span></h3>
+                <h3>Property Listings</h3>
                 <p>Here are all the properties listed with Agent-Link</p>
                 <div class="line"></div>
             </div>
@@ -48,20 +48,19 @@
                 <!-- House Information-->
                 <div class="single_advisor_details_info multiAddress">
                     <a th:href="@{/houses/{id}(id=${house.id})}" class="stretched-link"></a>
-                    <h6 class="address" th:text="${house.address}">  </h6>
+                    <h6 class="address" th:text="${house.address}"></h6>
                     <p class="city" th:text="${house.city}"></p>
                     <p class="state" th:text="${house.state}"></p>
                 </div>
             </div>
         </div>
     </div>
+    <!--mapbox here-->
+    <div class="row justify-content-center mb-4">
+            <div id='map2' style='width: 80%; height: 500px;' class="d-flex"></div>
+    </div>
+    <!--    end of map box-->
 </div>
-
-
-<!--mapbox here-->
-<div id='map2' style='width: 800px; height: 800px;' class=""></div>
-<!--    end of map box-->
-
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 <script>
@@ -75,6 +74,9 @@
         center: [-98.4936, 29.4241], // starting position [lng, lat]
         zoom: 8.7 // starting zoom. This zoom covers 1604 loop
     });
+    map2.on('load', function(){
+        map2.resize;
+    })
 
 
     //plotting all markers
