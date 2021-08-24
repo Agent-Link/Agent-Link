@@ -13,7 +13,8 @@
     <div class="card-body text-dark text-center">
         <p>Start Time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" /></p>
         <p>End Time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" /></p>
-        <p>Listing Agent: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"><span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></a></p>
+        <p>Listing Agent: <a th:href="@{/profile/{id}(id=${openHouseEvent.house.user.id})}"><span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}" /></a></p>
+        <p th:if="${openHouseEvent.house.user.id != openHouseEvent.user.id}">Host name: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"><span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></a></p>
     </div>
     <div class="text-center" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
         <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">Edit</a>

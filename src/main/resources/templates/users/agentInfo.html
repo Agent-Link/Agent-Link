@@ -15,11 +15,19 @@
             <p> Phone Number: <span th:text="${user.phone}"/></p>
             <p>Agent Team: <span th:text="${user.team}"/></p>
             <p th:if="${hasReviews}">Agent Rating: <span th:text="${userRating}"/> out of 5 </p>
-
         </div>
     </div>
-
-
+    <h4>Agent reviews</h4>
+    <div th:if="${hasReviews}" th:each="review : ${reviewsList}" class="card border border-dark mb-1">
+        <div class="card-header text-dark text-center">
+            <h6>Rating: <span th:text="${review.rating}"> out of 5</span></h6>
+            <h5 th:text="${review.title}"/>
+        </div>
+        <div class="card-body text-dark text-center">
+            <p th:text="${review.description}"></p>
+            <p>Reviewed by: <span th:text="${review.listingUser.firstName}"/> <span th:text="${review.listingUser.lastName}"/></p>
+        </div>
+    </div>
 </div>
 
 
