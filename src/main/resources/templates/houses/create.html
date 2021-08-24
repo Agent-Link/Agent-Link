@@ -3,46 +3,60 @@
 <head th:replace="partials/head :: head('Create House')"/>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
-<h1>Create a listing!</h1>
-<form class="container" action="/houses/create" th:action="@{/houses/create}" method="post" th:object="${house}">
-    <div class="form-group">
-        <label for="address">Address</label>
-        <input id="address" name="address" type="text" class="form-control" th:field="*{address}"/>
-        <p th:if = "${#fields.hasErrors('address')}" th:errors="*{address}"></p>
-    </div>
-    <div class="form-group">
-        <label for="city">City</label>
-        <input id="city" name="city" type="text" class="form-control" th:field="*{city}"/>
-        <p th:if = "${#fields.hasErrors('city')}" th:errors="*{city}"></p>
-    </div>
-    <div class="form-group">
-        <label for="state">State</label>
-        <select name="state" id="state">
-            <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="zipcode">Zipcode</label>
-        <input id="zipcode" name="zipcode" type="text" class="form-control" th:field="*{zipcode}"/>
-        <p th:if = "${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
-    </div>
-    <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"></textarea>
-        <p th:if = "${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-    </div>
 
-    <div class="form-group">
-        <input th:field="*{image_url}" type="hidden" class="form-control" id="image_url">
-    </div>
-    <div class="form-group">
-        <label for="filestack">Upload House Picture</label>
-        <button id="filestack" type="button">Select Image</button>
-    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="signup-form">
+                <form th:action="@{/houses/create}" method="post" th:object="${house}"
+                      class="mt-5 border p-4 bg-light shadow">
+                    <h4 class="mb-5 text-secondary">Create A Listing</h4>
+                    <div class="row">
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="address">Address</label>
+                            <input id="address" name="address" type="text" class="form-control" th:field="*{address}"/>
+                            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="city">City</label>
+                            <input id="city" name="city" type="text" class="form-control" th:field="*{city}"/>
+                            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="state">State</label>
+                            <br>
+                            <select name="state" id="state">
+                                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="zipcode">Zipcode</label>
+                            <input id="zipcode" name="zipcode" type="text" class="form-control" th:field="*{zipcode}"/>
+                            <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" class="materialize-textarea form-control"
+                                      th:field="*{description}"></textarea>
+                            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                        </div>
 
+                        <div class="mb-3 col-md-12 form-group">
+                            <input th:field="*{image_url}" type="hidden" class="form-control" id="image_url">
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="filestack">Upload House Picture</label>
+                            <button id="filestack" type="button">Select Image</button>
+                        </div>
+                        <div class="form-group"></div>
+                        <input type="submit" value="Create listing" class="btn btn-block btn-info"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <input type="submit" value="Create listing" class="btn btn-block btn-info" />
-</form>
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
