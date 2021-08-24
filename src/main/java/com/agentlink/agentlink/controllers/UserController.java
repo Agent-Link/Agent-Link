@@ -73,30 +73,26 @@ public class UserController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = usersDao.getById(user.getId());
         List<Review> reviewRatings = reviewsDao.findAllByBuyingUser(currentUser);
-        boolean hasReviews = false;
+        boolean hasReviews;
         model.addAttribute("user", currentUser);
-        if(!reviewRatings.isEmpty()){
+        if(!reviewRatings.isEmpty()) {
             hasReviews = true;
             int rating = 0;
             int length = reviewRatings.size();
             int sum = 0;
-            for (Review review : reviewRatings){
+            for (Review review : reviewRatings) {
                 sum += review.getRating();
             }
             rating = sum / length;
             model.addAttribute("hasReviews", hasReviews);
             model.addAttribute("userRating", rating);
-
-            model.addAttribute("houses", housesDao.findAllByUserAndListingActive(user, true)); //This produces all active user houses on their profile
-            model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
-            model.addAttribute("userId", user.getId());
-            model.addAttribute("currentDateTime", new Date());
-        }else {
-            model.addAttribute("houses", housesDao.findAllByUserAndListingActive(user, true)); //This produces all active user houses on their profile
-            model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
-            model.addAttribute("userId", user.getId());
-            model.addAttribute("currentDateTime", new Date());
         }
+        model.addAttribute("houses", housesDao.findAllByUserAndListingActive(user, true)); //This produces all active user houses on their profile
+        model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
+        model.addAttribute("currentDateTime", new Date());
+        model.addAttribute("upcomingEvents", eventsDao.findAllByCreatorIdAndDateStartAfter(user.getId(), new Date()));
+        model.addAttribute("previousEvents", eventsDao.findAllByCreatorIdAndDateEndBefore(user.getId(), new Date()));
+        model.addAttribute("hostingEvents", eventsDao.findAllByHostedByUserIdAndDateStartAfter(user.getId(), new Date()));
 
 
         return "users/profile";
