@@ -1,24 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('Open House Events')"/>
+<head>
+    <link rel="stylesheet" th:href="@{/css/eventsIndexStyle.css}">
+
+</head>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
-<h1>Open House events</h1>
-<div th:each="openHouseEvent : ${openHouseEvents}">
-    <div class="card">
-        <div class="card-body">
-            <div th:if="${openHouseEvent.user == openHouseEvent.house.user}">
-                <h3 class="card-header" ><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span th:text="${openHouseEvent.house.address}"></span></a></h3>
-                <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
-                <p>Start time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" /></p>
-                <p>End time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" /></p>
+<div class="container mb-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-8 col-lg-6">
+            <!-- Section Heading-->
+            <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s"
+                 style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                <h3>Open House Events</h3>
+                <p>Here are all the open house events happening around San Antonio</p>
+                <div class="line"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Single Card-->
+        <div class="col-12 col-sm-6 col-lg-3" th:each="openHouseEvent : ${openHouseEvents}">
+            <!--FOR EACH LOOP FOR ALL EVENTS-->
+            <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s"
+                 style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                <!-- House Image-->
+                <div class="advisor_thumb"><img th:src="${openHouseEvent.house.image_url}" width="350" height="350"
+                                                alt="HOUSE IMAGE">
+                    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="stretched-link"></a>
+                </div>
+                <!-- House Information-->
+                <div class="single_advisor_details_info multiAddress">
+                    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="stretched-link"></a>
+                    <h6 class="address" th:text="${openHouseEvent.house.address}"></h6>
+                    <p class="city" th:text="${openHouseEvent.house.city}"></p>
+                    <p class="state" th:text="${openHouseEvent.house.state}"></p>
+                    <p class="dateStart" th:text="${openHouseEvent.dateStart}"></p>
+                    <p class="dateEnd" th:text="${openHouseEvent.dateEnd}"></p>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
+
+
+<!--<h1>Open House events</h1>-->
+<!--<div th:each="openHouseEvent : ${openHouseEvents}">-->
+<!--    <div class="card">-->
+<!--        <div class="card-body">-->
+<!--            <div th:if="${openHouseEvent.user == openHouseEvent.house.user}">-->
+<!--                <h3 class="card-header" ><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span th:text="${openHouseEvent.house.address}"></span></a></h3>-->
+<!--                <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>-->
+<!--                <p>Start time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" /></p>-->
+<!--                <p>End time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" /></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
