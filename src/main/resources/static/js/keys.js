@@ -1,0 +1,3 @@
+const MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiY2FycmluZ3RvbnR4IiwiYSI6ImNrb2VnZW1xcTBhZmQydm80azNnNmx5ZGgifQ.OIODPgeRNm_unwB3VsYL_Q";
+
+const FILESTACK_TOKEN = "AOVSC80JnRFWctjZ6ynTcz"
