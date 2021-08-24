@@ -3,22 +3,39 @@
 <head th:replace="partials/head :: head('Submit feedback')"/>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"></nav>
-<h1>Leave feedback on the event!</h1>
-<form class="container" th:action="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" method="post" th:object="${openHouseEvent}">
 
-    <h2>Event</h2>
-    <p>Address: <span th:text="${openHouseEvent.house.address}" />, <span th:text="${openHouseEvent.house.city}" />, <span th:text="${openHouseEvent.house.state}" /> <span th:text="${openHouseEvent.house.zipcode}" /></p>
-    <p>Start time: <span th:text="${openHouseEvent.dateStart}" /></p>
-    <p>End time: <span th:text="${openHouseEvent.dateEnd}" /></p>
-
-    <p>Listing agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}"/></p>
-
-    <div class="rev-box form-group shadow-textarea">
-        <label class="feedback" for="feedback">Please leave a short summary of your experience</label>
-        <textarea id="feedback" class="review form-control" name="feedback"></textarea>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="createFeedback-form">
+                <form th:action="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" method="post"
+                      th:object="${openHouseEvent}" class="mt-5 border p-4 bg-light shadow text-center">
+                    <h4 class="mb-5 text-secondary">Leave Feedback on the hosted Open House Event</h4>
+                    <div class="row">
+                        <div class="mb-3 col-md-12 form-group">
+                            <p>Event Address: <span th:text="${openHouseEvent.house.address}"/>, <span
+                                    th:text="${openHouseEvent.house.city}"/>, <span
+                                    th:text="${openHouseEvent.house.state}"/> <span
+                                    th:text="${openHouseEvent.house.zipcode}"/></p>
+                            <p>Event Start time: <span th:text="${openHouseEvent.dateStart}"/></p> <!--NEED TO FORMAT THIS TIME BETTER. DOES NOT LOOK GREAT ON HTML-->
+                            <p>Event End time: <span th:text="${openHouseEvent.dateEnd}"/></p> <!--NEED TO FORMAT THIS TIME BETTER. DOES NOT LOOK GREAT ON HTML-->
+                            <p>Event Listing agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span
+                                    th:text="${openHouseEvent.house.user.lastName}"/></p>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label class="feedback" for="feedback">Please leave a short summary of your
+                                experience</label>
+                            <textarea id="feedback" class="review form-control" name="feedback"></textarea>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-</form>
+</div>
 
 
 <footer th:replace="partials/footer.html :: footer"/>
