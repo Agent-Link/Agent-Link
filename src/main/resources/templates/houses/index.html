@@ -37,16 +37,15 @@
         </div>
     </div>
     <div class="row">
-        <!-- Single Advisor-->
+        <!-- Single Card-->
         <div class="col-12 col-sm-6 col-lg-3" th:each="house : ${houses}"> <!--FOR EACH LOOP FOR ALL HOUSES-->
             <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s"
                  style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                <!-- Team Thumb-->
+                <!-- House Image-->
                 <div class="advisor_thumb"><img th:src="${house.image_url}" width="350" height="350" alt="HOUSE IMAGE">
-                    <!-- Social Info-->
                     <a th:href="@{/houses/{id}(id=${house.id})}" class="stretched-link"></a>
                 </div>
-                <!-- Team Details-->
+                <!-- House Information-->
                 <div class="single_advisor_details_info multiAddress">
                     <a th:href="@{/houses/{id}(id=${house.id})}" class="stretched-link"></a>
                     <h6 class="address" th:text="${house.address}">  </h6>

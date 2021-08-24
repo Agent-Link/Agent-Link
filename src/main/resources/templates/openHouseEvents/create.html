@@ -3,21 +3,40 @@
 <head th:replace="partials/head :: head('Create event')"/>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"></nav>
-<h1>Create open house event!</h1>
-<form class="container" action="/events/create" th:action="@{/events/create}" method="post" th:object="${openHouseEvent}">
-    <div class="form-group">
-        <label for="startDate">Start date / time</label>
-        <input id="startDate" name="startDate" type="datetime-local" class="form-control" placeholder="YYYY-MM-DD"/>
+
+<!--CREATE EVENT-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="openHouseEventCreate-form mb-4">
+                <form th:action="@{/events/create}" method="post" th:object="${openHouseEvent}"
+                      class="mt-5 border p-4 bg-light shadow">
+                    <h4 class="mb-5 text-secondary">Create An Open House Event</h4>
+                    <div class="row">
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="startDate">Start date / time</label>
+                            <input id="startDate" name="startDate" type="datetime-local" class="form-control"
+                                   placeholder="YYYY-MM-DD"/>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="endDate">End date / time</label>
+                            <input id="endDate" name="endDate" type="datetime-local" class="form-control"
+                                   placeholder="YYYY-MM-DD"/>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <h6>Please select an address:</h6>
+                            <select id="housesDropdown" name="housesDropdown" th:field="*{house}">
+                                <option th:each="house: ${houses}" th:value="${house.id}" th:text="${house.address}"/>
+                            </select>
+                        </div>
+                        <div class="form-group"></div>
+                        <input type="submit" value="Create event" class="btn btn-block btn-info"/>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="endDate">End date / time</label>
-        <input id="endDate" name="endDate" type="datetime-local" class="form-control" placeholder="YYYY-MM-DD"/>
-    </div>
-    <select id="housesDropdown" name="housesDropdown" th:field="*{house}">
-        <option th:each="house: ${houses}" th:value="${house.id}" th:text="${house.address}"/>
-    </select>
-    <input type="submit" value="Create event" class="btn btn-block btn-info" />
-</form>
+</div>
 <footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
