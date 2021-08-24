@@ -11,6 +11,10 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
+<div class="row flex-wrap">
+
+<div class="col-9 flex-wrap">
+
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendars" type="button" role="tab" aria-controls="calendars" aria-selected="true">Calendar</button>
@@ -54,24 +58,44 @@
     <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
     <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
     <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
+
+
     <div th:if="${userId == openHouseEvent.house.user.id && currentDateTime.before(openHouseEvent.dateStart)}">
         <form th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}" method="post">
             <input type="submit" value="Delete" class="btn btn-danger">
         </form>
         <a th:if="${currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{'/events/edit/' + ${openHouseEvent.id}}" class="btn btn-primary">Edit</a>
-        <a th:if="${userId != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
     </div>
+    <a th:if="${userId == openHouseEvent.house.user.id && userId != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
     <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
     <a th:if="${userId != openHouseEvent.house.user.id && userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
 </div>
+    </div>
+
+</div>
+</div>
+    <div class="col-3 flex-wrap">
+        <div class="card border border-dark mb-1">
+            <div class="card-header text-dark text-center">
+                <h3 id="profileName"> <span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/> </h3>
+            </div>
+            <div class="card-body text-dark text-center">
+                <h5>Contact Info</h5>
+                <p>Email: <span th:text="${user.email}"/></p>
+                <p> Phone Number: <span th:text="${user.phone}"/></p>
+                <p>Agent Team: <span th:text="${user.team}"/></p>
+                <p th:if="${hasReviews}">Agent Rating: <span th:text="${userRating}"/> out of 5 </p>
+
+                <p> <a th:href="@{/profile/edit}">Edit Your Profile</a></p>
+
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 
-
-
-</div>
-
-<p> <a th:href="@{/profile/edit}">Edit Your Profile</a></p>
 
 <footer th:replace="partials/footer :: footer"></footer>
 <div th:replace="partials/scripts :: scripts"></div>

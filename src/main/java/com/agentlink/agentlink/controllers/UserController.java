@@ -71,10 +71,34 @@ public class UserController {
     @GetMapping("/profile")
     public String userProfile(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("houses", housesDao.findAllByUserAndListingActive(user, true)); //This produces all active user houses on their profile
-        model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
-        model.addAttribute("userId", user.getId());
-        model.addAttribute("currentDateTime", new Date());
+        User currentUser = usersDao.getById(user.getId());
+        List<Review> reviewRatings = reviewsDao.findAllByBuyingUser(currentUser);
+        boolean hasReviews = false;
+        model.addAttribute("user", currentUser);
+        if(!reviewRatings.isEmpty()){
+            hasReviews = true;
+            int rating = 0;
+            int length = reviewRatings.size();
+            int sum = 0;
+            for (Review review : reviewRatings){
+                sum += review.getRating();
+            }
+            rating = sum / length;
+            model.addAttribute("hasReviews", hasReviews);
+            model.addAttribute("userRating", rating);
+
+            model.addAttribute("houses", housesDao.findAllByUserAndListingActive(user, true)); //This produces all active user houses on their profile
+            model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
+            model.addAttribute("userId", user.getId());
+            model.addAttribute("currentDateTime", new Date());
+        }else {
+            model.addAttribute("houses", housesDao.findAllByUserAndListingActive(user, true)); //This produces all active user houses on their profile
+            model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
+            model.addAttribute("userId", user.getId());
+            model.addAttribute("currentDateTime", new Date());
+        }
+
+
         return "users/profile";
     }
 
