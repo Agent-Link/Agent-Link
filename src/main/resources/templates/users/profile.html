@@ -12,67 +12,108 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 <div class="row flex-wrap">
+    <div class="col-9 flex-wrap">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendars" type="button" role="tab" aria-controls="calendars" aria-selected="true">Calendar</button>
+            </li>
+            <li th:if="${user.isListingAgent() && !houses.isEmpty()}" class="nav-item" role="presentation">
+                <button class="nav-link " id="listings-tab" data-bs-toggle="tab" data-bs-target="#listings" type="button" role="tab" aria-controls="listings" aria-selected="false">Listings</button>
+            </li>
+            <li th:if="${user.isListingAgent() && !upcomingEvents.isEmpty()}" class="nav-item" role="presentation">
+                <button class="nav-link" id="upcoming-events-tab" data-bs-toggle="tab" data-bs-target="#upcoming-events" type="button" role="tab" aria-controls="upcoming-events" aria-selected="false">Upcoming Events</button>
+            </li>
 
-<div class="col-9 flex-wrap">
+            <li th:if="${user.isListingAgent() && !previousEvents.isEmpty()}" class="nav-item" role="presentation">
+                <button class="nav-link" id="previous-events-tab" data-bs-toggle="tab" data-bs-target="#previous-events" type="button" role="tab" aria-controls="previous-events" aria-selected="false">Previous Events</button>
+            </li>
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendars" type="button" role="tab" aria-controls="calendars" aria-selected="true">Calendar</button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link " id="listings-tab" data-bs-toggle="tab" data-bs-target="#listings" type="button" role="tab" aria-controls="listings" aria-selected="false">Listings</button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events" type="button" role="tab" aria-controls="events" aria-selected="false">Open House Events</button>
-    </li>
-
-</ul>
+            <li th:if="${!hostingEvents.isEmpty()}" class="nav-item" role="presentation">
+                <button class="nav-link" id="hosting-events-tab" data-bs-toggle="tab" data-bs-target="#hosting-events" type="button" role="tab" aria-controls="hosting-events" aria-selected="false">Your Upcoming Events</button>
+            </li>
 
 
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="calendars" role="tabpanel" aria-labelledby="calendar-tab">
+                <div id='calendar'></div>
+            </div>
+            <div class="tab-pane fade" id="listings" role="tabpanel" aria-labelledby="listings-tab">
+                <h2>Here are your Houses:</h2>
+                <div class="card-body" th:each="house : ${houses}" th:if="${house.isListingActive() == true}">
+                    <h5 class="card-title"><a th:href="@{/houses/{id}(id=${house.id})}"><span th:text="${house.address}"></span></a></h5>
+                    <p th:text="${house.description}" class="card-text"></p>
+                    <a th:href="@{'/houses/edit/' + ${house.id}}" class="btn btn-primary">Edit</a>
+                    <form th:action="@{/houses/deactivate/{id}(id=${house.id})}" method="post">
+                        <input type="submit" class="btn btn-danger" value="Deactivate"/>
+                    </form>
+                </div>
+            </div>
 
-<div class="tab-content" id="myTabContent">
 
-    <div class="tab-pane fade show active" id="calendars" role="tabpanel" aria-labelledby="calendar-tab">
-        <div id='calendar'></div>
+            <div class="tab-pane fade" id="upcoming-events" role="tabpanel" aria-labelledby="upcoming-events-tab">
+                <h2>Upcoming Open House Events:</h2>
+                <div class="card-body event" th:each="openHouseEvent : ${upcomingEvents}">
+                    <h5 class="card-title event-title"><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span th:text="${openHouseEvent.house.address}"></span></a></h5>
+                    <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
+                    <p>Event start and end time</p>
+                    <p th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
+                    <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
+                    <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
+                    <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
+                    <p th:if="${openHouseEvent.house.user.id != openHouseEvent.user.id}">Host name: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"><span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></a></p>
+                    <p th:if="${openHouseEvent.house.user.id == openHouseEvent.user.id}">Host needed!</p>
+
+                    <div th:if="${userId == openHouseEvent.house.user.id && currentDateTime.before(openHouseEvent.dateStart)}">
+                        <form th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}" method="post">
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                        <a th:if="${currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{'/events/edit/' + ${openHouseEvent.id}}" class="btn btn-primary">Edit</a>
+                    </div>
+                    <a th:if="${userId == openHouseEvent.house.user.id && userId != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
+                    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+                    <a th:if="${userId != openHouseEvent.house.user.id && userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="previous-events" role="tabpanel" aria-labelledby="previous-events-tab">
+                <h2>Previous Open House Events:</h2>
+                <div class="card-body event" th:each="openHouseEvent : ${previousEvents}">
+                    <h5 class="card-title event-title"><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span th:text="${openHouseEvent.house.address}"></span></a></h5>
+                    <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
+                    <p>Open House Event Day and Time</p>
+                    <p th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
+                    <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
+                    <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
+                    <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
+                    <p th:if="${openHouseEvent.house.user.id != openHouseEvent.user.id}">Host name: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"><span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></a></p>
+                    <p th:if="${openHouseEvent.house.user.id == openHouseEvent.user.id}">You hosted this event by default.</p>
+                    <a th:if="${userId == openHouseEvent.house.user.id && userId != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
+                    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+                    <a th:if="${userId != openHouseEvent.house.user.id && userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="hosting-events" role="tabpanel" aria-labelledby="hosting-events-tab">
+                <h2>You're set to host these events':</h2>
+                <div class="card-body event" th:each="openHouseEvent : ${hostingEvents}" th:if="${openHouseEvent.user.id != openHouseEvent.house.user.id}">
+                    <h5 class="card-title event-title"><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span th:text="${openHouseEvent.house.address}"></span></a></h5>
+                    <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
+                    <p>Open House Event Day and Time</p>
+                    <p th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
+                    <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
+                    <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
+                    <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
+
+
+                    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+                    <a th:if="${userId != openHouseEvent.house.user.id && userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-
-    <div class="tab-pane fade" id="listings" role="tabpanel" aria-labelledby="listings-tab">
-<h2 th:if="${!houses.isEmpty()}">Here are your Houses:</h2>
-<div class="card-body" th:each="house : ${houses}" th:if="${house.isListingActive() == true}">
-    <h5 class="card-title"><a th:href="@{/houses/{id}(id=${house.id})}"><span th:text="${house.address}"></span></a></h5>
-    <p th:text="${house.description}" class="card-text"></p>
-    <a th:href="@{'/houses/edit/' + ${house.id}}" class="btn btn-primary">Edit</a>
-    <form th:action="@{/houses/deactivate/{id}(id=${house.id})}" method="post">
-        <input type="submit" class="btn btn-danger" value="Deactivate"/>
-    </form>
-</div>
-</div>
-
-    <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
-<h2 th:if="${!openHouseEvents.isEmpty()}">Here are your Open House Events:</h2>
-<div class="card-body event" th:each="openHouseEvent : ${openHouseEvents}" th:if="${userId == openHouseEvent.house.user.id || userId == openHouseEvent.user.id}">
-    <h5 class="card-title event-title"><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span th:text="${openHouseEvent.house.address}"></span></a></h5>
-    <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
-    <p>Open House Event Day and Time</p>
-    <p th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
-    <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text "></p>
-    <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
-    <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
-
-
-    <div th:if="${userId == openHouseEvent.house.user.id && currentDateTime.before(openHouseEvent.dateStart)}">
-        <form th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}" method="post">
-            <input type="submit" value="Delete" class="btn btn-danger">
-        </form>
-        <a th:if="${currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{'/events/edit/' + ${openHouseEvent.id}}" class="btn btn-primary">Edit</a>
-    </div>
-    <a th:if="${userId == openHouseEvent.house.user.id && userId != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
-    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
-    <a th:if="${userId != openHouseEvent.house.user.id && userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
-</div>
-    </div>
-
-</div>
 </div>
     <div class="col-3 flex-wrap">
         <div class="card border border-dark mb-1">

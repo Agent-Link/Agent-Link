@@ -2,8 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('Property listing')"/>
 <head>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css' rel='stylesheet'/>
+    <link rel="stylesheet" th:href="@{/showSingleHouseCSS.css}">
+    <style>
+        .btn-width {
+            width: 5em;
+        }
+        /*.row>*{*/
+        /*    padding: 0;*/
+        /*    padding-top: .5em;*/
+        /*}*/
+        /*.btn-height{*/
+        /*    height: 1.5em;*/
+        /*}*/
+    </style>
 </head>
 
 
@@ -11,38 +22,77 @@
 
 <nav th:replace="partials/navbar.html :: navbar"></nav>
 
-<div>
-    <div class="card border border-dark mb-1" style="width: auto;">
-            <div class="card-header">
-                 <h4 id="houseAddress" class="text-center" th:text="${house.address}"></h4>
+<div class="container py-3">
+    <div id="houseAddress" th:text="${house.address}" class="title h1 text-center"></div>
+    <!-- Card Start -->
+    <div class="card">
+        <div class="row ">
+
+            <div class="col-md-7 px-3">
+                <div class="card-block px-6">
+                    <h4 class="card-title text-center">House Information</h4>
+                    <p th:text="${house.description}" class="card-text text-center"></p>
+                    <p  id="houseCity" th:text="${house.city}" class="card-text text-center"></p>
+                    <p  id="houseState" th:text="${house.state}" class="card-text text-center"></p>
+                    <p  id="houseZipcode" th:text="${house.zipcode}" class="card-text text-center"></p>
+                    <br>
+                    <div th:if="${isHouseOwner}" class="row d-flex justify-content-center">
+                        <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary btn-width btn-height">Edit</a>
+                        <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post" class=" d-flex justify-content-center">
+                            <input type="submit" class="btn btn-danger btn-width btn-height" value="Delete"/>
+                        </form>
+                    </div>
+                </div>
             </div>
-        <div class="card-body text-dark text-center">
-            <p th:text="${house.description}"></p>
-    <p id="houseCity" th:text="${house.city}"></p>
-    <p id="houseState" th:text="${house.state}"></p>
-    <p id="houseZipcode" th:text="${house.zipcode}"></p>
+
+            <div class="col-md-5">
+                <div class="advisor_thumb"><img th:src="${house.image_url}" width="525" height="375" alt="HOUSE IMAGE"></div>
+            </div>
+
         </div>
     </div>
+    <!-- End of card -->
+
+</div>
+
+<!--<div>-->
+<!--    <div class="card border border-dark mb-1 row " style="width: 80%; height: 750px;">-->
+<!--            <div class="card-header">-->
+<!--                 <h4 id="houseAddress" class="text-center" th:text="${house.address}"></h4>-->
+<!--            </div>-->
+
+<!--        <div class="card-body text-dark text-center">-->
+<!--            <div th:if="${house.image_url != null}" class=" justify-center">-->
+<!--                <img th:src="${house.image_url}" alt="House Picture" width="40%" height="40%" >-->
+<!--            </div>-->
+
+<!--            <p th:text="${house.description}"></p>-->
+<!--    <p id="houseCity" th:text="${house.city}"></p>-->
+<!--    <p id="houseState" th:text="${house.state}"></p>-->
+<!--    <p id="houseZipcode" th:text="${house.zipcode}"></p>-->
+<!--            <div class="row flex-wrap">-->
+<!--             <div th:if="${isHouseOwner}" class="">-->
+<!--                <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>-->
+<!--                <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post" class="">-->
+<!--                    <input type="submit" class="btn btn-danger " value="Delete"/>-->
+<!--                </form>-->
+<!--             </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <!--mapbox here-->
-    <div id='map' style='width: 400px; height: 300px;' class=""></div>
+    <div class="row justify-content-center mb-4">
+        <div id='map' style='width: 80%; height: 500px;' class="d-flex"></div>
+    </div>
     <!--    end of map box-->
 
-    <div th:if="${house.image_url != null}" class="col-4">
-        <img th:src="${house.image_url}" alt="House Picture">
-    </div>
+
 
 <!--    <div>-->
 <!--        <img th:each="image : ${house.images}" th:src="${image.imageUrl}" alt="House Picture 2">-->
 <!--    </div>-->
 
-
-    <div th:if="${isHouseOwner}">
-        <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary">Edit</a>
-        <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post">
-            <input type="submit" class="btn btn-primary" value="Delete"/>
-        </form>
-    </div>
 </div>
 
 <!--mapbox scripts-->

@@ -45,6 +45,9 @@ public class User {
     @Column(nullable = false)
     private boolean isListingAgent;
 
+    @Column(length = 255)
+    private String profileImageUrl;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<House> houses;
 
