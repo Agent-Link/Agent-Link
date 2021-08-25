@@ -52,6 +52,7 @@ public class HousesController {
         }
         model.addAttribute("house", house);
         model.addAttribute("isHouseOwner", isHouseOwner);
+        model.addAttribute("MAPBOX_ACCESS_TOKEN",MAPBOX_ACCESS_TOKEN);
         return "houses/show";
     }
 
