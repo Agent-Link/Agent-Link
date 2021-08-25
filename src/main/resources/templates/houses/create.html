@@ -47,6 +47,7 @@
                         <div class="mb-3 col-md-12 form-group">
                             <label for="filestack">Upload House Picture</label>
                             <button id="filestack" type="button">Select Image</button>
+                            <input type="hidden" th:value="${FILESTACK_TOKEN}" class="filestackToken">
                         </div>
                         <div class="form-group"></div>
                         <input type="submit" value="Create listing" class="btn btn-block btn-info"/>

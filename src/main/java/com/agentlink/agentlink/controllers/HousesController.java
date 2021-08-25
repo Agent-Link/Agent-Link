@@ -5,6 +5,7 @@ import com.agentlink.agentlink.models.House;
 import com.agentlink.agentlink.models.User;
 import com.agentlink.agentlink.repositories.HouseRepository;
 import com.agentlink.agentlink.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -21,6 +21,13 @@ public class HousesController {
     private final HouseRepository housesDao;
     private final UserRepository usersDao;
     private final String[] states = {"Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"};
+
+    //access (took out final)
+    @Value("${MAPBOX_ACCESS_TOKEN}")
+    private String MAPBOX_ACCESS_TOKEN;
+
+    @Value("${FILESTACK_TOKEN}")
+    private String FILESTACK_TOKEN;
 
     public HousesController(HouseRepository housesDao, UserRepository usersDao) {
         this.housesDao = housesDao;
@@ -31,6 +38,7 @@ public class HousesController {
     public String getAllHouses(Model model) {
         List<House> houses = housesDao.findAll();
         model.addAttribute("houses", houses);
+        model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
         return "houses/index";
     }
 
