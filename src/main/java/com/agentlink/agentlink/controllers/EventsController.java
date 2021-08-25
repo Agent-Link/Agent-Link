@@ -43,12 +43,14 @@ public class EventsController {
         List<OpenHouseEvent> openHouseEvents = openHouseEventsDao.findAllWithoutHostWhereDateStartAfter(new Date());
         model.addAttribute("house", housesDao);
         model.addAttribute("openHouseEvents", openHouseEvents);
+        model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
         return "openHouseEvents/index";
     }
 
     @GetMapping("/events/{id}")
     public String singleEvent(@PathVariable long id, Model model){
         OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
+        model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
         model.addAttribute("openHouseEvent", openHouseEvent);
         boolean isEventCreator;
         boolean hasNotApplied = true;
@@ -72,7 +74,6 @@ public class EventsController {
         model.addAttribute("isEventCreator", isEventCreator);
         model.addAttribute("hasNotApplied", hasNotApplied);
         model.addAttribute("currentDateTime", new Date());
-        model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
         return "openHouseEvents/show";
     }
 
