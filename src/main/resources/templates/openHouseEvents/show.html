@@ -41,7 +41,7 @@
                     </p>
                 </div>
                 <div class="row d-flex justify-content-center">
-                    <div class="text-center"
+                    <div sec:authorize="isAuthenticated()" class="text-center"
                          th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
                         <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary btn-width">Edit</a>
                         <form th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}" method="post" class="d-flex justify-content-center">
@@ -64,7 +64,7 @@
 </div>
 <!--mapbox here-->
 <div class="row justify-content-center mb-4">
-    <div id='map' style='width: 80%; height: 500px;' class="d-flex"></div>
+    <div id='map' style='width: 70%; height: 500px;' class="d-flex"></div>
 </div>
 <!--    end of map box-->
 <div sec:authorize="isAuthenticated()">
