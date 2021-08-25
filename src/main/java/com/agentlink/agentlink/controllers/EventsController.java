@@ -34,9 +34,9 @@ public class EventsController {
         this.applicationsDao = applicationsDao;
     }
 
-    @RequestMapping(path = "/events", method = RequestMethod.GET)
+    @GetMapping("/events")
     public String getAllEvents(Model model) {
-        List<OpenHouseEvent> openHouseEvents = openHouseEventsDao.findAll();
+        List<OpenHouseEvent> openHouseEvents = openHouseEventsDao.findAllWithoutHostWhereDateStartAfter(new Date());
         model.addAttribute("house", housesDao);
         model.addAttribute("openHouseEvents", openHouseEvents);
         return "openHouseEvents/index";
