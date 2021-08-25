@@ -94,7 +94,7 @@
         $('document').ready(function () {
             var setMarkers = $("address").val();
             allMarkers.forEach(function (houseMarker) {
-                geocode(houseMarker.address,  $(".mapboxToken").val()).then(function (results) {
+                geocode(houseMarker.address, $(".mapboxToken").val()).then(function (results) {
                     console.log(results)
                     var lngLat = {
                         lng: results[0],

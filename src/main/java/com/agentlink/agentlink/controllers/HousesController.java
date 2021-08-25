@@ -38,7 +38,7 @@ public class HousesController {
     public String getAllHouses(Model model) {
         List<House> houses = housesDao.findAll();
         model.addAttribute("houses", houses);
-        model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
+        model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
         return "houses/index";
     }
 
@@ -60,6 +60,7 @@ public class HousesController {
     public String createHouseForm(Model model) {
         model.addAttribute("house", new House());
         model.addAttribute("states", states);
+        model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
         return "/houses/create";
     }
 
@@ -83,6 +84,7 @@ public class HousesController {
         model.addAttribute("states", states);
         if (currentUser.getId() == house.getUser().getId()) {
             model.addAttribute("house", house);
+            model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
             return "/houses/edit";
         } else {
             return "redirect:/houses";
