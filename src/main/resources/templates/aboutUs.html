@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Meet The Developers')"/>
+<head>
+    <link rel="stylesheet" th:href="@{/css/aboutUsStyle.css}">
+</head>
+
+<body>
+<nav th:replace="partials/navbar.html :: navbar"/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="section-title title-left text-center text-lg-left">
+                <h3 class="top-sep">Meet The Developers</h3>
+                <p>Here is your Agent-Link Team!</p>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4 mb-30">
+            <div class="team-item">
+                <div class="mb-30 position-relative d-flex align-items-center">
+                            <span class="socials d-inline-block">
+                                <a href="#" class="far fa-envelope"></a>
+                                <a href="#" class="fab fa-linkedin"></a>
+                                <a href="#" class="fab fa-github"></a>
+                            </span>
+                    <span class="img-holder d-inline-block">
+                    <img th:src="@{/img/Matthew.jpeg}" height="300" width="300"/></span>
+                </div>
+                <div class="team-content">
+                    <h5 class="mb-2">Matthew Walker</h5>
+                    <p class="text-uppercase mb-0">Software Developer</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-30">
+            <div class="team-item">
+                <div class="mb-30 position-relative d-flex align-items-center">
+                            <span class="socials d-inline-block">
+                                <a href="#" class="far fa-envelope"></a>
+                                <a href="#" class="fab fa-linkedin"></a>
+                                <a href="#" class="fab fa-github"></a>
+                            </span>
+                    <span class="img-holder d-inline-block">
+                            <img th:src="@{/img/Jordan.jpeg}" height="300" width="300"/>
+                    </span>
+                </div>
+                <div class="team-content">
+                    <h5 class="mb-2">Jordan Felan</h5>
+                    <p class="text-uppercase mb-0">Software Developer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4 mb-30">
+            <div class="team-item">
+                <div class="mb-30 position-relative d-flex align-items-center">
+                            <span class="socials d-inline-block">
+                                <a href="#" class="far fa-envelope"></a>
+                                <a href="#" class="fab fa-linkedin"></a>
+                                <a href="#" class="fab fa-github"></a>
+                            </span>
+                    <span class="img-holder d-inline-block">
+                            <img th:src="@{/img/Carrington.jpeg}" height="300" width="300"/>
+                    </span>
+                </div>
+                <div class="team-content">
+                    <h5 class="mb-2">Carrington Jones</h5>
+                    <p class="text-uppercase mb-0">Software Developer</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-30">
+            <div class="team-item">
+                <div class="mb-30 position-relative d-flex align-items-center">
+                            <span class="socials d-inline-block">
+                                <a href="#" class="far fa-envelope"></a>
+                                <a href="#" class="fab fa-linkedin"></a>
+                                <a href="#" class="fab fa-github"></a>
+                            </span>
+                    <span class="img-holder d-inline-block">
+                            <img th:src="@{/img/Alex.jpeg}" height="300" width="300"/>
+                    </span>
+                </div>
+                <div class="team-content">
+                    <h5 class="mb-2">Alex Hernandez</h5>
+                    <p class="text-uppercase mb-0">Software Developer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
+</body>
+</html>
