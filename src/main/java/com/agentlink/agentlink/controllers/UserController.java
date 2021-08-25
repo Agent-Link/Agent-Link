@@ -4,10 +4,7 @@ import com.agentlink.agentlink.models.House;
 import com.agentlink.agentlink.models.OpenHouseEvent;
 import com.agentlink.agentlink.models.Review;
 import com.agentlink.agentlink.models.User;
-import com.agentlink.agentlink.repositories.HouseRepository;
-import com.agentlink.agentlink.repositories.OpenHouseEventRepository;
-import com.agentlink.agentlink.repositories.ReviewRepository;
-import com.agentlink.agentlink.repositories.UserRepository;
+import com.agentlink.agentlink.repositories.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,13 +25,15 @@ public class UserController {
     private HouseRepository housesDao;
     private OpenHouseEventRepository eventsDao;
     private ReviewRepository reviewsDao;
+    private ApplicationRepository appsDao;
 
-    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, HouseRepository housesDao, OpenHouseEventRepository eventsDao, ReviewRepository reviewsDao) {
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, HouseRepository housesDao, OpenHouseEventRepository eventsDao, ReviewRepository reviewsDao, ApplicationRepository appsDao) {
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.housesDao = housesDao;
         this.eventsDao = eventsDao;
         this.reviewsDao = reviewsDao;
+        this.appsDao = appsDao;
     }
 
     @GetMapping("/sign-up")
@@ -93,6 +92,7 @@ public class UserController {
         model.addAttribute("upcomingEvents", eventsDao.findAllByCreatorIdAndDateStartAfter(user.getId(), new Date()));
         model.addAttribute("previousEvents", eventsDao.findAllByCreatorIdAndDateEndBefore(user.getId(), new Date()));
         model.addAttribute("hostingEvents", eventsDao.findAllByHostedByUserIdAndDateStartAfter(user.getId(), new Date()));
+        model.addAttribute("appliedEvents", appsDao.findAllByUserIdWhereNotHost(user.getId()));
 
 
         return "users/profile";
