@@ -6,6 +6,7 @@ import com.agentlink.agentlink.repositories.HouseRepository;
 import com.agentlink.agentlink.repositories.OpenHouseEventRepository;
 import com.agentlink.agentlink.repositories.UserRepository;
 import jdk.jfr.Event;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,9 @@ public class EventsController {
     private final UserRepository usersDao;
     private final OpenHouseEventRepository openHouseEventsDao;
     private final ApplicationRepository applicationsDao;
+
+    @Value("${MAPBOX_ACCESS_TOKEN}")
+    private String MAPBOX_ACCESS_TOKEN;
 
     public EventsController(HouseRepository housesDao, UserRepository usersDao, OpenHouseEventRepository openHouseEventsDao, ApplicationRepository applicationsDao) {
         this.housesDao = housesDao;
@@ -68,6 +72,7 @@ public class EventsController {
         model.addAttribute("isEventCreator", isEventCreator);
         model.addAttribute("hasNotApplied", hasNotApplied);
         model.addAttribute("currentDateTime", new Date());
+        model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
         return "openHouseEvents/show";
     }
 

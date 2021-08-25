@@ -58,6 +58,7 @@
     <!--mapbox here-->
     <div class="row justify-content-center mb-4">
             <div id='map2' style='width: 80%; height: 500px;' class="d-flex"></div>
+        <input type="hidden" th:value="${MAPBOX_ACCESS_TOKEN}" class="mapboxToken">
     </div>
     <!--    end of map box-->
 </div>
@@ -67,7 +68,7 @@
 
     /// making the map and centering it on SA
 
-    mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+    mapboxgl.accessToken =  $(".mapboxToken").val();
     const map2 = new mapboxgl.Map({
         container: 'map2', // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
@@ -93,7 +94,7 @@
         $('document').ready(function () {
             var setMarkers = $("address").val();
             allMarkers.forEach(function (houseMarker) {
-                geocode(houseMarker.address, MAPBOX_ACCESS_TOKEN).then(function (results) {
+                geocode(houseMarker.address,  $(".mapboxToken").val()).then(function (results) {
                     console.log(results)
                     var lngLat = {
                         lng: results[0],
