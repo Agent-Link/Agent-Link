@@ -56,28 +56,20 @@
             </div>
         </div>
 
-<!--    <div class="card justify-content-center">-->
-<!--        <div class=" justify-content-center">-->
-<!--            <div class=" mb-4">-->
-<!--                <div class="mt-5 border p-4 bg-light shadow">-->
-<!--                    <img class="mb-0" th:src="@{/img/Agent-Link-2.png}" alt="AGENT-LINK LOGO HERE" width="60%" height="40%">-->
-<!--                    <h1 class="h3 mb-3 fw-normal">Welcome!</h1>-->
-<!--                    <p class="mt-5 mb-3 text-muted">AgentLink is an application where real estate listing agents with properties on the market can find other local agents who are newly licensed to hold open houses in their properties to promote their listing, bring potential buyers and ultimately sell the home. Users of the application can utilize to set up open house events, personal profiles, track open house events via a map interface and leave reviews of agents. This application was created as a team project with Java, Spring Boot, MySQL, ThymeLeaf, HTML, CSS, Javascript, and jQuery. Application was made as an MVC design pattern, and implements full CRUD functionality with the custom built database.</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-    <div class="card mb-4 mt-5 border p-4 bg-light shadow">
-        <img th:src="@{/img/Agent-Link-2.png}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Welcome</h5>
-            <p class="card-text">AgentLink is an application where real estate listing agents with properties on the market can find other local agents who are newly licensed to hold open houses in their properties to promote their listing, bring potential buyers and ultimately sell the home. Users of the application can utilize to set up open house events, personal profiles, track open house events via a map interface and leave reviews of agents. This application was created as a team project with Java, Spring Boot, MySQL, ThymeLeaf, HTML, CSS, Javascript, and jQuery. Application was made as an MVC design pattern, and implements full CRUD functionality with the custom built database.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+    <hr class="featurette-divider">
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading">Welcome.<span class="text-muted"> We're here to help.</span></h2>
+            <p class="lead">AgentLink is an application where real estate listing agents with properties on the market can find other local agents who are newly licensed to hold open houses in their properties to promote their listing, bring potential buyers and ultimately sell the home. Users of the application can utilize to set up open house events, personal profiles, track open house events via a map interface and leave reviews of agents. This application was created as a team project with Java, Spring Boot, MySQL, ThymeLeaf, HTML, CSS, Javascript, and jQuery. Application was made as an MVC design pattern, and implements full CRUD functionality with the custom built database</p>
+            <p><a class="btn btn-lg btn-secondary" href="/AboutUs">About Us</a></p>
+        </div>
+        <div class="col-md-5">
+            <img th:src="@{/img/Agent-Link-2.png}"class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" alt="...">
         </div>
     </div>
+    <hr class="featurette-divider">
 
-</div>
+
 
 <footer th:replace="partials/footer :: footer"></footer>
 <div th:replace="partials/scripts :: scripts"></div>
