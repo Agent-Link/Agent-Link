@@ -84,7 +84,7 @@ public class EventsController {
 
         model.addAttribute("houses", houses);
         model.addAttribute("openHouseEvent", new OpenHouseEvent());
-        return "/openHouseEvents/create";
+        return "openHouseEvents/create";
     }
 
     @PostMapping("/events/create")
@@ -130,7 +130,7 @@ public class EventsController {
         OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
         if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId()) {
             model.addAttribute("openHouseEvent", openHouseEvent);
-            return "/openHouseEvents/edit";
+            return "openHouseEvents/edit";
         } else {
             return "redirect:/profile";
         }
@@ -199,7 +199,7 @@ public class EventsController {
     @GetMapping("/event/feedback/{eventId}")
     public String submitFeedbackForm(Model model, @PathVariable long eventId){
         model.addAttribute("openHouseEvent", openHouseEventsDao.getById(eventId));
-        return "/openHouseEvents/createfeedback";
+        return "openHouseEvents/createfeedback";
     }
 
     @PostMapping("/event/feedback/{eventId}")

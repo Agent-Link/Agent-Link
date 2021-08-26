@@ -25,7 +25,7 @@ public class SearchController {
         model.addAttribute("openHouseEventsSearch", openHouseDao.findAllQuery(search));
         model.addAttribute("usersSearch", userDao.findAllByFirstNameLike(search));
         model.addAttribute("houseSearch", houseDao.findAllHouseQuery(search));
-        return "/results";
+        return "results";
     }
 }
 
