@@ -18,6 +18,7 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
+<!--This is the start of where we get our tabs set up. We used generic bootstrap tabs to be able to to over flow the profile page with to much info all at once. This section sets up the tabs as buttons and allows them to go to the linked data. There are some tabs that are only seen buy buying agents or listing agents and there are tabs that are seen by both types of agents. We use boolean checks to make sure which agent can see which data and if there are houses or events even saved to be displayed.-->
 <div class="row flex-wrap">
     <div class="col-9 flex-wrap">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -48,20 +49,23 @@
                 </button>
             </li>
 
-
             <li th:if="${!appliedEvents.isEmpty()}" class="nav-item" role="presentation">
                 <button class="nav-link" id="applied-events-tab" data-bs-toggle="tab" data-bs-target="#applied-events"
                         type="button" role="tab" aria-controls="applied-events" aria-selected="false">Events applied to
                 </button>
             </li>
 
-
         </ul>
+
+<!--        So this is the start of the info that displays in each tab!-->
+<!--        -->
+<!--        First off we have the calender tab that literally gets filled through the ID in the div. Its filled by the JavaScript that is linked to the calendar ID.-->
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="calendars" role="tabpanel" aria-labelledby="calendar-tab">
                 <div id='calendar'></div>
             </div>
 
+<!--            so here is the start of the data that fills the listings tab! It is filled almost the same way we fill our House Index page. We iterate thru an array using the house objects to call each piece of data we need such as the address, state, etc..-->
             <div class="tab-pane fade" id="listings" role="tabpanel" aria-labelledby="listings-tab">
                 <h2>Here are your Houses:</h2>
                 <div style="width: 45rem;" class="card m-3" th:each="house : ${houses}"
@@ -86,6 +90,7 @@
             </div>
 
 
+            <!--so here is the start of the data that fills the upcoming open house events tab that either show events you have created but do not have a host set, or shows the events you have been approved to host as a buying agent. It is filled almost the same way we fill our Open house events Index page. We iterate thru an array using the openhouseevent object to call each piece of data we need such as the address, start time, etc..-->
             <div class="tab-pane fade" id="upcoming-events" role="tabpanel" aria-labelledby="upcoming-events-tab">
                 <h2>Upcoming Open House Events:</h2>
                 <div style="width: 35rem;" class=" card event m-3" th:each="openHouseEvent : ${upcomingEvents}">
@@ -128,6 +133,7 @@
                 </div>
             </div>
 
+<!--            This is where we begin to display the information that goes inside the Previous open house events tab which shows event sthat have passed either if you have hosted them or were the person that created them. Here we utilize an array that cycles and pulls info from the Open house event object to diplay the data we ask for such as the address, start date, etc...-->
             <div class="tab-pane fade" id="previous-events" role="tabpanel" aria-labelledby="previous-events-tab">
                 <h2>Previous Open House Events:</h2>
                 <div style="width: 35rem;" class="card event m-3" th:each="openHouseEvent : ${previousEvents}">
@@ -168,6 +174,7 @@
                 </div>
             </div>
 
+<!--            Here is where we start to fill our Events your set to host tab. This shows the events that a buying agents are set to host after a listing agent sets them to host. We use an array that pulls data from the open house event object to display the address, start date, etcc...-->
             <div class="tab-pane fade" id="hosting-events" role="tabpanel" aria-labelledby="hosting-events-tab">
                 <h2>You're set to host these events':</h2>
                 <div style="width: 35rem;" class="card event m-3" th:each="openHouseEvent : ${hostingEvents}">
@@ -197,6 +204,7 @@
                 </div>
             </div>
 
+<!--            This where we start to fill the final tab we have that can be displayed. We fill this tab with the data of the events you have applied too as a buying or a listing agent. This time we use the Application object to go and pull the store open house event data that is tied to each application by a foreign key. We use an array to iterate and display the information we are looking for such as the address, description, etc...-->
             <div class="tab-pane fade" id="applied-events" role="tabpanel" aria-labelledby="applied-events-tab">
                 <h2>You've applied to host these events:</h2>
                 <div style="width: 35rem;" class="card event m-3" th:each="app : ${appliedEvents}">
