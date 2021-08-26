@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <head th:replace="partials/head :: head('Profile')"></head>
 
+<head th:replace="partials/head :: head('Profile')"></head>
+<head>
+    <style>
+        .btn-width {
+            width: 8em;
+        }
+        #calendar {
+            background-color: #ffffff;
+        }
+    </style>
 
 
 </head>
@@ -41,15 +47,19 @@
             <div class="tab-pane fade show active" id="calendars" role="tabpanel" aria-labelledby="calendar-tab">
                 <div id='calendar'></div>
             </div>
+
             <div class="tab-pane fade" id="listings" role="tabpanel" aria-labelledby="listings-tab">
                 <h2>Here are your Houses:</h2>
-                <div class="card-body" th:each="house : ${houses}" th:if="${house.isListingActive() == true}">
+                <div style="width: 30rem;" class="card"  th:each="house : ${houses}" th:if="${house.isListingActive() == true}">
+                    <div class="card-body">
                     <h5 class="card-title"><a th:href="@{/houses/{id}(id=${house.id})}"><span th:text="${house.address}"></span></a></h5>
                     <p th:text="${house.description}" class="card-text"></p>
-                    <a th:href="@{'/houses/edit/' + ${house.id}}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{'/houses/edit/' + ${house.id}}" class="btn btn-primary btn-width">Edit</a>
                     <form th:action="@{/houses/deactivate/{id}(id=${house.id})}" method="post">
-                        <input type="submit" class="btn btn-danger" value="Deactivate"/>
+                        <input type="submit" class="btn btn-danger btn-width" value="Deactivate"/>
                     </form>
+                    </div>
+
                 </div>
             </div>
 
@@ -126,7 +136,7 @@
 
         </div>
     </div>
-</div>
+
     <div class="col-3 flex-wrap">
         <div class="card border border-dark mb-1">
             <div class="card-header text-dark text-center">
