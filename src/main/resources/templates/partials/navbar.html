@@ -5,60 +5,57 @@
     <title>Title</title>
 </head>
 <body>
-    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                <img th:src="@{/img/logoForNav.png}" alt="" width="50" height="26.625">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link active" aria-current="page" href="#">Home</a>-->
-<!--                    </li>-->
-                    <li sec:authorize="isAuthenticated()" class="nav-item">
-                        <form th:action="@{/logout}" th:method="post" id="form1" class="nav-item">
-                            <a onclick="document.getElementById('form1').submit();" class="nav-link">Logout</a>
-                        </form>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/houses">View all properties</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/events">Open house events</a>
-                    </li>
-                    <li sec:authorize="isAuthenticated()" class="nav-item">
-                        <a class="nav-link" href="/houses/create">Create listing</a>
-                    </li>
-                    <li sec:authorize="isAuthenticated()" class="nav-item">
-                        <a class="nav-link" href="/events/create">Create event</a>
-                    </li>
-                    <li sec:authorize="!isAuthenticated()" class="nav-item">
-                        <a class="nav-link" href="/sign-up">Sign up</a>
-                    </li>
-                    <li sec:authorize="!isAuthenticated()" class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Events</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class=form-inline th:action="@{/search}" th:method="get">
-                    <input class="form-control me-2" type="search" name="search" id="search" placeholder="Search" aria-label="search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img th:src="@{/img/logoForNav.png}" alt="" width="50" height="26.625">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!--                    <li class="nav-item">-->
+                <!--                        <a class="nav-link active" aria-current="page" href="#">Home</a>-->
+                <!--                    </li>-->
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <form th:action="@{/logout}" th:method="post" id="form1" class="nav-item">
+                        <a onclick="document.getElementById('form1').submit();" class="nav-link">Logout</a>
+                    </form>
+                </li>
+                <li>
+                    <a class="nav-link" href="/houses">View all properties</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/events">Open house events</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/houses/create">Create listing</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/events/create">Create event</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/sign-up">Sign up</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+
+                <li sec:authorize="isAuthenticated()">
+                    <a class="dropdown-item" href="/profile">My Profile</a>
+                </li>
+            </ul>
+            <form class="form-inline" th:action="@{/search}" th:method="get">
+                <input class="form-inline me-2 rounded" type="search" name="search" id="search"
+                       placeholder="Search for events"
+                       aria-label="search">
+                <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+            </form>
         </div>
-    </nav>
+    </div>
+</nav>
 
 </body>
 </html>
