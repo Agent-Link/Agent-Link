@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -76,15 +77,17 @@ public class UserController {
         model.addAttribute("user", currentUser);
         if(!reviewRatings.isEmpty()) {
             hasReviews = true;
-            int rating = 0;
+            double rating = 0;
             int length = reviewRatings.size();
-            int sum = 0;
+            double sum = 0;
             for (Review review : reviewRatings) {
                 sum += review.getRating();
             }
             rating = sum / length;
+            Formatter formatter = new Formatter();
+            String ratingFormatted = formatter.format("%.1f", rating).toString();
             model.addAttribute("hasReviews", hasReviews);
-            model.addAttribute("userRating", rating);
+            model.addAttribute("userRating", ratingFormatted);
         }
         model.addAttribute("houses", housesDao.findAllByUserAndListingActive(user, true)); //This produces all active user houses on their profile
         model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
@@ -106,15 +109,18 @@ public class UserController {
         boolean hasReviews = false;
         if(!reviewsList.isEmpty()){
            hasReviews = true;
-            int rating = 0;
+            double rating = 0;
             int length = reviewsList.size();
-            int sum = 0;
+            double sum = 0;
             for (Review review : reviewsList){
                 sum += review.getRating();
             }
             rating = sum / length;
+
+            Formatter formatter = new Formatter();
+            String ratingFormatted = formatter.format("%.1f", rating).toString();
             model.addAttribute("hasReviews", hasReviews);
-            model.addAttribute("userRating", rating);
+            model.addAttribute("userRating", ratingFormatted);
             model.addAttribute("reviewsList", reviewsList);
         }
         return "users/agentInfo";
