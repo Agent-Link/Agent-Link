@@ -65,7 +65,7 @@ public class ApplicationController {
             applicationsDao.save(app);
         }
         // will redirect to applicants profile or an applied to page
-        return "redirect:/";
+        return "redirect:/profile";
     }
 
     @PostMapping("/events/apply/host/{openHouseId}/{userId}")
@@ -74,6 +74,6 @@ public class ApplicationController {
         OpenHouseEvent openHouseEvent = eventsDao.getById(openHouseId);
         openHouseEvent.setUser(applicant);
         eventsDao.save(openHouseEvent);
-        return "redirect:/events";
+        return "redirect:/profile";
     }
 }
