@@ -39,22 +39,6 @@ public class Review{
     public Review() {
     }
 
-    //INITIAL VALUE TO REVIEW INCLUDING GETTERS AND SETTERS
-//    int reviewDefault = 5;
-//
-//    public Review(int reviewDefault) {
-//        this.reviewDefault = reviewDefault;
-//    }
-//
-//    public int getReviewDefault() {
-//        return reviewDefault;
-//    }
-//
-//    public void setReviewDefault(int reviewDefault) {
-//        this.reviewDefault = reviewDefault;
-//    }
-
-
     public Review(long id, User listingUser, User buyingUser, OpenHouseEvent openHouseEvent, Date date, String title, String description, int rating) {
         this.id = id;
         this.listingUser = listingUser;
