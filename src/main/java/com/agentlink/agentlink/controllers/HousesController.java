@@ -5,6 +5,7 @@ import com.agentlink.agentlink.models.House;
 import com.agentlink.agentlink.models.User;
 import com.agentlink.agentlink.repositories.HouseRepository;
 import com.agentlink.agentlink.repositories.UserRepository;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -129,14 +130,15 @@ public class HousesController {
     }
 
     @PostMapping("/houses/delete/{id}/image")
-    public String deleteHouseImage(@PathVariable Long id){
+    public String deleteHouseImage(@PathVariable Long id, Model model){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         House houseFromDb = housesDao.getById(id);
+        model.addAttribute("house", houseFromDb);
+        model.addAttribute("states", states);
         if (currentUser.getId() == houseFromDb.getUser().getId()) {
             houseFromDb.setImage_url(null);
         }
-        housesDao.save(houseFromDb);
-        return "redirect:/houses";
+        return "/houses/edit";
     }
 
 

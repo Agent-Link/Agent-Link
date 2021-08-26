@@ -9,9 +9,8 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="houseEdit-form mb-4">
-                <form class="mt-5 border p-4 bg-light shadow" th:action="@{/houses/edit/{id} (id = ${house.id})}"
-                      th:object="${house}" method="post">
-                    <div class="row">
+                <div class="mt-5 border p-4 bg-light shadow row">
+                    <form th:action="@{/houses/edit/{id} (id = ${house.id})}" th:object="${house}" method="post">
                         <h4 class="mb-5 text-secondary">Edit Your House</h4>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="address">Address</label>
@@ -57,22 +56,21 @@
                         <div class="mb-3 col-md-12 form-group">
                             <input type="submit" value="Save Changes" class="btn btn-block btn-info mt-2"/>
                         </div>
-                        <div class="mb-3 col-md-12 form-group">
-                            <h6> Here is your current house:</h6>
+                        <div th:if="${house.image_url != null}">
+                            <div class="mb-3 col-md-12 form-group">
+                                <h6> Here is your current house:</h6>
+                            </div>
+                            <div class="mb-3 col-md-12 form-group">
+                                <img th:src="${house.image_url}" width="100%" height="100%" alt="House Picture">
+                            </div>
                         </div>
-                        <div class="mb-3 col-md-12 form-group">
-                            <img th:src="${house.image_url}" width="100%" height="100%"
-                                 alt="House Picture">
-                        </div>
-                        <div class="mb-3 col-md-12 form-group">
-                            <form th:action="@{/houses/delete/{id}/image (id = ${house.id})}"
-                                  th:object="${house}"
-                                  method="post">
-                                <input type="submit" class="btn btn-danger" value="Delete House Image"/>
-                            </form>
-                        </div>
+                    </form>
+                    <div th:if="${house.image_url != null}" class="mb-3 col-md-12 form-group">
+                        <form th:action="@{/houses/delete/{id}/image (id = ${house.id})}" th:object="${house}" method="post">
+                            <input type="submit" class="btn btn-danger" value="Delete House Image"/>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
