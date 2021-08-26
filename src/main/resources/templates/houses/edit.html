@@ -56,6 +56,7 @@
                         <div class="mb-3 col-md-12 form-group">
                             <input type="submit" value="Save Changes" class="btn btn-block btn-info mt-2"/>
                         </div>
+                        <!--DISPLAY HOUSE IMAGE-->
                         <div th:if="${house.image_url != null}">
                             <div class="mb-3 col-md-12 form-group">
                                 <h6> Here is your current house:</h6>
@@ -65,6 +66,7 @@
                             </div>
                         </div>
                     </form>
+                    <!--HOUSE IMAGE DELETE BUTTON-->
                     <div th:if="${house.image_url != null}" class="mb-3 col-md-12 form-group">
                         <form th:action="@{/houses/delete/{id}/image (id = ${house.id})}" th:object="${house}" method="post">
                             <input type="submit" class="btn btn-danger" value="Delete House Image"/>

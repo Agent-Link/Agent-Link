@@ -107,6 +107,7 @@ public class HousesController {
         return "redirect:/houses/" + id;
     }
 
+//    This deactivates a house so it will no longer show up on profiles
     @PostMapping("/houses/deactivate/{id}")
     public String deactivateHouse(@PathVariable Long id) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -129,6 +130,7 @@ public class HousesController {
         return "redirect:/houses";
     }
 
+//This deletes a house's image
     @PostMapping("/houses/delete/{id}/image")
     public String deleteHouseImage(@PathVariable Long id, Model model){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
