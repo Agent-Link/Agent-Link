@@ -37,8 +37,8 @@
                     <h6 class="address" th:text="${openHouseEvent.house.address}"></h6>
                     <p class="city" th:text="${openHouseEvent.house.city}"></p>
                     <p class="state" th:text="${openHouseEvent.house.state}"></p>
-                    <p class="dateStart" th:text="${openHouseEvent.dateStart}"></p>
-                    <p class="dateEnd" th:text="${openHouseEvent.dateEnd}"></p>
+                    <p class="dateStart" th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"></p>
+                    <p class="dateEnd" th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}"></p>
                 </div>
             </div>
         </div>
