@@ -62,7 +62,7 @@ public class HousesController {
         model.addAttribute("house", new House());
         model.addAttribute("states", states);
         model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
-        return "/houses/create";
+        return "houses/create";
     }
 
     @PostMapping("/houses/create")
@@ -86,7 +86,7 @@ public class HousesController {
         if (currentUser.getId() == house.getUser().getId()) {
             model.addAttribute("house", house);
             model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
-            return "/houses/edit";
+            return "houses/edit";
         } else {
             return "redirect:/profile";
         }
@@ -138,7 +138,7 @@ public class HousesController {
         if (currentUser.getId() == houseFromDb.getUser().getId()) {
             houseFromDb.setImage_url(null);
         }
-        return "/houses/edit";
+        return "houses/edit";
     }
 
 
