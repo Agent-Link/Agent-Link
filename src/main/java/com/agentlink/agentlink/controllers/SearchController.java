@@ -27,7 +27,7 @@ public class SearchController {
         model.addAttribute("usersSearch", userDao.findAllByLastNameLike(search));
         model.addAttribute("usersSearch", userDao.findAllByTeamLike(search));
         model.addAttribute("houseSearch", houseDao.findAllHouseQuery(search));
-        return "/results";
+        return "results";
     }
 }
 

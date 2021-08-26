@@ -37,6 +37,11 @@ public class HousesController {
 
 @RequestMapping(path = "/houses", method = RequestMethod.GET)
     public String getAllHouses(Model model) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         List<House> houses = housesDao.findAll();
         model.addAttribute("houses", houses);
         model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
@@ -45,10 +50,12 @@ public class HousesController {
 
     @GetMapping("/houses/{id}")
     public String singleHouse(@PathVariable long id, Model model){
-        House house = housesDao.getById(id);
         boolean isHouseOwner = false;
+        House house = housesDao.getById(id);
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
             isHouseOwner = currentUser.getId() == house.getUser().getId();
         }
         model.addAttribute("house", house);
@@ -59,6 +66,11 @@ public class HousesController {
 
     @GetMapping("/houses/create")
     public String createHouseForm(Model model) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         model.addAttribute("house", new House());
         model.addAttribute("states", states);
         model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
@@ -68,6 +80,10 @@ public class HousesController {
     @PostMapping("/houses/create")
     public String createHouse(@Valid @ModelAttribute House house, BindingResult result, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         house.setUser(currentUser);
         model.addAttribute("states", states);
         if (result.hasErrors()) {
@@ -81,6 +97,10 @@ public class HousesController {
     @GetMapping("/houses/edit/{id}")
     public String editHousesForm(@PathVariable long id, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         House house = housesDao.getById((id));
         model.addAttribute("states", states);
         if (currentUser.getId() == house.getUser().getId()) {
@@ -95,6 +115,10 @@ public class HousesController {
     @PostMapping("/houses/edit/{id}")
     public String saveEditedHouse(@PathVariable Long id, @Valid @ModelAttribute House house, BindingResult result, Model model){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         House houseFromDb = housesDao.getById(id);
         model.addAttribute("states", states);
         if (result.hasErrors()) {
@@ -108,8 +132,12 @@ public class HousesController {
     }
 
     @PostMapping("/houses/deactivate/{id}")
-    public String deactivateHouse(@PathVariable Long id) {
+    public String deactivateHouse(@PathVariable Long id, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         House houseFromDb = housesDao.getById(id);
         if (currentUser.getId() == houseFromDb.getUser().getId()) {
             houseFromDb.setListingActive(false);
@@ -120,8 +148,12 @@ public class HousesController {
 
 
     @PostMapping("/houses/delete/{id}")
-    public String deleteHouse(@PathVariable Long id) {
+    public String deleteHouse(@PathVariable Long id, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         House houseFromDb = housesDao.getById(id);
         if (currentUser.getId() == houseFromDb.getUser().getId()) {
             housesDao.deleteById(id);
@@ -132,13 +164,17 @@ public class HousesController {
     @PostMapping("/houses/delete/{id}/image")
     public String deleteHouseImage(@PathVariable Long id, Model model){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         House houseFromDb = housesDao.getById(id);
         model.addAttribute("house", houseFromDb);
         model.addAttribute("states", states);
         if (currentUser.getId() == houseFromDb.getUser().getId()) {
             houseFromDb.setImage_url(null);
         }
-        return "/houses/edit";
+        return "houses/edit";
     }
 
 
