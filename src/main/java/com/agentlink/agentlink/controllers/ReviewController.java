@@ -33,6 +33,11 @@ public class ReviewController {
 
     @GetMapping(path = "/reviews")
     public String getAllReviews(Model model) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         List<Review> reviews = reviewsDao.findAll();
         model.addAttribute("reviews", reviews);
         return "reviews/index";
@@ -41,12 +46,22 @@ public class ReviewController {
     //STILL NEED TO CREATE HTML PAGE.
     @GetMapping("/reviews/{id}")
     public String singleHouse(@PathVariable long id, Model model){
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         model.addAttribute("review", reviewsDao.getById(id));
         return"reviews/show";
     }
 
     @GetMapping("/reviews/{eventId}/create")
     public String createReviewForm(Model model, @PathVariable long eventId){
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         model.addAttribute("openHouseEvent", openhouseDao.getById(eventId));
         model.addAttribute("review", new Review());
         return "reviews/create";
@@ -55,6 +70,10 @@ public class ReviewController {
     @PostMapping("/reviews/{eventId}/create")
     public String submitReview(@ModelAttribute Review review, @PathVariable long eventId, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         OpenHouseEvent openHouseEvent = openhouseDao.getById(eventId);
 
         // This verifies that the current user should have permission to leave a review on the host of the event and that they cannot review themselves if they were host

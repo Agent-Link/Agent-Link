@@ -15,7 +15,7 @@ $('.event').each(function (i){
 });
 console.log(events);
 
-const render = ()=>{
+document.addEventListener('DOMContentLoaded', function() {
 
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -34,7 +34,7 @@ const render = ()=>{
             // any other event sources...
 
         ],
-        eventClick: function(info) {
+        eventClick: function (info) {
             alert('Event Address: ' + info.event.title + "\n" + ' Event Start: ' + info.event.start.toLocaleString('en-US') + "\n" + ' Event End: ' + info.event.end.toLocaleString('en-US'));
 
 
@@ -43,13 +43,13 @@ const render = ()=>{
         }
     });
     calendar.render();
-
-}
-document.addEventListener('DOMContentLoaded', function() {
-    render();
 });
 
-document.getElementById("calendars").addEventListener("click", render);
+// document.addEventListener('DOMContentLoaded', function() {
+//     render();
+// });
+//
+// document.getElementById("calendars").addEventListener("click", render);
 
 
 

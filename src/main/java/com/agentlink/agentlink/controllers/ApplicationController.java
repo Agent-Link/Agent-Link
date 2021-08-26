@@ -35,7 +35,11 @@ public class ApplicationController {
 
     @GetMapping("/events/apply/{openHouseId}")
     public String applicationForm(@PathVariable Long openHouseId, Model model) {
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         model.addAttribute("openHouseEvent", eventsDao.getById(openHouseId));
         model.addAttribute("app", new Application());
         return "applications/create";
@@ -44,6 +48,10 @@ public class ApplicationController {
     @PostMapping("/events/apply/{openHouseId}")
     public String submitApplication(@PathVariable Long openHouseId, @Valid @ModelAttribute Application app, BindingResult result, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         OpenHouseEvent openHouseEvent = eventsDao.getById(openHouseId);
         app.setUser(currentUser);
         app.setOpenHouseEvent(openHouseEvent);
