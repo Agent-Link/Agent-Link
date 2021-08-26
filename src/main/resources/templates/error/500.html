@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="partials/head.html :: head('Oooops!')">
+    <head>
+        <title th:text="'Ooops, ' + ${error}"></title>
+    </head>
+<body>
+<nav th:replace="partials/navbar.html :: navbar"/>
+<div class="container text-center">
+
+    <th:block th:switch="${error}">
+        <div th:case="'Not Found'">
+            <h4 class="text-center">Don't know where you are?</h4>
+            <h6 class="text-center"> It's okay we are not sure either.</h6>
+        </div>
+        <div th:case="'Forbidden'">
+            <h4>You don't have permission to view this page.</h4>
+        </div>
+    </th:block>
+    <p class="text-center">Anyways, here a tour of Michael Jordan's house.</p>
+    <iframe
+            width="560" height="315"
+            src="https://www.youtube.com/embed/3lf_w0olusA"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+    <br>
+    <a class="btn btn-primary mb-3 mt-3" href="/">Let's go back home!</a>
+</div>
+<footer th:replace="partials/footer.html :: footer"/>
+<div th:replace="partials/scripts.html :: scripts"/>
+</body>
+</html>
