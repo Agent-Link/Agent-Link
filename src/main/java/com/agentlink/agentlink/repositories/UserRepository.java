@@ -17,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //    @Query("FROM User U WHERE U.firstName LIKE %:query%")
 //    List<User> findAllQueryByFirstName(String query);
     User findAllByFirstNameLike(String query);
+    User findAllByLastNameLike(String query);
+    User findAllByTeamLike(String query);
 }
