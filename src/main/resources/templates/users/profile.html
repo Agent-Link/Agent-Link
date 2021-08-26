@@ -67,15 +67,13 @@
                     <p th:if="${openHouseEvent.house.user.id != openHouseEvent.user.id}">Host name: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"><span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></a></p>
                     <p th:if="${openHouseEvent.house.user.id == openHouseEvent.user.id}">Host needed!</p>
 
-                    <div th:if="${userId == openHouseEvent.house.user.id && currentDateTime.before(openHouseEvent.dateStart)}">
+                    <div th:if="${user.id == openHouseEvent.house.user.id && currentDateTime.before(openHouseEvent.dateStart)}">
                         <form th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}" method="post">
                             <input type="submit" value="Delete" class="btn btn-danger">
                         </form>
                         <a th:if="${currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{'/events/edit/' + ${openHouseEvent.id}}" class="btn btn-primary">Edit</a>
                     </div>
-                    <a th:if="${userId == openHouseEvent.house.user.id && userId != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
                     <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
-                    <a th:if="${userId != openHouseEvent.house.user.id && userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
                 </div>
             </div>
 
@@ -91,9 +89,9 @@
                     <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
                     <p th:if="${openHouseEvent.house.user.id != openHouseEvent.user.id}">Host name: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"><span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></a></p>
                     <p th:if="${openHouseEvent.house.user.id == openHouseEvent.user.id}">You hosted this event by default.</p>
-                    <a th:if="${userId == openHouseEvent.house.user.id && userId != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
+                    <a th:if="${user.id == openHouseEvent.house.user.id && user.id != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" class="btn btn-primary">Review host</a>
                     <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
-                    <a th:if="${userId != openHouseEvent.house.user.id && userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
+                    <a th:if="${user.id != openHouseEvent.house.user.id && user.id == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
                 </div>
             </div>
 
@@ -108,7 +106,7 @@
                     <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
                     <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
                     <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
-                    <a th:if="${userId != openHouseEvent.house.user.id && userId == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
+                    <a th:if="${user.id != openHouseEvent.house.user.id && user.id == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary">Event feedback</a>
                 </div>
             </div>
 
