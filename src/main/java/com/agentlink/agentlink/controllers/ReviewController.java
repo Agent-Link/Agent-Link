@@ -68,6 +68,6 @@ public class ReviewController {
         } else {
             return "redirect:/";
         }
-        return "redirect:/reviews";
+        return "redirect:/profile";
     }
 }

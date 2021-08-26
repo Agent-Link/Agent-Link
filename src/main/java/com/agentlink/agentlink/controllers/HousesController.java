@@ -75,7 +75,7 @@ public class HousesController {
         }
 //        emailSvc.prepareAndSend(post.getUser().getEmail(), "title", "body");
         housesDao.save(house);
-        return "redirect:/houses";
+        return "redirect:/profile";
     }
 
     @GetMapping("/houses/edit/{id}")
@@ -88,7 +88,7 @@ public class HousesController {
             model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
             return "/houses/edit";
         } else {
-            return "redirect:/houses";
+            return "redirect:/profile";
         }
     }
 

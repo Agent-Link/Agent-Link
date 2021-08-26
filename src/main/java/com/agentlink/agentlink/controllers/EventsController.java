@@ -132,7 +132,7 @@ public class EventsController {
             model.addAttribute("openHouseEvent", openHouseEvent);
             return "/openHouseEvents/edit";
         } else {
-            return "redirect:/events";
+            return "redirect:/profile";
         }
     }
 
