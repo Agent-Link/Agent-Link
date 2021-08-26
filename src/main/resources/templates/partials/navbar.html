@@ -42,9 +42,8 @@
                 <li sec:authorize="!isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
-
-                <li sec:authorize="isAuthenticated()">
-                    <a class="dropdown-item" href="/profile">My Profile</a>
+                <li sec:authorize="isAuthenticated()" class="nav-item" >
+                    <a class="nav-link" href="/profile">My Profile</a>
                 </li>
             </ul>
             <form class="form-inline" th:action="@{/search}" th:method="get">

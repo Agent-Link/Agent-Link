@@ -19,6 +19,16 @@
     <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
 </div>
 
+<h6>Here are your search results for houses:</h6>
+<div class="card-body" th:each="house : ${houseSearch}">
+    <h5>House Address:</h5>
+    <h5 th:text="${house.address}" class="card-title"></h5>
+    <p th:text="${house.state}" class="card-text"></p>
+    <p th:text="${house.zipcode}" class="card-text"></p>
+    <p th:text="${house.description}" class="card-text"></p>
+    <a th:href="@{/houses/{id}(id=${house.id})}" class="btn btn-primary">More Details</a>
+</div>
+
 <h6>Here are your search results for agents:</h6>
 <div class="card-body" th:each="user : ${usersSearch}">
     <h5>Username:</h5>
