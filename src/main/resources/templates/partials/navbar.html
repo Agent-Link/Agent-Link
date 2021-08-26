@@ -30,10 +30,10 @@
                 <li>
                     <a class="nav-link" href="/events">Open house events</a>
                 </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item">
+                <li th:if="${user != null && user.isListingAgent()}" sec:authorize="isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="/houses/create">Create listing</a>
                 </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item">
+                <li th:if="${user != null && user.isListingAgent()}" sec:authorize="isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="/events/create">Create event</a>
                 </li>
                 <li sec:authorize="!isAuthenticated()" class="nav-item">

@@ -40,6 +40,11 @@ public class EventsController {
 
     @GetMapping("/events")
     public String getAllEvents(Model model) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         List<OpenHouseEvent> openHouseEvents = openHouseEventsDao.findAllWithoutHostWhereDateStartAfter(new Date());
         model.addAttribute("house", housesDao);
         model.addAttribute("openHouseEvents", openHouseEvents);
@@ -59,6 +64,8 @@ public class EventsController {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             isEventCreator = currentUser.getId() == openHouseEvent.getHouse().getUser().getId();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
         } else {
             return "openHouseEvents/show";
         }
@@ -80,6 +87,8 @@ public class EventsController {
     @GetMapping("/events/create")
     public String createEventForm(Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = usersDao.getById(currentUser.getId());
+        model.addAttribute("user", user);
         List<House> houses = housesDao.findAllByUserAndListingActive(currentUser, true);
 
         model.addAttribute("houses", houses);
@@ -88,8 +97,12 @@ public class EventsController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate, @RequestParam Long house) throws ParseException {
+    public String createEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate, @RequestParam Long house, Model model) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         openHouseEvent.setUser(currentUser);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -127,6 +140,10 @@ public class EventsController {
     @GetMapping("/events/edit/{id}")
     public String editEventsForm(@PathVariable long id, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
         if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId()) {
             model.addAttribute("openHouseEvent", openHouseEvent);
@@ -137,8 +154,12 @@ public class EventsController {
     }
 
     @PostMapping("/events/edit/{id}")
-    public String saveEditedEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate) throws ParseException {
+    public String saveEditedEvent(@ModelAttribute OpenHouseEvent openHouseEvent, @RequestParam String startDate, @RequestParam String endDate, Model model) throws ParseException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         OpenHouseEvent openHouseEventFromDb = openHouseEventsDao.getById(openHouseEvent.getId());
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -180,8 +201,12 @@ public class EventsController {
     }
 
     @PostMapping("/events/delete/{id}")
-    public String deleteEvent(@PathVariable long id) {
+    public String deleteEvent(@PathVariable long id, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
         // Verifies the current user is the event creator and that the event has not started/passed.
         if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId() && openHouseEvent.getDateStart().after(new Date())) {
@@ -198,13 +223,22 @@ public class EventsController {
 
     @GetMapping("/event/feedback/{eventId}")
     public String submitFeedbackForm(Model model, @PathVariable long eventId){
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         model.addAttribute("openHouseEvent", openHouseEventsDao.getById(eventId));
         return "openHouseEvents/createfeedback";
     }
 
     @PostMapping("/event/feedback/{eventId}")
-    public String submitFeedback(@PathVariable long eventId, @RequestParam String feedback) {
+    public String submitFeedback(@PathVariable long eventId, @RequestParam String feedback, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
         OpenHouseEvent openHouseEventFromDb = openHouseEventsDao.getById(eventId);
 
         // This verifies that the current user should have permission to leave feedback on the event and cannot leave feedback on themself if they host the event

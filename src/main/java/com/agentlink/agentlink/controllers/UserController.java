@@ -72,6 +72,7 @@ public class UserController {
     public String userProfile(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = usersDao.getById(user.getId());
+        model.addAttribute("user", currentUser);
         List<Review> reviewRatings = reviewsDao.findAllByBuyingUser(currentUser);
         boolean hasReviews;
         model.addAttribute("user", currentUser);
@@ -93,7 +94,12 @@ public class UserController {
         model.addAttribute("openHouseEvents", eventsDao.findAll()); //This code produces all user events on their profile
         model.addAttribute("currentDateTime", new Date());
         model.addAttribute("upcomingEvents", eventsDao.findAllByCreatorIdAndDateStartAfter(user.getId(), new Date()));
-        model.addAttribute("previousEvents", eventsDao.findAllByCreatorIdAndDateEndBefore(user.getId(), new Date()));
+        if (currentUser.isListingAgent()) {
+            model.addAttribute("previousEvents", eventsDao.findAllByCreatorIdAndDateEndBefore(user.getId(), new Date()));
+        } else if (!currentUser.isListingAgent()) {
+            model.addAttribute("previousEvents", eventsDao.findAllByHostedByUserIdAndDateEndBefore(user.getId(), new Date()));
+        }
+
         model.addAttribute("hostingEvents", eventsDao.findAllByHostedByUserIdAndDateStartAfter(user.getId(), new Date()));
         model.addAttribute("appliedEvents", appsDao.findAllByUserIdWhereNotHost(user.getId()));
 
@@ -149,23 +155,29 @@ public class UserController {
         if (isListingAgent) {
             updatedUser.setListingAgent(true);
         }
+        model.addAttribute("user", updatedUser);
         usersDao.save(updatedUser);
         return "redirect:/profile";
     }
 
     //EDIT PASSWORD
     @GetMapping("/users/editPassword")
-    public String showEditPassword() {
+    public String showEditPassword(Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = usersDao.getById(currentUser.getId());
+        model.addAttribute("user", user);
         return "users/editPassword";
     }
 
     @PostMapping("/users/editPassword")
-    public String editPassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirm) {
+    public String editPassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirm, Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = usersDao.getById(currentUser.getId());
+        model.addAttribute("user", user);
         if (!confirm.equals(newPassword)) {
             return "users/editPassword";
         }
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = usersDao.getById(currentUser.getId());
+
 
         //FOLLOWING 2 LINES DID NOT WORK
         String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(10)); //Generates a hash from plaintext password
