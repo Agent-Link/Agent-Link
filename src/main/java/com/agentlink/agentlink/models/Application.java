@@ -3,6 +3,7 @@ package com.agentlink.agentlink.models;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 
@@ -22,6 +23,8 @@ public class Application {
     private OpenHouseEvent openHouseEvent;
 
     @Column(nullable = false, length = 500)
+    @NotBlank
+    @Size(min = 1, max = 500)
     private String inquiry;
 
     @Column(nullable = false)

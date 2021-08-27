@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -52,13 +53,24 @@ public class ApplicationController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
+        // had to write custom errors because error results is not passing to html correctly.
+        if (result.hasErrors()) {
+            if (app.getInquiry().trim().isEmpty()) {
+                boolean isBlank = true;
+                model.addAttribute("isBlank", isBlank);
+            }
+            if (app.getInquiry().length() > 500) {
+                boolean isOver500 = true;
+                model.addAttribute("isOver500", isOver500);
+            }
+            model.addAttribute("openHouseEvent", eventsDao.getById(openHouseId));
+            model.addAttribute("app", app);
+            return "applications/create";
+        }
         OpenHouseEvent openHouseEvent = eventsDao.getById(openHouseId);
         app.setUser(currentUser);
         app.setOpenHouseEvent(openHouseEvent);
         app.setDate(new Date());
-        if (result.hasErrors()) {
-            return "applications/create";
-        }
 
         List<Application> appsForEvent = applicationsDao.findApplicationsByOpenHouseEventId(openHouseId);
         boolean hasNotApplied = true;
