@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/head.html :: head('Results')">
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="partials/head.html :: head('Results')"/>
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
@@ -42,11 +39,6 @@
     <h6>Real Estate Team:</h6>
     <p th:text="${user.team}" class="card-text"></p>
 </div>
-
-
-
-
-<footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
