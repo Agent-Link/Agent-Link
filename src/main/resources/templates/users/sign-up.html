@@ -13,33 +13,28 @@
                     <div class="row">
                         <div class="mb-3 col-md-12 form-group">
                             <label for="username">Username</label>
-                            <input class="form-control" id="username" th:field="*{username}"
-                                   placeholder="Enter User Name"/>
+                            <input class="form-control" id="username" th:field="*{username}" placeholder="Enter User Name"/>
                             <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="email">Email</label>
-                            <input class="form-control" id="email" th:field="*{email}"
-                                   placeholder="AgentTony@KellerWilliams.com"/>
+                            <input class="form-control" id="email" th:field="*{email}" placeholder="AgentTony@KellerWilliams.com"/>
                             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="signUpPassword">Password</label>
-                            <input class="form-control" id="signUpPassword" name="signUpPassword" type="password"
-                                   th:field="*{password}" placeholder="Password"/>
+                            <input class="form-control" id="signUpPassword" name="signUpPassword" type="password" th:field="*{password}" placeholder="Password"/>
                             <!--The th:field should still take password if they match. -->
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="signUpPassword-confirm">Confirm Password</label>
-                            <input class="form-control" id="signUpPassword-confirm" name="signUpPasswordConfirm"
-                                   type="password" placeholder="Confirm Password"/>
+                            <input class="form-control" id="signUpPassword-confirm" name="signUpPasswordConfirm" type="password" placeholder="Confirm Password"/>
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="firstName">First Name</label>
-                            <input class="form-control" id="firstName" th:field="*{firstName}"
-                                   placeholder="First Name"/>
+                            <input class="form-control" id="firstName" th:field="*{firstName}" placeholder="First Name"/>
                             <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
@@ -49,8 +44,7 @@
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="team">Team Name</label>
-                            <input class="form-control" id="team" th:field="*{team}"
-                                   placeholder="ReMax, Century 21, Keller Williams etc."/>
+                            <input class="form-control" id="team" th:field="*{team}" placeholder="ReMax, Century 21, Keller Williams etc."/>
                             <p th:if="${#fields.hasErrors('team')}" th:errors="*{team}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
@@ -74,8 +68,6 @@
         </div>
     </div>
 </div>
-
-<footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
