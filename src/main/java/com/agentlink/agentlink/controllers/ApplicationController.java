@@ -36,14 +36,20 @@ public class ApplicationController {
 
     @GetMapping("/events/apply/{openHouseId}")
     public String applicationForm(@PathVariable Long openHouseId, Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        model.addAttribute("openHouseEvent", eventsDao.getById(openHouseId));
-        model.addAttribute("app", new Application());
-        return "applications/create";
+        OpenHouseEvent openHouseEvent = eventsDao.getById(openHouseId);
+        // Verifies the user cannot view the apply page for their own event
+        if (currentUser.getId() != openHouseEvent.getHouse().getUser().getId()) {
+            model.addAttribute("openHouseEvent", openHouseEvent);
+            model.addAttribute("app", new Application());
+            return "applications/create";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/events/apply/{openHouseId}")
@@ -81,10 +87,9 @@ public class ApplicationController {
             }
         }
         // Verifies that the person trying to apply is actually an user that has not applied and is also not the event creator. And that the event has not started yet.
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser" && hasNotApplied && currentUser.getId() != openHouseEvent.getUser().getId() && openHouseEvent.getDateStart().after(new Date())) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser" && hasNotApplied && currentUser.getId() != openHouseEvent.getHouse().getUser().getId() && openHouseEvent.getDateStart().after(new Date())) {
             applicationsDao.save(app);
         }
-        // will redirect to applicants profile or an applied to page
         return "redirect:/profile";
     }
 

@@ -35,7 +35,7 @@ public class HousesController {
         this.usersDao = usersDao;
     }
 
-@RequestMapping(path = "/houses", method = RequestMethod.GET)
+    @GetMapping("/houses")
     public String getAllHouses(Model model) {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -66,15 +66,20 @@ public class HousesController {
 
     @GetMapping("/houses/create")
     public String createHouseForm(Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        model.addAttribute("house", new House());
-        model.addAttribute("states", states);
-        model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
-        return "houses/create";
+        // Verifies the current user is a listing agent
+        if (usersDao.getById(currentUser.getId()).isListingAgent()) {
+            model.addAttribute("house", new House());
+            model.addAttribute("states", states);
+            model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
+            return "houses/create";
+        } else {
+            return "redirect:/profile";
+        }
     }
 
     @PostMapping("/houses/create")
@@ -89,8 +94,11 @@ public class HousesController {
         if (result.hasErrors()) {
             return "houses/create";
         }
-//        emailSvc.prepareAndSend(post.getUser().getEmail(), "title", "body");
-        housesDao.save(house);
+        // Verifies the current user is a listing agent
+        if (usersDao.getById(currentUser.getId()).isListingAgent()) {
+            housesDao.save(house);
+//            emailSvc.prepareAndSend(post.getUser().getEmail(), "title", "body");
+        }
         return "redirect:/profile";
     }
 
@@ -103,6 +111,7 @@ public class HousesController {
         }
         House house = housesDao.getById((id));
         model.addAttribute("states", states);
+        // Verifies the current user is the house creator
         if (currentUser.getId() == house.getUser().getId()) {
             model.addAttribute("house", house);
             model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
@@ -125,6 +134,7 @@ public class HousesController {
         if (result.hasErrors()) {
             return "houses/edit";
         }
+        // Verifies the current user is the house creator
         if (currentUser.getId() == houseFromDb.getUser().getId()) {
             house.setUser(currentUser);
             housesDao.save(house);
@@ -140,6 +150,7 @@ public class HousesController {
             model.addAttribute("user", user);
         }
         House houseFromDb = housesDao.getById(id);
+        // Verifies the current user is the house creator
         if (currentUser.getId() == houseFromDb.getUser().getId()) {
             houseFromDb.setListingActive(false);
             housesDao.save(houseFromDb);
@@ -147,20 +158,21 @@ public class HousesController {
         return "redirect:/profile";
     }
 
-
-    @PostMapping("/houses/delete/{id}")
-    public String deleteHouse(@PathVariable Long id, Model model) {
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User user = usersDao.getById(currentUser.getId());
-            model.addAttribute("user", user);
-        }
-        House houseFromDb = housesDao.getById(id);
-        if (currentUser.getId() == houseFromDb.getUser().getId()) {
-            housesDao.deleteById(id);
-        }
-        return "redirect:/houses";
-    }
+    // Do we need to remove this entirely? We are not allowing house deletion as it will cause a cascade of data loss if connected to events/reviews etc..
+//    @PostMapping("/houses/delete/{id}")
+//    public String deleteHouse(@PathVariable Long id, Model model) {
+//        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+//            User user = usersDao.getById(currentUser.getId());
+//            model.addAttribute("user", user);
+//        }
+//        House houseFromDb = housesDao.getById(id);
+//        // Verifies the current user is the house creator
+//        if (currentUser.getId() == houseFromDb.getUser().getId()) {
+//            housesDao.deleteById(id);
+//        }
+//        return "redirect:/houses";
+//    }
 
     @PostMapping("/houses/delete/{id}/image")
     public String deleteHouseImage(@PathVariable Long id, Model model){
@@ -177,8 +189,4 @@ public class HousesController {
         }
         return "houses/edit";
     }
-
-
-
-
 }
