@@ -21,15 +21,15 @@ VALUES /* 1 */('cody@codeup.com','Cody','Duck',true,'$2a$10$Ka8b4vJbXPGsP8jeu5MK
 
 
 INSERT INTO agentlink_db.houses(address, city, description, image_url, listing_active, state, zipcode, listing_agent_id)
-VALUES/* 1 */('11507 Sayanora Ct','San Antonio','4 bedroom 3 bathroom','https://cdn.filestackcontent.com/uiZ9HRk6Q6urwjD4e6qG',true,'Texas','78216',1),
-    /* 2 */('227 Herweck Dr','Castle Hills','10 bedroom 3 bathroom','https://cdn.filestackcontent.com/uiZ9HRk6Q6urwjD4e6qG',true,'Texas','78213',1),
-    /* 3 */('2312 Encino Xing','San Antonio','1 bedroom 3 bathroom','https://cdn.filestackcontent.com/uiZ9HRk6Q6urwjD4e6qG',true,'Texas','78259',1),
-    /* 4 */('15603 Trail Bluff St','San Antonio','4 bedroom 3 bathroom','https://cdn.filestackcontent.com/uiZ9HRk6Q6urwjD4e6qG',true,'Texas','78247',1),
-    /* 5 */('11119 Reverie Ln','San Antonio','Big backyard, 2 bedroom, 3 bathroom','https://cdn.filestackcontent.com/uiZ9HRk6Q6urwjD4e6qG',true,'Texas','78216',2),
-    /* 6 */('9107 Contessa Dr','San Antonio','smaller town house, 2 bedroom, 1 bathroom','https://cdn.filestackcontent.com/uiZ9HRk6Q6urwjD4e6qG',true,'Texas','78216',3),
-    /* 7 */('8913 Willmon Way','Windcrest','countryside suburb, 4 bedroom, 3 bathroom','https://cdn.filestackcontent.com/uiZ9HRk6Q6urwjD4e6qG',true,'Texas','78239',4),
-    /* 8 */('2111 Domal Ln','San Antonio','5 bedroom, 4 bathroom','https://cdn.filestackcontent.com/uiZ9HRk6Q6urwjD4e6qG',true,'Texas','78230',5),
-    /* 9 */('230 Dwyer Ave UNIT 203','San Antonio','6 bedrooms,3 bathrooms','https://cdn.filestackcontent.com/uiZ9HRk6Q6urwjD4e6qG',true,'Texas','78204',5);
+VALUES/* 1 */('11507 Sayanora Ct','San Antonio','4 bedroom 3 bathroom','https://cdn.filestackcontent.com/daufKGaRmG7HBXczjx4s',true,'Texas','78216',1),
+    /* 2 */('227 Herweck Dr','Castle Hills','10 bedroom 3 bathroom','https://cdn.filestackcontent.com/DLpHGilcTnexlzj17dvg',true,'Texas','78213',1),
+    /* 3 */('2312 Encino Xing','San Antonio','1 bedroom 3 bathroom','https://cdn.filestackcontent.com/ksNyiKniThCXvc7qf0zn',true,'Texas','78259',1),
+    /* 4 */('15603 Trail Bluff St','San Antonio','4 bedroom 3 bathroom','https://cdn.filestackcontent.com/C2tjTklMScSXLA2RE9OU',true,'Texas','78247',1),
+    /* 5 */('11119 Reverie Ln','San Antonio','Big backyard, 2 bedroom, 3 bathroom','https://cdn.filestackcontent.com/63syfdODR7eQCvfNvrCu',true,'Texas','78216',2),
+    /* 6 */('9107 Contessa Dr','San Antonio','4 bedroom, 2 bathroom','https://cdn.filestackcontent.com/VMQxBMeLSjSsF8UGVmvj',true,'Texas','78216',3),
+    /* 7 */('8913 Willmon Way','Windcrest','Townhouse, 3 bedroom, 2 bathroom','https://cdn.filestackcontent.com/ga8xJNcQqi4aGYgLpROt',true,'Texas','78239',4),
+    /* 8 */('2111 Domal Ln','San Antonio','5 bedroom, 4 bathroom','https://cdn.filestackcontent.com/seKuDIq4QlGnMqdk1Feq',true,'Texas','78230',5),
+    /* 9 */('230 Dwyer Ave UNIT 203','San Antonio','Downtown townhouse, 3 bedrooms,3 bathrooms','https://cdn.filestackcontent.com/OFTi6vIlSWiMuBY3ORdv',true,'Texas','78204',5);
 
 
 INSERT INTO agentlink_db.reviews(date, description, rating, title, listing_agent_id, buying_agent_id)

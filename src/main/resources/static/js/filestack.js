@@ -1,4 +1,4 @@
-const client = filestack.init(FILESTACK_TOKEN);
+const client = filestack.init($(".filestackToken").val());
 
 const uploadDone = (results) => {
     const fileData = results.filesUploaded[0];
