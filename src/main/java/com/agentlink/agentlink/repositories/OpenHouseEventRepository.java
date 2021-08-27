@@ -31,7 +31,7 @@ public interface OpenHouseEventRepository extends JpaRepository<OpenHouseEvent, 
     @Query("FROM OpenHouseEvent O WHERE O.user.id = ?1 AND O.house.user.id <> O.user.id AND O.dateStart >= ?2")
     List<OpenHouseEvent> findAllByHostedByUserIdAndDateStartAfter(long id, Date date);
 
-    // Finds all events by user id where an user has been set to host and that start after the input date
+    // Finds all events by user id where an user has been set to host and that end before the input date
     @Query("FROM OpenHouseEvent O WHERE O.user.id = ?1 AND O.house.user.id <> O.user.id AND O.dateEnd <= ?2")
     List<OpenHouseEvent> findAllByHostedByUserIdAndDateEndBefore(long id, Date date);
 

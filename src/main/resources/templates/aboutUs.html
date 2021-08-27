@@ -4,11 +4,11 @@
 <head>
     <link rel="stylesheet" th:href="@{/css/aboutUsStyle.css}">
 </head>
-
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
 <!--This page is an About Us/ Meet the Developers page. It has links to the developers emails, LinkedIn and GitHub as well as a photo.-->
+
 <div class="container">
     <!--Meet the Developers paragraph-->
     <div class="row">
@@ -21,16 +21,17 @@
     </div>
     <!--Start of 1st card-->
     <div class="row justify-content-center">
-        <div class="col-3 mb-30">
+        <div class="col-md-6 col-lg-4 mb-30">
             <div class="team-item">
                 <div class="mb-30 position-relative d-flex align-items-center">
-                            <span class="socials d-inline-block">
-                                <a href="mailto:matthew.r.walker4@gmail.com" class="far fa-envelope"></a>
-                                <a href="https://www.linkedin.com/in/matthew-walker4/" class="fab fa-linkedin"></a>
-                                <a href="https://github.com/matthew-r-walker" class="fab fa-github"></a>
-                            </span>
+                    <span class="socials d-inline-block">
+                        <a href="mailto:matthew.r.walker4@gmail.com" class="far fa-envelope"></a>
+                        <a href="https://www.linkedin.com/in/matthew-walker4/" class="fab fa-linkedin"></a>
+                        <a href="https://github.com/matthew-r-walker" class="fab fa-github"></a>
+                    </span>
                     <span class="img-holder d-inline-block">
-                    <img th:src="@{/img/Matthew.jpeg}" height="200" width="200"/></span>
+                        <img th:src="@{/img/Matthew.jpeg}" height="300" width="300"/>
+                    </span>
                 </div>
                 <div class="team-content">
                     <h5 class="mb-2">Matthew Walker</h5>
@@ -39,16 +40,16 @@
             </div>
         </div>
         <!--Start of 2nd card-->
-        <div class="col-3 mb-30">
+        <div class="col-md-6 col-lg-4 mb-30">
             <div class="team-item">
                 <div class="mb-30 position-relative d-flex align-items-center">
-                            <span class="socials d-inline-block">
-                                <a href="mailto:felan.jordan94@gmail.com" class="far fa-envelope"></a>
-                                <a href="https://www.linkedin.com/in/jordan-felan/" class="fab fa-linkedin"></a>
-                                <a href="https://github.com/Jordan-felan" class="fab fa-github"></a>
-                            </span>
+                    <span class="socials d-inline-block">
+                        <a href="mailto:felan.jordan94@gmail.com" class="far fa-envelope"></a>
+                        <a href="https://www.linkedin.com/in/jordan-felan/" class="fab fa-linkedin"></a>
+                        <a href="https://github.com/Jordan-felan" class="fab fa-github"></a>
+                    </span>
                     <span class="img-holder d-inline-block">
-                            <img th:src="@{/img/Jordan.jpeg}" height="200" width="200"/>
+                        <img th:src="@{/img/Jordan.jpeg}" height="300" width="300"/>
                     </span>
                 </div>
                 <div class="team-content">
@@ -57,19 +58,19 @@
                 </div>
             </div>
         </div>
-
+    </div>
     <!--Start of 3rd card-->
-
-        <div class="col-3 mb-30">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4 mb-30">
             <div class="team-item">
                 <div class="mb-30 position-relative d-flex align-items-center">
-                            <span class="socials d-inline-block">
-                                <a href="mailto:Carrington.Jones47@gmail.com" class="far fa-envelope"></a>
-                                <a href="https://www.linkedin.com/in/carrington-jones/" class="fab fa-linkedin"></a>
-                                <a href="https://github.com/carrington-jones" class="fab fa-github"></a>
-                            </span>
+                    <span class="socials d-inline-block">
+                        <a href="mailto:Carrington.Jones47@gmail.com" class="far fa-envelope"></a>
+                        <a href="https://www.linkedin.com/in/carrington-jones/" class="fab fa-linkedin"></a>
+                        <a href="https://github.com/carrington-jones" class="fab fa-github"></a>
+                    </span>
                     <span class="img-holder d-inline-block">
-                            <img th:src="@{/img/Carrington.jpeg}" height="200" width="200"/>
+                        <img th:src="@{/img/Carrington.jpeg}" height="300" width="300"/>
                     </span>
                 </div>
                 <div class="team-content">
@@ -79,16 +80,16 @@
             </div>
         </div>
         <!--Start of 4th card-->
-        <div class="col-3 mb-30">
+        <div class="col-md-6 col-lg-4 mb-30">
             <div class="team-item">
                 <div class="mb-30 position-relative d-flex align-items-center">
-                            <span class="socials d-inline-block">
-                                <a href="mailto:alex.hernandez7573@gmail.com" class="far fa-envelope"></a>
-                                <a href="https://www.linkedin.com/in/alexander-hernandez-540166214/" class="fab fa-linkedin"></a>
-                                <a href="https://github.com/alex-hernandez7573" class="fab fa-github"></a>
-                            </span>
+                    <span class="socials d-inline-block">
+                        <a href="mailto:alex.hernandez7573@gmail.com" class="far fa-envelope"></a>
+                        <a href="https://www.linkedin.com/in/alexander-hernandez-540166214/" class="fab fa-linkedin"></a>
+                        <a href="https://github.com/alex-hernandez7573" class="fab fa-github"></a>
+                    </span>
                     <span class="img-holder d-inline-block">
-                            <img th:src="@{/img/Alex.jpeg}" height="200" width="200"/>
+                        <img th:src="@{/img/Alex.jpeg}" height="300" width="300"/>
                     </span>
                 </div>
                 <div class="team-content">
@@ -99,9 +100,6 @@
         </div>
     </div>
 </div>
-
-
-<footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>

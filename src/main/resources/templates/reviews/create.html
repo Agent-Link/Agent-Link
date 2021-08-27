@@ -8,56 +8,44 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="applicationCreate-form">
-                <form th:action="@{/reviews/{eventId}/create (eventId=${eventId})}" method="post" th:object="${review}"
-                      class="mt-5 border p-4 bg-light shadow text-center">
+                <form th:action="@{/reviews/{eventId}/create (eventId=${eventId})}" method="post" th:object="${review}" class="mt-5 border p-4 bg-light shadow text-center">
                     <h4 class="mb-5 text-secondary">Leave a Review<br></h4>
-                        <div class="row">
-                            <div class="mb-3 col-md-12 form-group">
-                                <p>Event Address: <span th:text="${openHouseEvent.house.address}"/>, <span
-                                        th:text="${openHouseEvent.house.city}"/>, <span
-                                        th:text="${openHouseEvent.house.state}"/> <span
-                                        th:text="${openHouseEvent.house.zipcode}"/></p>
-                                <p>Event Start Time: <span
-                                        th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"/></p>
-                                <p>Event End Time: <span
-                                        th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}"/></p>
-                                <p>Event Host: <span th:text="${openHouseEvent.user.firstName}"/> <span
-                                        th:text="${openHouseEvent.user.lastName}"/></p>
-                            </div>
-                            <div class="mb-3 col-md-12 form-group">
-                                <label for="title">Title</label>
-                                <input id="title" name="title" type="text" class="form-control" th:field="*{title}"/>
-                            </div>
-                            <div class="mb-3 col-md-12 form-group">
-                                <input type="radio" th:field="*{rating}" id="star5" name="rate" value="5"/>
-                                <label for="star5" title="text">5 stars</label>
-                                <input type="radio" th:field="*{rating}" id="star4" name="rate" value="4"/>
-                                <label for="star4" title="text">4 stars</label>
-                                <input type="radio" th:field="*{rating}" id="star3" name="rate" value="3"/>
-                                <label for="star3" title="text">3 stars</label>
-                                <input type="radio" th:field="*{rating}" id="star2" name="rate" value="2"/>
-                                <label for="star2" title="text">2 stars</label>
-                                <input type="radio" th:field="*{rating}" id="star1" name="rate" value="1"/>
-                                <label for="star1" title="text">1 star</label>
-                            </div>
-                            <div class="mb-3 col-md-12 form-group">
-                                <label class="review" for="review">Please leave a short review of your
-                                    experience with the buying agent</label>
-                                <textarea id="review" th:field="*{description}" class="review form-control"
-                                          name="review"></textarea>
-                            </div>
-                            <div class="mb-3 col-md-12 form-group">
-                                <button class="btn btn-primary" type="submit">Post Review</button>
-                            </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-12 form-group">
+                            <p>Event Address: <span th:text="${openHouseEvent.house.address}"/>, <span th:text="${openHouseEvent.house.city}"/>, <span th:text="${openHouseEvent.house.state}"/> <span th:text="${openHouseEvent.house.zipcode}"/></p>
+                            <p>Event Start Time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"/></p>
+                            <p>Event End Time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}"/></p>
+                            <p>Event Host: <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></p>
                         </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="title">Title</label>
+                            <input id="title" name="title" type="text" class="form-control" th:field="*{title}"/>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <input type="radio" th:field="*{rating}" id="star5" name="rate" value="5"/>
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" th:field="*{rating}" id="star4" name="rate" value="4"/>
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" th:field="*{rating}" id="star3" name="rate" value="3"/>
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" th:field="*{rating}" id="star2" name="rate" value="2"/>
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" th:field="*{rating}" id="star1" name="rate" value="1"/>
+                            <label for="star1" title="text">1 star</label>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label class="review" for="review">Please leave a short review of your experience with the buying agent</label>
+                            <textarea id="review" th:field="*{description}" class="review form-control" name="review"></textarea>
+                        </div>
+                        <div class="mb-3 col-md-12 form-group">
+                            <button class="btn btn-primary" type="submit">Post Review</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-
-<footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
