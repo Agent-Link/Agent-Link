@@ -118,6 +118,7 @@ public class HousesController {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
+            model.addAttribute("FILESTACK_TOKEN",FILESTACK_TOKEN);
         }
         House houseFromDb = housesDao.getById(id);
         model.addAttribute("states", states);
