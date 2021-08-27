@@ -56,6 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     "/houses/edit/{id}", // only authenticated users can edit houses
                     "/events/create",
                     "/events/edit/{id}",
+                    "/events/apply/{id}",
                         "/profile",
                         "/profile/edit"
                 )

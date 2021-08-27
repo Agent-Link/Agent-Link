@@ -28,7 +28,7 @@ public class House {
 
     @Column(nullable = false, length = 10)
     @NotBlank
-    @Size(max = 10, message = "Max size 10 chars")
+    @Pattern(regexp = "[0-9]{5}|[0-9]{9}", message = "must be a 5 or 9 digit zipcode, no hyphens -")
     private String zipcode;
 
     @Column(nullable = false, length = 500)
