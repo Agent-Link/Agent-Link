@@ -26,10 +26,8 @@
                             <label for="state">State</label>
                             <br>
                             <select name="state" id="state">
-                                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"
-                                        th:if="${house.state == state}" selected></option>
-                                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"
-                                        th:unless="${house.state == state}"></option>
+                                <option th:each="state: ${states}" th:value="${state}" th:text="${state}" th:if="${house.state == state}" selected></option>
+                                <option th:each="state: ${states}" th:value="${state}" th:text="${state}" th:unless="${house.state == state}"></option>
                             </select>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
@@ -39,11 +37,9 @@
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="description">Description</label>
-                            <textarea id="description" name="description" class="materialize-textarea form-control"
-                                      th:field="*{description}"></textarea>
+                            <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"></textarea>
                             <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                         </div>
-
                         <div class="mb-3 col-md-12 form-group">
                             <input th:field="*{image_url}" type="hidden" class="form-control" id="image_url">
                         </div>
@@ -77,10 +73,6 @@
         </div>
     </div>
 </div>
-
-
-<footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
-<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 </body>
 </html>

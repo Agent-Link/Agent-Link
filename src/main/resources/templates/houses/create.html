@@ -8,8 +8,7 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="houseCreate-form mb-4">
-                <form th:action="@{/houses/create}" method="post" th:object="${house}"
-                      class="mt-5 border p-4 bg-light shadow">
+                <form th:action="@{/houses/create}" method="post" th:object="${house}" class="mt-5 border p-4 bg-light shadow">
                     <h4 class="mb-5 text-secondary">Create A Listing</h4>
                     <div class="row">
                         <div class="mb-3 col-md-12 form-group">
@@ -36,11 +35,9 @@
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="description">Description</label>
-                            <textarea id="description" name="description" class="materialize-textarea form-control"
-                                      th:field="*{description}"></textarea>
+                            <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"/>
                             <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                         </div>
-
                         <div class="mb-3 col-md-12 form-group">
                             <input th:field="*{image_url}" type="hidden" class="form-control" id="image_url">
                         </div>
@@ -49,7 +46,6 @@
                             <button id="filestack" type="button">Select Image</button>
                             <input type="hidden" th:value="${FILESTACK_TOKEN}" class="filestackToken">
                         </div>
-                        <div class="form-group"></div>
                         <input type="submit" value="Create listing" class="btn btn-block btn-info"/>
                     </div>
                 </form>
@@ -57,8 +53,6 @@
         </div>
     </div>
 </div>
-
-<footer th:replace="partials/footer.html :: footer"/>
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
