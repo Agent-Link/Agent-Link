@@ -3,6 +3,7 @@ package com.agentlink.agentlink.models;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
@@ -28,12 +29,18 @@ public class Review{
     private Date date;
 
     @Column(nullable = false, length = 70)
+    @NotBlank
+    @Size(max = 70, message = "must not be over 70 characters")
     private String title;
 
     @Column(nullable = false, length = 500)
+    @NotBlank
+    @Size(max = 500, message = "must not be over 500 characters")
     private String description;
 
     @Column(nullable = false)
+    @Min(value = 1, message = "must select a rating")
+    @Max(value = 5)
     private int rating;
 
     public Review() {

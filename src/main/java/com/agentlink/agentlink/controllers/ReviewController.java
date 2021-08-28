@@ -11,8 +11,10 @@ import com.agentlink.agentlink.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +33,7 @@ public class ReviewController {
         this.openhouseDao = openhouseDao;
     }
 
+    // Should probably not be a thing
     @GetMapping(path = "/reviews")
     public String getAllReviews(Model model) {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
@@ -57,25 +60,35 @@ public class ReviewController {
 
     @GetMapping("/reviews/{eventId}/create")
     public String createReviewForm(Model model, @PathVariable long eventId){
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User user = usersDao.getById(currentUser.getId());
-            model.addAttribute("user", user);
-        }
-        model.addAttribute("openHouseEvent", openhouseDao.getById(eventId));
-        model.addAttribute("review", new Review());
-        return "reviews/create";
-    }
-
-    @PostMapping("/reviews/{eventId}/create")
-    public String submitReview(@ModelAttribute Review review, @PathVariable long eventId, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
         OpenHouseEvent openHouseEvent = openhouseDao.getById(eventId);
+        // This verifies that the current user should have permission to leave a review
+        if (openHouseEvent.getHouse().getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEvent.getUser().getId() && new Date().after(openHouseEvent.getDateEnd()) && openHouseEvent.getReview() == null) {
+            model.addAttribute("openHouseEvent", openHouseEvent);
+            model.addAttribute("review", new Review());
+            return "reviews/create";
+        } else {
+            return "redirect:/";
+        }
+    }
 
+    @PostMapping("/reviews/{eventId}/create")
+    public String submitReview(@Valid @ModelAttribute Review review, BindingResult result, @PathVariable long eventId, Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        }
+        OpenHouseEvent openHouseEvent = openhouseDao.getById(eventId);
+        if (result.hasErrors()) {
+            model.addAttribute("openHouseEvent", openHouseEvent);
+            model.addAttribute("review", review);
+            return "reviews/create";
+        }
         // This verifies that the current user should have permission to leave a review on the host of the event and that they cannot review themselves if they were host
         if(openHouseEvent.getHouse().getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEvent.getUser().getId() && new Date().after(openHouseEvent.getDateEnd()) && openHouseEvent.getReview() == null) {
             User buyingAgent = openhouseDao.getById(eventId).getUser();

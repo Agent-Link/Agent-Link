@@ -57,8 +57,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     "/events/create",
                     "/events/edit/{id}",
                     "/events/apply/{id}",
-                        "/profile",
-                        "/profile/edit"
+                    "/reviews/{eventId}/create",
+                    "/profile",
+                    "/profile/edit"
                 )
                 .authenticated()
         ;
