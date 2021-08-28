@@ -20,6 +20,7 @@
                         <div class="mb-3 col-md-12 form-group">
                             <label for="title">Title</label>
                             <input id="title" name="title" type="text" class="form-control" th:field="*{title}"/>
+                            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <input type="radio" th:field="*{rating}" id="star5" name="rate" value="5"/>
@@ -33,9 +34,11 @@
                             <input type="radio" th:field="*{rating}" id="star1" name="rate" value="1"/>
                             <label for="star1" title="text">1 star</label>
                         </div>
+                        <p th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></p>
                         <div class="mb-3 col-md-12 form-group">
                             <label class="review" for="review">Please leave a short review of your experience with the buying agent</label>
                             <textarea id="review" th:field="*{description}" class="review form-control" name="review"></textarea>
+                            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <button class="btn btn-primary" type="submit">Post Review</button>
