@@ -115,13 +115,12 @@ public class UserController {
         boolean hasReviews = false;
         if(!reviewsList.isEmpty()){
            hasReviews = true;
-            double rating = 0;
             int length = reviewsList.size();
             double sum = 0;
             for (Review review : reviewsList){
                 sum += review.getRating();
             }
-            rating = sum / length;
+            double rating = sum / length;
 
             Formatter formatter = new Formatter();
             String ratingFormatted = formatter.format("%.1f", rating).toString();
@@ -135,23 +134,30 @@ public class UserController {
     //This code allows users to edit their profile.
     @GetMapping("/profile/edit")
     public String editUserProfile(Model model) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", usersDao.getById(user.getId()));
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = usersDao.getById(currentUser.getId());
+        model.addAttribute("user", user);
+        model.addAttribute("isListingAgent", user.isListingAgent());
         return "users/editProfile";
     }
 
     // Need to add validation to user edit
     @PostMapping("/profile/edit")
-    public String updateUser(@ModelAttribute("user") User user, Model model, @RequestParam(defaultValue = "false") boolean isListingAgent) {
+    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, @RequestParam(defaultValue = "false") boolean isListingAgent) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User updatedUser = usersDao.getById(currentUser.getId());
 
+        if (result.hasErrors()) {
+            model.addAttribute("isListingAgent", updatedUser.isListingAgent());
+            return "users/editProfile";
+        }
         updatedUser.setEmail(user.getEmail());
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setUsername(user.getUsername());
         updatedUser.setPhone(user.getPhone());
         updatedUser.setTeam(user.getTeam());
+        updatedUser.setPassword(user.getPassword());
         if (isListingAgent) {
             updatedUser.setListingAgent(true);
         }
@@ -160,8 +166,7 @@ public class UserController {
         return "redirect:/profile";
     }
 
-    //EDIT PASSWORD
-    @GetMapping("/users/editPassword")
+    @GetMapping("/users/editpassword")
     public String showEditPassword(Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = usersDao.getById(currentUser.getId());
@@ -169,25 +174,31 @@ public class UserController {
         return "users/editPassword";
     }
 
-    @PostMapping("/users/editPassword")
-    public String editPassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirm, Model model) {
+    @PostMapping("/users/editpassword")
+    public String editPassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String newPasswordConfirm, Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = usersDao.getById(currentUser.getId());
-        model.addAttribute("user", user);
-        if (!confirm.equals(newPassword)) {
+        User userCurrent = usersDao.getById(currentUser.getId());
+
+        boolean passwordCorrect = BCrypt.checkpw(oldPassword, userCurrent.getPassword());
+        boolean passwordsDoNotMatch = !newPasswordConfirm.equals(newPassword);
+
+        if (!passwordCorrect || passwordsDoNotMatch || newPassword.length() < 8) {
+            if (!passwordCorrect) {
+                model.addAttribute("incorrectPassword", true);
+            }
+            if (passwordsDoNotMatch) {
+                model.addAttribute("passwordsDoNotMatch", true);
+            }
+            if (newPassword.length() < 8) {
+                model.addAttribute("passwordNot8Chars", true);
+            }
             return "users/editPassword";
         }
 
-
-        //FOLLOWING 2 LINES DID NOT WORK
         String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(10)); //Generates a hash from plaintext password
-        //String hashedPassword = passwordEncoder.encode(newPassword);
 
-//        This checks that given plaintext password matches a known hash
-        if (BCrypt.checkpw(oldPassword, user.getPassword())) {
-            user.setPassword(hashedPassword);
-            usersDao.save(user);
-        }
+        userCurrent.setPassword(hashedPassword);
+        usersDao.save(userCurrent);
         return "users/passwordChangeSuccess";
     }
 }

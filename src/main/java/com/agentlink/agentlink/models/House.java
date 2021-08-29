@@ -39,7 +39,7 @@ public class House {
     @Column
     private boolean listingActive = true;
 
-    @Column(length = 255)
+    @Column
     private String image_url;
 
     @ManyToOne
@@ -51,17 +51,6 @@ public class House {
 
     public House() {
     }
-
-//    public House(long id, String address, String city, String state, String zipcode, String description, boolean listingActive, User user) {
-//        this.id = id;
-//        this.address = address;
-//        this.city = city;
-//        this.state = state;
-//        this.zipcode = zipcode;
-//        this.description = description;
-//        this.listingActive = listingActive;
-//        this.user = user;
-//    }
 
     public House(long id, String address, String city, String state, String zipcode, String description, boolean listingActive, String image_url, User user, List<OpenHouseEvent> openHouseEvents) {
         this.id = id;

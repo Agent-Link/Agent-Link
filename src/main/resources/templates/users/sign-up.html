@@ -24,12 +24,11 @@
                         <div class="mb-3 col-md-12 form-group">
                             <label for="signUpPassword">Password</label>
                             <input class="form-control" id="signUpPassword" name="signUpPassword" type="password" th:field="*{password}" placeholder="Password"/>
-                            <!--The th:field should still take password if they match. -->
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="signUpPassword-confirm">Confirm Password</label>
-                            <input class="form-control" id="signUpPassword-confirm" name="signUpPasswordConfirm" type="password" placeholder="Confirm Password"/>
+                            <label for="signUpPasswordConfirm">Confirm Password</label>
+                            <input class="form-control" id="signUpPasswordConfirm" name="signUpPasswordConfirm" type="password" placeholder="Confirm Password"/>
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">

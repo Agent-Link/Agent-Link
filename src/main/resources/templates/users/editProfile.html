@@ -17,36 +17,42 @@
                         <div class="mb-3 col-md-12 form-group">
                             <label for="first_name">First Name</label>
                             <input id="first_name" class="form-control" th:field="*{firstName}" th:value="${user.firstName}">
+                            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="last_name">Last Name</label>
                             <input id="last_name" class="form-control" type="text" th:field="*{lastName}" th:value="${user.lastName}">
+                            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="username">Username</label>
                             <input id="username" class="form-control" type="text" th:field="*{username}" th:value="${user.username}"/>
+                            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                             <input id="password" type="hidden" th:field="*{password}" th:value="${user.password}"/>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="email">Email</label>
                             <input id="email" class="form-control" type="text" th:field="*{email}" th:value="${user.email}"/>
+                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="team">Real Estate Team</label>
                             <input id="team" class="form-control" type="text" th:field="*{team}" th:value="${user.team}">
+                            <p th:if="${#fields.hasErrors('team')}" th:errors="*{team}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="phoneNumber">Phone Number</label>
                             <input id="phoneNumber" class="form-control" type="text" th:field="*{phone}" th:value="${user.phone}">
+                            <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
                         </div>
-                        <div th:if="${!user.isListingAgent()}" class="mb-3 col-md-12 form-group">
+                        <div th:if="${!isListingAgent}" class="mb-3 col-md-12 form-group">
                             <label for="isListingAgent">Would you like to become a listing agent?</label>
                             <input type="checkbox" id="isListingAgent" name="isListingAgent" value="1">
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <button class="btn btn-primary" type="submit">Submit Changes</button>
                         </div>
-                        <p><a th:href="@{/users/editPassword}">Click here to change your password</a></p>
+                        <p><a th:href="@{/users/editpassword}">Click here to change your password</a></p>
                     </div>
                 </form>
             </div>
