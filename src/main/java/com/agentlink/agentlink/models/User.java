@@ -12,7 +12,7 @@ public class User {
     private long id;
 
     @Column(nullable = false, length = 25, unique = true)
-    @Pattern(regexp = "^[a-zA-Z]\\w{4,29}", message = "Usernames must be 5-30 chars long, start with a letter and may only contain A-z, 0-9 and underscore.")
+    @Pattern(regexp = "^[a-zA-Z]\\w{4,24}", message = "Usernames must be 5-25 chars long, start with a letter and may only contain A-z, 0-9 and underscore.")
     private String username;
 
     @Column(nullable = false, unique = true)
@@ -27,10 +27,12 @@ public class User {
 
     @Column(nullable = false, length = 20)
     @NotBlank
+    @Size(max = 20, message = "must not be longer than 20 characters")
     private String firstName;
 
     @Column(nullable = false, length = 30)
     @NotBlank
+    @Size(max = 30, message = "must not be longer than 30 characters")
     private String lastName;
 
     @Column(nullable = false, length = 10)
@@ -40,12 +42,14 @@ public class User {
 
     @Column(nullable = false, length = 40)
     @NotBlank
+    @Size(max = 40, message = "must not be longer than 40 characters")
     private String team;
 
     @Column(nullable = false)
     private boolean isListingAgent;
 
     @Column(length = 255)
+    @Size(max = 255)
     private String profileImageUrl;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
