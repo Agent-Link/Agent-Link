@@ -17,6 +17,10 @@
                             <p>Previous event start date <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"/></p>
                             <label for="startDate">New Start time/date of event</label>
                             <input id="startDate" name="startDate" type="datetime-local" class="form-control"/>
+                            <p th:if="${doesNotStartAndEndOnSameDay != null && doesNotStartAndEndOnSameDay}">Start date and end date must be on the same day</p>
+                            <p th:if="${eventOnSelectedDateAlreadyExists != null && eventOnSelectedDateAlreadyExists}">You already scheduled an event for this house on this date, please select another date</p>
+                            <p th:if="${doesNotStartAfterCurrentDateAndTime != null && doesNotStartAfterCurrentDateAndTime}">You cannot schedule your event in the past</p>
+                            <p th:if="${startTimeNotBeforeEndTime != null && startTimeNotBeforeEndTime}">Start time must be before end time</p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <p>Previous event end date <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}"/></p>

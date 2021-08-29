@@ -115,18 +115,41 @@ public class EventsController {
 
         Date startDateFormatted = simpleDateFormat.parse(startDate);
         Date endDateFormatted = simpleDateFormat.parse(endDate);
-        // Checks for existing events on a house for the input start date, if an event already exists you will be redirected.
+
+        boolean startTimeNotBeforeEndTime = startDateFormatted.after(endDateFormatted);
+        boolean doesNotStartAfterCurrentDateAndTime = startDateFormatted.before(new Date());
+        boolean doesNotStartAndEndOnSameDay = !sdfYMD.format(startDateFormatted).equals(sdfYMD.format(endDateFormatted));
+        boolean isCreatorOfHouse = currentUser.getId() == selectedHouse.getUser().getId();
+
+        List<House> houses = housesDao.findAllByUserAndListingActive(currentUser, true);
+
+        // Checks for existing events on a house for the input start date.
         if (houseEventList != null) {
             for (OpenHouseEvent event : houseEventList) {
                 if (sdfYMD.format(event.getDateStart()).equals(sdfYMD.format(startDateFormatted))) {
-                    return "redirect:/";
+                    model.addAttribute("eventOnSelectedDateAlreadyExists", true);
+                    model.addAttribute("houses", houses);
+                    return "openHouseEvents/create";
                 }
             }
         }
 
-        // Verifies start/end date are on the same day and that the time is set in the future and that the start time is before the end time along
-        // with checking if the user trying to create the event is actually the listing agent of the house they are trying to create an event for.
-        if (sdfYMD.format(startDateFormatted).equals(sdfYMD.format(endDateFormatted)) && startDateFormatted.after(new Date()) && startDateFormatted.before(endDateFormatted) && currentUser.getId() == openHouseEvent.getHouse().getUser().getId()) {
+        // Verifies start/end date are on the same day and that the time is set in the future and that the start time is before the end time.
+        if (startTimeNotBeforeEndTime || doesNotStartAfterCurrentDateAndTime || doesNotStartAndEndOnSameDay) {
+            model.addAttribute("houses", houses);
+            if (startTimeNotBeforeEndTime) {
+                model.addAttribute("startTimeNotBeforeEndTime", true);
+            }
+            if (doesNotStartAfterCurrentDateAndTime) {
+                model.addAttribute("doesNotStartAfterCurrentDateAndTime", true);
+            }
+            if (doesNotStartAndEndOnSameDay) {
+                model.addAttribute("doesNotStartAndEndOnSameDay", true);
+            }
+            return "openHouseEvents/create";
+        }
+        // Verifies if the user trying to create the event is actually the listing agent/creator of the house they are trying to create an event for.
+        if (isCreatorOfHouse) {
             openHouseEvent.setDateStart(startDateFormatted);
             openHouseEvent.setDateEnd(endDateFormatted);
             openHouseEventsDao.save(openHouseEvent);
@@ -145,11 +168,11 @@ public class EventsController {
             model.addAttribute("user", user);
         }
         OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
-        if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId()) {
+        if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId() && openHouseEvent.getDateStart().after(new Date())) {
             model.addAttribute("openHouseEvent", openHouseEvent);
             return "openHouseEvents/edit";
         } else {
-            return "redirect:/profile";
+            return "redirect:/";
         }
     }
 
@@ -169,25 +192,41 @@ public class EventsController {
         Date startDateFormatted = simpleDateFormat.parse(startDate);
         Date endDateFormatted = simpleDateFormat.parse(endDate);
 
-//        Need to test and probably refactor this code to be properly implemented on edit. This will probably currently have an issue with the current date selected if you're just trying to change the time
-        // Checks for existing events on a house for the input start date, if an event already exists you will be redirected.
-//        House selectedHouse = housesDao.getById(openHouseEventFromDb.getHouse().getId());
-//
-//        List<OpenHouseEvent> houseEventList = selectedHouse.getOpenHouseEvents();
-//
-//        if (houseEventList != null) {
-//            for (OpenHouseEvent event : houseEventList) {
-//                if (sdfYMD.format(event.getDateStart()).equals(sdfYMD.format(startDateFormatted))) {
-//                    return "redirect:/";
-//                }
-//            }
-//        }
+        List<OpenHouseEvent> houseEventList = openHouseEventFromDb.getHouse().getOpenHouseEvents();
+
+        boolean startTimeNotBeforeEndTime = startDateFormatted.after(endDateFormatted);
+        boolean doesNotStartAfterCurrentDateAndTime = startDateFormatted.before(new Date());
+        boolean doesNotStartAndEndOnSameDay = !sdfYMD.format(startDateFormatted).equals(sdfYMD.format(endDateFormatted));
+        boolean isCreatorOfHouse = currentUser.getId() == openHouseEventFromDb.getHouse().getUser().getId();
+
+        // Checks for existing events on a house for the input start date.
+        for (OpenHouseEvent event : houseEventList) {
+            if (sdfYMD.format(event.getDateStart()).equals(sdfYMD.format(startDateFormatted)) && event.getId() != openHouseEventFromDb.getId()) {
+                model.addAttribute("eventOnSelectedDateAlreadyExists", true);
+                model.addAttribute("openHouseEvent", openHouseEventFromDb);
+                return "openHouseEvents/edit";
+            }
+        }
+
+        // Verifies start/end date are on the same day and that the time is set in the future and that the start time is before the end time.
+        if (startTimeNotBeforeEndTime || doesNotStartAfterCurrentDateAndTime || doesNotStartAndEndOnSameDay) {
+            model.addAttribute("openHouseEvent", openHouseEventFromDb);
+            if (startTimeNotBeforeEndTime) {
+                model.addAttribute("startTimeNotBeforeEndTime", true);
+            }
+            if (doesNotStartAfterCurrentDateAndTime) {
+                model.addAttribute("doesNotStartAfterCurrentDateAndTime", true);
+            }
+            if (doesNotStartAndEndOnSameDay) {
+                model.addAttribute("doesNotStartAndEndOnSameDay", true);
+            }
+            return "openHouseEvents/edit";
+        }
 
         /// need to disallow editing event once it has passed
 
-        // Verifies the event has not started/passed, verifies the new event start/end day are on the same day and the time is set in the future and that
-        // the start time is before the end time along with checking if the user editing the event is actually the listing agent of the event house
-        if (sdfYMD.format(startDateFormatted).equals(sdfYMD.format(endDateFormatted)) && openHouseEventFromDb.getDateStart().after(new Date()) && startDateFormatted.after(new Date()) && startDateFormatted.before(endDateFormatted) && currentUser.getId() == openHouseEventFromDb.getHouse().getUser().getId()) {
+//      Checks if the user editing the event is actually the listing agent/creator of the event house
+        if (isCreatorOfHouse && openHouseEventFromDb.getDateStart().after(new Date())) {
             openHouseEvent.setDateStart(startDateFormatted);
             openHouseEvent.setDateEnd(endDateFormatted);
             openHouseEvent.setHouse(openHouseEventFromDb.getHouse());
