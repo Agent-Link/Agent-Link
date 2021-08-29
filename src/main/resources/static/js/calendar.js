@@ -6,7 +6,7 @@ $('.event').each(function (i){
     var title, start, end;
 
 
-    title = $(this).children().first().text();
+    title = $(this).children('.event-title').first().text();
     start = $(this).children('.event-start').first().text().toLocaleString('en-US');
     end = $(this).children('.event-end').first().text().toLocaleString('en-US');
     events.push({title, start, end})
@@ -26,9 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // your event source
             {
-                events,
-                color: 'black',     // an option!
-                textColor: 'black' // an option!
+                events
+
             }
 
             // any other event sources...

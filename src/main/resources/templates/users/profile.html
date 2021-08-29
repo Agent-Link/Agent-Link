@@ -162,7 +162,8 @@ even saved to be displayed.-->
                         address, start date, etc...-->
             <div class="tab-pane fade" id="previous-events" role="tabpanel" aria-labelledby="previous-events-tab">
                 <div class="container">
-                    <div style="width: 35rem;" class="card event m-3" th:each="openHouseEvent : ${previousEvents}">
+<!--                    removed event from class down below. may need to put it back in case something breaks. testing things-->
+                    <div style="width: 35rem;" class="card  m-3" th:each="openHouseEvent : ${previousEvents}">
                         <div class="row card-body">
                             <div class="col-8 m-0 text-center">
                                 <h4 class="card-title event-title"><a
@@ -205,9 +206,9 @@ even saved to be displayed.-->
                         We use an array that pulls data from the open house event object to display the address, start date, etcc...-->
             <div class="tab-pane fade" id="hosting-events" role="tabpanel" aria-labelledby="hosting-events-tab">
                 <div class="container">
-                    <div style="width: 35rem;" class="card event m-3" th:each="openHouseEvent : ${hostingEvents}">
+                    <div style="width: 35rem;" class="card  m-3" th:each="openHouseEvent : ${hostingEvents}">
                         <div class="row card-body">
-                            <div class="col-7">
+                            <div class="col-7 event">
                                 <h4 class="card-title event-title"><a
                                         th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span
                                         th:text="${openHouseEvent.house.address}"></span></a></h4>
@@ -236,7 +237,8 @@ even saved to be displayed.-->
                         display the information we are looking for such as the address, description, etc...-->
             <div class="tab-pane fade" id="applied-events" role="tabpanel" aria-labelledby="applied-events-tab">
                 <div class="container">
-                    <div style="width: 35rem;" class="card event m-3" th:each="app : ${appliedEvents}">
+<!--                    removed event from the class below as well. mayu need to be added back if something has brokem-->
+                    <div style="width: 35rem;" class="card  m-3" th:each="app : ${appliedEvents}">
                         <div class="row card-body">
                             <div class="col-7">
                                 <h4 class="card-title event-title"><a
