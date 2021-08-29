@@ -255,11 +255,6 @@ public class EventsController {
     }
 
 
-
-/////////////////////
-
-    /// Need to clean up unused code here
-
     @GetMapping("/event/feedback/{eventId}")
     public String submitFeedbackForm(Model model, @PathVariable long eventId){
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
@@ -279,7 +274,15 @@ public class EventsController {
             model.addAttribute("user", user);
         }
         OpenHouseEvent openHouseEventFromDb = openHouseEventsDao.getById(eventId);
-
+        model.addAttribute("openHouseEvent", openHouseEventFromDb);
+        if (feedback.trim().isEmpty()) {
+            model.addAttribute("isBlank", true);
+            return "openHouseEvents/createfeedback";
+        }
+        if (feedback.length() > 500) {
+            model.addAttribute("isOver500", true);
+            return "openHouseEvents/createfeedback";
+        }
         // This verifies that the current user should have permission to leave feedback on the event and cannot leave feedback on themself if they host the event
         if(openHouseEventFromDb.getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEventFromDb.getHouse().getUser().getId() && new Date().after(openHouseEventFromDb.getDateEnd()) && openHouseEventFromDb.getFeedback() == null) {
             openHouseEventFromDb.setFeedback(feedback);
@@ -289,6 +292,5 @@ public class EventsController {
         }
         return "redirect:/profile";
     }
-////////////////////
 
 }
