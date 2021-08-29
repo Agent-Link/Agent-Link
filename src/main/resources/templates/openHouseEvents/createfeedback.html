@@ -20,6 +20,8 @@
                         <div class="mb-3 col-md-12 form-group">
                             <label class="feedback" for="feedback">Please leave a short summary of your experience</label>
                             <textarea id="feedback" class="review form-control" name="feedback"></textarea>
+                            <p th:if="${isBlank != null && isBlank}">must not be blank</p>
+                            <p th:if="${isOver500 != null && isOver500}">must not be more than 500 characters</p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <button class="btn btn-primary" type="submit">Submit</button>
