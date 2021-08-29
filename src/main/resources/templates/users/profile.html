@@ -279,7 +279,9 @@ even saved to be displayed.-->
     </div>
 </div>
 <div th:replace="partials/scripts :: scripts"></div>
-<script th:src='@{/fullcalendar/main.js}'></script>
-<script src="/calender.js"></script>
+<div th:replace="partials/calendarScripts :: calendarScripts"></div>
+
+<!--<script th:src='@{/fullcalendar/main.js}'></script>/not sure what this was doing? It did not seem to be a problem if commented out?-->
+<!--<script src="/calender.js"></script> this is now included in the calendarScripts partial-->
 </body>
 </html>
