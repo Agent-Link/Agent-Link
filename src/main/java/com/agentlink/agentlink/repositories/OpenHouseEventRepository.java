@@ -15,24 +15,24 @@ public interface OpenHouseEventRepository extends JpaRepository<OpenHouseEvent, 
     List<OpenHouseEvent> findAllQuery(String query);
 
     // Finds all events without a host that start after the input date
-    @Query("FROM OpenHouseEvent O WHERE O.dateStart >= ?1 AND O.user.id = O.house.user.id")
+    @Query("FROM OpenHouseEvent O WHERE O.dateStart >= ?1 AND O.user.id = O.house.user.id ORDER BY O.dateStart")
     List<OpenHouseEvent> findAllWithoutHostWhereDateStartAfter(Date date);
 
     // Finds all events by event creator (house.user.id) id that start after the input date
-    @Query("FROM OpenHouseEvent O WHERE O.house.user.id = ?1 AND O.dateStart >= ?2")
+    @Query("FROM OpenHouseEvent O WHERE O.house.user.id = ?1 AND O.dateStart >= ?2 ORDER BY O.dateStart")
     List<OpenHouseEvent> findAllByCreatorIdAndDateStartAfter(long id, Date date);
 
     // Finds all events by event creator (house.user.id) id that have ended before the input date
-    @Query("FROM OpenHouseEvent O WHERE O.house.user.id = ?1 AND O.dateEnd <= ?2")
+    @Query("FROM OpenHouseEvent O WHERE O.house.user.id = ?1 AND O.dateEnd <= ?2 ORDER BY O.dateStart DESC")
     List<OpenHouseEvent> findAllByCreatorIdAndDateEndBefore(long id, Date date);
 
 
     // Finds all events by user id where an user has been set to host and that start after the input date
-    @Query("FROM OpenHouseEvent O WHERE O.user.id = ?1 AND O.house.user.id <> O.user.id AND O.dateStart >= ?2")
+    @Query("FROM OpenHouseEvent O WHERE O.user.id = ?1 AND O.house.user.id <> O.user.id AND O.dateStart >= ?2 ORDER BY O.dateStart")
     List<OpenHouseEvent> findAllByHostedByUserIdAndDateStartAfter(long id, Date date);
 
     // Finds all events by user id where an user has been set to host and that end before the input date
-    @Query("FROM OpenHouseEvent O WHERE O.user.id = ?1 AND O.house.user.id <> O.user.id AND O.dateEnd <= ?2")
+    @Query("FROM OpenHouseEvent O WHERE O.user.id = ?1 AND O.house.user.id <> O.user.id AND O.dateEnd <= ?2 ORDER BY O.dateStart DESC")
     List<OpenHouseEvent> findAllByHostedByUserIdAndDateEndBefore(long id, Date date);
 
 }
