@@ -13,46 +13,46 @@
                     <h4 class="mb-5 text-secondary">Create Your Account</h4>
                     <div class="row">
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="username">Username</label>
+                            <label for="username">Username</label><span class="required text-danger"> *</span>
                             <input class="form-control" id="username" th:field="*{username}" placeholder="Enter User Name"/>
                             <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Email</label><span class="required text-danger"> *</span>
                             <input class="form-control" id="email" th:field="*{email}" placeholder="AgentTony@KellerWilliams.com"/>
                             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="signUpPassword">Password</label>
+                            <label for="signUpPassword">Password</label><span class="required text-danger"> *</span>
                             <input class="form-control" id="signUpPassword" name="signUpPassword" type="password" th:field="*{password}" placeholder="Password"/>
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="signUpPasswordConfirm">Confirm Password</label>
+                            <label for="signUpPasswordConfirm">Confirm Password</label><span class="required text-danger"> *</span>
                             <input class="form-control" id="signUpPasswordConfirm" name="signUpPasswordConfirm" type="password" placeholder="Confirm Password"/>
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="firstName">First Name</label>
+                            <label for="firstName">First Name</label><span class="required text-danger"> *</span>
                             <input class="form-control" id="firstName" th:field="*{firstName}" placeholder="First Name"/>
                             <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="lastName">Last Name</label>
+                            <label for="lastName">Last Name</label><span class="required text-danger"> *</span>
                             <input class="form-control" id="lastName" th:field="*{lastName}" placeholder="Last Name"/>
                             <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="team">Team Name</label>
+                            <label for="team">Team Name</label><span class="required text-danger"> *</span>
                             <input class="form-control" id="team" th:field="*{team}" placeholder="ReMax, Century 21, Keller Williams etc."/>
                             <p th:if="${#fields.hasErrors('team')}" th:errors="*{team}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="isListingAgent">Are you a listing agent?</label>
+                            <label for="isListingAgent">Are you a listing agent?</label><span class="required text-danger"> *</span>
                             <input type="checkbox" id="isListingAgent" name="isListingAgent" value="1">
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="phone">Phone Number</label>
+                            <label for="phone">Phone Number</label><span class="required text-danger"> *</span>
                             <input class="form-control" id="phone" th:field="*{phone}" placeholder="5123273070"/>
                             <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
                         </div>

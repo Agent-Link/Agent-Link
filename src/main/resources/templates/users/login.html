@@ -7,30 +7,34 @@
 </head>
 <body class="text-center">
 <nav th:replace="partials/navbar.html :: navbar"/>
-<div class="row justify-content-center">
-    <div class="col-9 col-xs-10 col-md-4 col-lg-4 col-xl-4 justify-content-center">
-        <main class="form-signin mb-4">
-            <form th:action="@{/login}" method="post" class="mt-5 border p-4 bg-light shadow">
-                <img class="mb-0" th:src="@{/img/Agent-Link-2.png}" alt="AGENT-LINK LOGO HERE" width="60%" height="40%">
-                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-                <div th:if="${param.error}">
-                    Invalid Username and Password.
-                </div>
-                <div th:if="${param.logout}">
-                    You have been logged out.
-                </div>
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input id="username" name="username" placeholder="Username" class="form-control" type="text"/>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="password">Password</label>
-                    <input id="password" name="password" placeholder="Password" class="form-control" type="password"/>
-                </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                <p class="mt-5 mb-3 text-muted">©2021</p>
-            </form>
-        </main>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-9 col-xs-10 col-md-4 col-lg-4 col-xl-4 justify-content-center">
+            <main class="form-signin mb-4">
+                <form th:action="@{/login}" method="post" class="mt-5 border p-4 bg-light shadow">
+                    <img class="mb-0" th:src="@{/img/Agent-Link-2.png}" alt="AGENT-LINK LOGO HERE" width="60%"
+                         height="40%">
+                    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                    <div th:if="${param.error}">
+                        Invalid Username and Password.
+                    </div>
+                    <div th:if="${param.logout}">
+                        You have been logged out.
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input id="username" name="username" placeholder="Username" class="form-control" type="text"/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" placeholder="Password" class="form-control"
+                               type="password"/>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                    <p class="mt-5 mb-3 text-muted">©2021</p>
+                </form>
+            </main>
+        </div>
     </div>
 </div>
 <div th:replace="partials/scripts.html :: scripts"/>
