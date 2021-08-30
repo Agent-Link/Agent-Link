@@ -147,6 +147,7 @@ even saved to be displayed.-->
                                         <p hidden th:text="${openHouseEvent.dateStart}"
                                            class="card-text event-start"></p>
                                         <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
+                                        <p hidden th:text="${openHouseEvent.id}" class="event-id"></p>
                                         <p th:if="${openHouseEvent.house.user.id != openHouseEvent.user.id}">Host name:
                                             <a
                                                     th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"><span
