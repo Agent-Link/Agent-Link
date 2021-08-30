@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ],
         eventClick: function (info) {
             alert('Event Address: ' + info.event.title + "\n" + ' Event Start: ' + info.event.start.toLocaleString('en-US') + "\n" + ' Event End: ' + info.event.end.toLocaleString('en-US'));
-
+            // window.location.href = "/events/{info.event.id}";
 
             // change the border color just for fun
             info.el.style.borderColor = 'red';
