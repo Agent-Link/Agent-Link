@@ -1,3 +1,7 @@
-#footerTest{
-    height: 100vh;
+.btn-color {
+    color: white;
+    background-color: #24ade3;
+}
+a{
+    color: #1172be;
 }
