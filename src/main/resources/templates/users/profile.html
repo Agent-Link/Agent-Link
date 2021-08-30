@@ -32,6 +32,7 @@
             margin-left: 1em;
         }
     </style>
+    <link rel="stylesheet" th:href="@{/css/Main.css}">
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -179,9 +180,10 @@ even saved to be displayed.-->
                                                 th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span
                                                 th:text="${openHouseEvent.house.address}"></span></a></h4>
                                         <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
-                                        <p>Event start and end time</p>
+                                        <p class="EventParagraph">Event start:</p>
                                         <p th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"
                                            class="card-text"></p>
+                                        <p class="EventParagraph">Event End:</p>
                                         <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}"
                                            class="card-text"></p>
                                         <p hidden th:text="${openHouseEvent.dateStart}"
