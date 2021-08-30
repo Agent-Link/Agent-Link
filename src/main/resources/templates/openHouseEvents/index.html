@@ -12,8 +12,8 @@
         <div class="col-12 col-sm-8 col-lg-6">
             <!-- Section Heading-->
             <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                <h3>Open House Events</h3>
-                <p>Here are all the open house events happening around San Antonio</p>
+                <h1>Open House Events</h1>
+                <p style="font-size: x-large">Here are all the open house events happening around San Antonio</p>
                 <div class="line"></div>
             </div>
         </div>
@@ -30,11 +30,11 @@
                 <!-- House Information-->
                 <div class="single_advisor_details_info multiAddress">
                     <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="stretched-link"></a>
-                    <h6 class="address" th:text="${openHouseEvent.house.address}"></h6>
-                    <p class="city" th:text="${openHouseEvent.house.city}"></p>
-                    <p class="state" th:text="${openHouseEvent.house.state}"></p>
-                    <p class="dateStart" th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"></p>
-                    <p class="dateEnd" th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}"></p>
+                    <h5 class="address" th:text="${openHouseEvent.house.address}"></h5>
+                    <p style="font-size: large" class="city" th:text="${openHouseEvent.house.city}"></p>
+                    <p style="font-size: large" class="state" th:text="${openHouseEvent.house.state}"></p>
+                    <p style="font-size: large" class="dateStart" th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"></p>
+                    <p style="font-size: large" class="dateEnd" th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}"></p>
                 </div>
             </div>
         </div>
