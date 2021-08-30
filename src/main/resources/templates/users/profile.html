@@ -21,7 +21,7 @@
         }
 
         .cal-container {
-            padding-left: 10px;
+            padding-left: 16px;
             padding-right: 0px;
             margin-right: auto;
             margin-left: auto;
@@ -30,6 +30,14 @@
         #myTab {
             background-color: lightgray;
             margin-left: 1em;
+        }
+        .fc .fc-toolbar-title {
+            padding-top: .25em;
+            padding-left: .5em;
+        }
+        .fc-toolbar-chunk {
+            padding-top: .25em;
+            padding-right: .5em;
         }
     </style>
     <link rel="stylesheet" th:href="@{/css/Main.css}">
@@ -46,34 +54,34 @@ even saved to be displayed.-->
     <div class="col-12 flex-wrap pr-0">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendars"
+                <button style="color: #1172be" class="nav-link active" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendars"
                         type="button" role="tab" aria-controls="calendars" aria-selected="true">Calendar
                 </button>
             </li>
             <li th:if="${user.isListingAgent() && !houses.isEmpty()}" class="nav-item" role="presentation">
-                <button class="nav-link " id="listings-tab" data-bs-toggle="tab" data-bs-target="#listings"
+                <button style="color: #1172be" class="nav-link " id="listings-tab" data-bs-toggle="tab" data-bs-target="#listings"
                         type="button" role="tab" aria-controls="listings" aria-selected="false">Listings
                 </button>
             </li>
             <li th:if="${user.isListingAgent() && !upcomingEvents.isEmpty()}" class="nav-item" role="presentation">
-                <button class="nav-link" id="upcoming-events-tab" data-bs-toggle="tab" data-bs-target="#upcoming-events"
+                <button style="color: #1172be" class="nav-link" id="upcoming-events-tab" data-bs-toggle="tab" data-bs-target="#upcoming-events"
                         type="button" role="tab" aria-controls="upcoming-events" aria-selected="false">Upcoming Events
                 </button>
             </li>
             <li th:if="${!previousEvents.isEmpty()}" class="nav-item" role="presentation">
-                <button class="nav-link" id="previous-events-tab" data-bs-toggle="tab" data-bs-target="#previous-events"
+                <button style="color: #1172be" class="nav-link" id="previous-events-tab" data-bs-toggle="tab" data-bs-target="#previous-events"
                         type="button" role="tab" aria-controls="previous-events" aria-selected="false">Previous Events
                 </button>
             </li>
             <li th:if="${!hostingEvents.isEmpty()}" class="nav-item" role="presentation">
-                <button class="nav-link" id="hosting-events-tab" data-bs-toggle="tab" data-bs-target="#hosting-events"
+                <button style="color: #1172be" class="nav-link" id="hosting-events-tab" data-bs-toggle="tab" data-bs-target="#hosting-events"
                         type="button" role="tab" aria-controls="hosting-events" aria-selected="false">Your Upcoming
                     Events
                 </button>
             </li>
             <li th:if="${!appliedEvents.isEmpty()}" class="nav-item" role="presentation">
-                <button class="nav-link" id="applied-events-tab" data-bs-toggle="tab" data-bs-target="#applied-events"
-                        type="button" role="tab" aria-controls="applied-events" aria-selected="false">Events applied to
+                <button style="color: #1172be" class="nav-link" id="applied-events-tab" data-bs-toggle="tab" data-bs-target="#applied-events"
+                        type="button" role="tab" aria-controls="applied-events" aria-selected="false">Events Applied To
                 </button>
             </li>
         </ul>
