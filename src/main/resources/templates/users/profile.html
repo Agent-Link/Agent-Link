@@ -160,7 +160,7 @@ even saved to be displayed.-->
                                         <div th:if="${user.id == openHouseEvent.house.user.id && currentDateTime.before(openHouseEvent.dateStart)}">
                                             <a th:if="${currentDateTime.before(openHouseEvent.dateStart)}"
                                                th:href="@{'/events/edit/' + ${openHouseEvent.id}}"
-                                               class="btn btn-primary btn-width ">Edit</a>
+                                               style="color: white; background-color: #24ade3" class="btn btn-width ">Edit</a>
                                             <form th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}"
                                                   method="post">
                                                 <input type="submit" value="Delete" class="btn btn-danger btn-width ">
@@ -217,7 +217,7 @@ even saved to be displayed.-->
                                             Details</a>
                                         <a th:if="${user.id == openHouseEvent.house.user.id && user.id != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}"
                                            th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}"
-                                           class="btn btn-primary btn-width">Review host</a>
+                                           style="color: white; background-color: #24ade3" class="btn btn-width">Review host</a>
                                         <a th:if="${user.id != openHouseEvent.house.user.id && user.id == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}"
                                            th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}"
                                            class="btn btn-primary btn-width">Event feedback</a>
