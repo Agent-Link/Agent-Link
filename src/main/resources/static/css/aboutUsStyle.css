@@ -32,7 +32,7 @@ body{margin-top:0;
 .team-item:after {
     height: 6px;
     width: calc(100% - 30px);
-    background-color: #070a57;
+    background-color: #1172be;
     left: 0;
     bottom: 0;
     -webkit-transition: all 0.3s linear;
@@ -90,13 +90,13 @@ body{margin-top:0;
 }
 
 .team-item .team-content h5 {
-    color: #101f41;
+    color: #1172be;
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
 }
 
 .team-item .team-content p {
-    color: #4e63d7;
+    color: #1172be;
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
     font-weight: 600;
@@ -116,10 +116,10 @@ body{margin-top:0;
 .socials a {
     width: 35px;
     height: 35px;
-    background-color: #6893e1;
+    background-color: #1172be;
     border-radius: 50%;
-    -webkit-box-shadow: 0 3px 2px 0 #516cd9;
-    box-shadow: 0 3px 2px 0 #516cd9;
+    -webkit-box-shadow: 0 3px 2px 0 #1172be;
+    box-shadow: 0 3px 2px 0 #1172be;
     text-align: center;
     color: #fff;
     padding-top: 10px;
@@ -129,9 +129,9 @@ body{margin-top:0;
     transition: all 0.3s ease;
 }
 
-.mb-2, .my-2 {
-    margin-bottom: .5rem!important;
-}
+/*.mb-2, .my-2 {*/
+/*    margin-bottom: .5rem!important;*/
+/*}*/
 
 h5 {
     font-size: 21px;
