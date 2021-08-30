@@ -32,8 +32,8 @@ var marker = new mapboxgl.Marker({
 // pop up on the marker
 var popup = new mapboxgl.Popup()
     .setLngLat(marker.getLngLat())
-    .setHTML("<h6>" + singleHouseAddress + "</h6>")
-    .setMaxWidth("300px")
+    .setHTML("<p>" + singleHouseAddress + "</p>")
+    .setMaxWidth("350px")
 marker.setPopup(popup);
 
 // for a single house, a map search for info that is compared to lng lat for the mapbox api
@@ -45,7 +45,7 @@ geocode(singleHouseAddress +" "+singleHouseCity+" "+singleHouseZipcode, $(".mapb
     };
     map.setCenter([info[0], info[1]]);
     marker.setLngLat(singleHouseMarker1);
-    popup.setHTML("<h3>" + singleHouseAddress + "</h3>");
+    popup.setHTML("<h6>" + singleHouseAddress + " " + singleHouseCity + ",  " + singleHouseState + "</h6>");
 });
 
 

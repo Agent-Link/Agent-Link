@@ -1,0 +1,12 @@
+p {
+    font-size: large
+}
+.EventParagraph{
+    text-decoration: underline;
+}
+label{
+    font-size:large
+}
+#Agent-LinkTeam{
+    font-size: x-large; !important;
+}
