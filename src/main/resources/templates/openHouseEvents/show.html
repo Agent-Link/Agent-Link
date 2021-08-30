@@ -16,9 +16,9 @@
     <div class="title h1 text-dark text-center">
         <h4><span id="houseAddress" th:text="${openHouseEvent.house.address}"/>, <span id="houseCity" th:text="${openHouseEvent.house.city}"/>, <span id="houseState" th:text="${openHouseEvent.house.state}"/> <span id="houseZipcode" th:text="${openHouseEvent.house.zipcode}"/></h4>
     </div>
-    <div class="card">
+    <div style="width: 100%" class="card">
         <div class="row">
-            <div class="col-md-7 px-3">
+            <div  class="col-md-7 px-3">
                 <div class="card-block px-6">
                     <h4 class="card-title text-center">Event Information</h4>
                     <div class="card-body text-dark text-center">
@@ -31,13 +31,13 @@
                     <div class="row d-flex justify-content-center">
                         <div sec:authorize="isAuthenticated()" class="text-center" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
                             <div sec:authorize="isAuthenticated()" class="text-center" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
-                                <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-primary btn-width">Edit</a>
+                                <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-color btn-width">Edit</a>
                                 <form th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}" method="post" class="d-flex justify-content-center">
                                     <input type="submit" value="Delete" class="btn btn-danger btn-width">
                                 </form>
                             </div>
                         </div>
-                        <a sec:authorize="isAuthenticated()" th:if="${!isEventCreator && hasNotApplied && currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-primary btn-width ">Apply</a>
+                        <a sec:authorize="isAuthenticated()" th:if="${!isEventCreator && hasNotApplied && currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-color btn-width ">Apply</a>
                     </div>
                 </div>
             </div>
@@ -48,19 +48,19 @@
     </div>
     <!--mapbox here-->
     <div class="row justify-content-center mb-4">
-        <div id='map' style='width: 70%; height: 500px;' class="d-flex"></div>
+        <div id='map' style='width: 99%; height: 500px;' class="d-flex"></div>
         <input type="hidden" th:value="${MAPBOX_ACCESS_TOKEN}" class="mapboxToken">
     </div>
     <!--    end of map box-->
     <div sec:authorize="isAuthenticated()">
-        <div style="width: 30rem;" class="card" th:if="${isEventCreator && openHouseEvent.feedback != null}">
-            <h3>Event feedback:</h3>
+        <div style="width: 30rem;" class="card text-center p-1" th:if="${isEventCreator && openHouseEvent.feedback != null}">
+            <h3>Event Feedback</h3>
             <div class="card-body">
-                <p>Host name: <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></p>
-                <p>Feedback: <span th:text="${openHouseEvent.feedback}"/></p>
+                <p>Host: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"> <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/> </a></p>
+                <p><span th:text="${openHouseEvent.feedback}"/></p>
             </div>
         </div>
-        <div sec:authorize="isAuthenticated()" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
+        <div class="justify-content-center" sec:authorize="isAuthenticated()" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
             <h3 th:if="${!applications.isEmpty()}">Applicants</h3>
             <div style="width: 30rem;" class="card" th:each="app : ${applications}">
                 <div class="card-body">
@@ -68,7 +68,7 @@
                     <p>Applicant name: <a th:href="@{/profile/{id}(id=${app.user.id})}"> <span th:text="${app.user.firstName}"/> <span th:text="${app.user.lastName}"/></a></p>
                     <p>Inquiry: <span th:text="${app.inquiry}"/></p>
                     <form th:action="@{/events/apply/host/{eventId}/{userId} (eventId=${openHouseEvent.id}, userId=${app.user.id})}" method="post">
-                        <input type="submit" value="Set host" class="btn btn-primary"/>
+                        <input type="submit" value="Set host" class="btn btn-color"/>
                     </form>
                 </div>
             </div>
