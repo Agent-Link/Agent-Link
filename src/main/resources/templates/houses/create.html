@@ -13,29 +13,29 @@
                     <h4 class="mb-5 text-secondary">Create A Listing</h4>
                     <div class="row">
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="address">Address</label>
+                            <label for="address">Address</label><span class="required text-danger"> *</span>
                             <input id="address" name="address" type="text" class="form-control" th:field="*{address}"/>
                             <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="city">City</label>
+                            <label for="city">City</label><span class="required text-danger"> *</span>
                             <input id="city" name="city" type="text" class="form-control" th:field="*{city}"/>
                             <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="state">State</label>
+                            <label for="state">State</label><span class="required text-danger"> *</span>
                             <br>
                             <select name="state" id="state">
                                 <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
                             </select>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="zipcode">Zipcode</label>
+                            <label for="zipcode">Zipcode</label><span class="required text-danger"> *</span>
                             <input id="zipcode" name="zipcode" type="text" class="form-control" th:field="*{zipcode}"/>
                             <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="description">Description</label>
+                            <label for="description">Description</label><span class="required text-danger"> *</span>
                             <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"/>
                             <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                         </div>
