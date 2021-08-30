@@ -53,11 +53,11 @@
     </div>
     <!--    end of map box-->
     <div sec:authorize="isAuthenticated()">
-        <div style="width: 30rem;" class="card" th:if="${isEventCreator && openHouseEvent.feedback != null}">
-            <h3>Event feedback:</h3>
+        <div style="width: 30rem;" class="card text-center p-1" th:if="${isEventCreator && openHouseEvent.feedback != null}">
+            <h3>Event Feedback</h3>
             <div class="card-body">
-                <p>Host name: <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></p>
-                <p>Feedback: <span th:text="${openHouseEvent.feedback}"/></p>
+                <p>Host: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"> <span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/> </a></p>
+                <p><span th:text="${openHouseEvent.feedback}"/></p>
             </div>
         </div>
         <div class="justify-content-center" sec:authorize="isAuthenticated()" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
