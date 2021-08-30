@@ -90,10 +90,12 @@ public class EventsController {
         User user = usersDao.getById(currentUser.getId());
         model.addAttribute("user", user);
         List<House> houses = housesDao.findAllByUserAndListingActive(currentUser, true);
-
-        model.addAttribute("houses", houses);
-        model.addAttribute("openHouseEvent", new OpenHouseEvent());
-        return "openHouseEvents/create";
+        if (user.isListingAgent()) {
+            model.addAttribute("houses", houses);
+            model.addAttribute("openHouseEvent", new OpenHouseEvent());
+            return "openHouseEvents/create";
+        } else
+            return "redirect:/";
     }
 
     @PostMapping("/events/create")
@@ -257,13 +259,20 @@ public class EventsController {
 
     @GetMapping("/event/feedback/{eventId}")
     public String submitFeedbackForm(Model model, @PathVariable long eventId){
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        model.addAttribute("openHouseEvent", openHouseEventsDao.getById(eventId));
-        return "openHouseEvents/createfeedback";
+        OpenHouseEvent openHouseEventFromDb = openHouseEventsDao.getById(eventId);
+        // This verifies that the current user should have permission to leave feedback on the event and cannot leave feedback on themself if they host the event
+        if(openHouseEventFromDb.getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEventFromDb.getHouse().getUser().getId() && new Date().after(openHouseEventFromDb.getDateEnd()) && openHouseEventFromDb.getFeedback() == null) {
+
+            model.addAttribute("openHouseEvent", openHouseEventsDao.getById(eventId));
+            return "openHouseEvents/createfeedback";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/event/feedback/{eventId}")
