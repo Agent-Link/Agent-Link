@@ -10,7 +10,7 @@
         <a class="navbar-brand" href="/">
             <img th:src="@{/img/logoForNav.png}" alt="" width="50" height="26.625">
         </a>
-        <p sec:authorize="isAuthenticated()" class="nav-item nav-link m-0" th:if="${user != null}">Hello, <span th:text="${user.firstName}"></span></p>
+        <p sec:authorize="isAuthenticated()" class="nav-item nav-link m-0" style="color: #24ade3" th:if="${user != null}">Hello, <span th:text="${user.firstName}"></span></p>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
