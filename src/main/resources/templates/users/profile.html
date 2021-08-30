@@ -126,7 +126,7 @@ even saved to be displayed.-->
                             <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-5 m-3 shadow-lg p-2 mb-5 bg-body rounded"
                                  th:each="openHouseEvent : ${upcomingEvents}">
                                 <div class="row">
-                                    <div class="col-7">
+                                    <div class="col-7 event">
                                         <h4 class="card-title event-title"><a
                                                 th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span
                                                 th:text="${openHouseEvent.house.address}"></span></a></h4>
