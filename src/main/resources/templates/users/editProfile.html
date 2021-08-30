@@ -50,10 +50,12 @@
                             <label for="isListingAgent">Would you like to become a listing agent?</label>
                             <input type="checkbox" id="isListingAgent" name="isListingAgent" value="1">
                         </div>
-                        <div class="mb-3 col-md-12 form-group">
-                            <button class="btn btn-primary" type="submit">Submit Changes</button>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <button class="btn btn-sm" style="color: white; background-color: #24ade3" type="submit">Submit Changes</button>
                         </div>
-                        <p><a th:href="@{/users/editpassword}">Click here to change your password</a></p>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <a style="color: white; background-color: red;"  class="btn btn-sm" th:href="@{/users/editpassword}">Change Password</a>
+                        </div>
                     </div>
                 </form>
             </div>
