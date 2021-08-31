@@ -22,10 +22,10 @@
                             <input id="city" name="city" type="text" class="form-control" th:field="*{city}"/>
                             <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
                         </div>
-                        <div class="mb-3 col-md-12 form-group">
-                            <label for="state">State</label><span class="required text-danger"> *</span>
-                            <br>
-                            <select name="state" id="state">
+                        <p class="m-0">State<span class="required text-danger"> *</span></p>
+                        <div class="mb-3 col-md-12 input-group">
+                            <label class="input-group-text" for="state">Select</label>
+                            <select class="form-select" name="state" id="state">
                                 <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
                             </select>
                         </div>

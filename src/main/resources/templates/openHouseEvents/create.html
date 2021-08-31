@@ -24,11 +24,11 @@
                         <div class="mb-3 col-md-12 form-group">
                             <label for="endDate">End date / time</label><span class="required text-danger"> *</span>
                             <input id="endDate" name="endDate" type="datetime-local" class="form-control" placeholder="YYYY-MM-DD"/>
-<!--                            <p th:if="${}"></p>-->
                         </div>
-                        <div class="mb-3 col-md-12 form-group">
-                            <h6>Please select an address:</h6>
-                            <select id="house" name="house" th:field="*{house}">
+                        <h6>Please select a listing<span class="required text-danger"> *</span></h6>
+                        <div class="mb-3 col-md-12 input-group">
+                            <label class="input-group-text" for="house">Listings</label>
+                            <select class="form-select" id="house" name="house" th:field="*{house}">
                                 <option th:each="house: ${houses}" th:value="${house.id}" th:text="${house.address}"/>
                             </select>
                         </div>
