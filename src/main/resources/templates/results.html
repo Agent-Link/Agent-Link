@@ -5,41 +5,65 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"/>
 
-<h6>Here are your search results for events:</h6>
-<div class="card-body" th:each="openHouseEvent : ${openHouseEventsSearch}">
-    <h5>Event Address:</h5>
-    <h5 th:text="${openHouseEvent.house.address}" class="card-title"></h5>
-    <h6>Event Description:</h6>
-    <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
-    <h6>Event Day and Time:</h6>
-    <p>Open House Event Day and Time</p>
-    <p th:text="${openHouseEvent.dateStart}" class="card-text"></p>
-    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-primary">More Details</a>
+<div class="container">
+    <div class="row container text-center">
+        <h3>Here are your search results for events:</h3>
+        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-5 m-3 ml-0 pl-3 shadow-lg bg-body rounded"
+             th:each="openHouseEvent : ${openHouseEventsSearch}">
+            <div class="row justify-content-center">
+                <div class="col-7 event text-center">
+                    <h4 class="card-title event-title"><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span
+                            th:text="${openHouseEvent.house.address}"></span></a></h4>
+                    <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
+                    <p>Event Start and End Time:</p>
+                    <p th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
+                    <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
+                    <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
+                    <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
+                    <p hidden th:text="${openHouseEvent.id}" class="event-id"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row container text-center justify-content-around">
+        <h3>Here are your search results for houses:</h3>
+        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-5 mt-3 pl-3 mb-3 shadow-lg bg-body rounded"
+             th:each="house : ${houseSearch}"
+             th:if="${house.isListingActive() == true}">
+            <div class="row no-gutters">
+                <div class="col-7">
+                    <h4 class="card-title text center mt-2"><a
+                            th:href="@{/houses/{id}(id=${house.id})}"><span
+                            th:text="${house.address}"></span></a></h4>
+                    <p th:text="${house.description}" class="card-text"></p>
+                </div>
+                <div class="col-5 mt-0 mb-0 mr-3 p-0 advisor_thumb">
+                    <img class="align-middle" th:src="${house.image_url}" width="100%" height="100%"
+                         alt="HOUSE IMAGE">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<h6>Here are your search results for houses:</h6>
-<div class="card-body" th:each="house : ${houseSearch}">
-    <h5>House Address:</h5>
-    <h5 th:text="${house.address}" class="card-title"></h5>
-    <p th:text="${house.state}" class="card-text"></p>
-    <p th:text="${house.zipcode}" class="card-text"></p>
-    <p th:text="${house.description}" class="card-text"></p>
-    <a th:href="@{/houses/{id}(id=${house.id})}" class="btn btn-primary">More Details</a>
-</div>
 
-<h6>Here are your search results for agents:</h6>
-<div class="card-body" th:each="user : ${usersSearch}">
-    <h5>Username:</h5>
-    <h5 th:text="${user.username}" class="card-title"></h5>
-    <h6>First Name:</h6>
-    <p th:text="${user.firstName}" class="card-text"></p>
-    <h6>Last Name</h6>
-    <p th:text="${user.lastName}" class="card-text"></p>
-    <h6>Email:</h6>
-    <p th:text="${user.email}" class="card-text"></p>
-    <h6>Real Estate Team:</h6>
-    <p th:text="${user.team}" class="card-text"></p>
-</div>
+
+<!--<h6>Here are your search results for agents:</h6>-->
+<!--<div class="card-body" th:each="user : ${usersSearch}">-->
+<!--    <h5>Username:</h5>-->
+<!--    <h5 th:text="${user.username}" class="card-title"></h5>-->
+<!--    <h6>First Name:</h6>-->
+<!--    <p th:text="${user.firstName}" class="card-text"></p>-->
+<!--    <h6>Last Name</h6>-->
+<!--    <p th:text="${user.lastName}" class="card-text"></p>-->
+<!--    <h6>Email:</h6>-->
+<!--    <p th:text="${user.email}" class="card-text"></p>-->
+<!--    <h6>Real Estate Team:</h6>-->
+<!--    <p th:text="${user.team}" class="card-text"></p>-->
+<!--</div>-->
 <div th:replace="partials/scripts.html :: scripts"/>
 </body>
 </html>
