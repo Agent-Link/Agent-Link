@@ -4,28 +4,32 @@
 <body>
 <nav th:replace="partials/navbar.html :: navbar"></nav>
 
-<div>
-    <div class="card border border-dark mb-1">
-        <div class="card-header text-dark text-center">
+<div class="container">
+    <div class="col-8 card border border-dark text-center mb-1 mx-auto">
+        <div class="card-header text-dark">
             <h3 id="profileName"><span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/></h3>
         </div>
-        <div class="card-body text-dark text-center">
+        <div class="card-body text-dark">
             <h5>Contact Info</h5>
-            <p>Email: <span th:text="${user.email}"/></p>
+            <p>Email: <a th:href="@{mailto:{email}(email=${user.email})}" th:text="${user.email}"/></p>
             <p> Phone Number: <span th:text="${user.phone}"/></p>
             <p>Agent Team: <span th:text="${user.team}"/></p>
             <p th:if="${hasReviews}">Agent Rating: <span th:text="${userRating}"/> out of 5 </p>
         </div>
     </div>
-    <div th:if="${hasReviews}" th:each="review : ${reviewsList}" class="card border border-dark mb-1">
-        <h4>Agent reviews</h4>
-        <div class="card-header text-dark text-center">
-            <h6>Rating: <span th:text="${review.rating}"> out of 5</span></h6>
-            <h5 th:text="${review.title}"/>
-        </div>
-        <div class="card-body text-dark text-center">
-            <p th:text="${review.description}"></p>
-            <p>Reviewed by: <span th:text="${review.listingUser.firstName}"/> <span th:text="${review.listingUser.lastName}"/></p>
+    <div class="col-8 row mx-auto" th:if="${hasReviews}">
+        <h4 class="text-center">Agent reviews</h4>
+        <div th:each="review : ${reviewsList}" class="card border p-0 border-dark text-center mb-1">
+            <div class="card-header text-dark">
+                <h6>Rating: <span th:text="${review.rating}"> out of 5</span></h6>
+                <h5 th:text="${review.title}"/>
+            </div>
+            <div class="card-body text-dark">
+                <p th:text="${review.description}"></p>
+            </div>
+            <div class="card-footer">
+                <p class="m-0">Reviewed by: <a th:href="@{/profile/{id}(id=${review.listingUser.id})}"><span th:text="${review.listingUser.firstName}"/> <span th:text="${review.listingUser.lastName}"/></a> <span th:text="${#dates.format(review.date, 'MMM-dd-yyyy')}"/></p>
+            </div>
         </div>
     </div>
 </div>

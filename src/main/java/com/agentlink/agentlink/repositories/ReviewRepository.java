@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    List<Review> findAllByBuyingUser(User user);
+    List<Review> findAllByBuyingUserOrderByDateDesc(User user);
 }

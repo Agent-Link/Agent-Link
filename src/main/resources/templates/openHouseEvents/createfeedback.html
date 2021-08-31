@@ -12,10 +12,10 @@
                     <h4 class="mb-5 text-secondary">Leave Feedback on the hosted Open House Event</h4>
                     <div class="row">
                         <div class="mb-3 col-md-12 form-group">
-                            <p>Event Address: <span th:text="${openHouseEvent.house.address}"/>, <span th:text="${openHouseEvent.house.city}"/>, <span th:text="${openHouseEvent.house.state}"/> <span th:text="${openHouseEvent.house.zipcode}"/></p>
-                            <p>Event Start time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"/></p>
-                            <p>Event End time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}"/></p>
-                            <p>Event Listing agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}"/></p>
+                            <p><span th:text="${openHouseEvent.house.address}"/>, <span th:text="${openHouseEvent.house.city}"/>, <span th:text="${openHouseEvent.house.state}"/> <span th:text="${openHouseEvent.house.zipcode}"/></p>
+                            <p>Start time: <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"/></p>
+                            <p>End time: <span th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}"/></p>
+                            <p>Listing agent: <span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}"/></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label class="feedback" for="feedback">Please leave a short summary of your experience</label>
@@ -24,7 +24,7 @@
                             <p th:if="${isOver500 != null && isOver500}">must not be more than 500 characters</p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-color" type="submit">Submit</button>
                         </div>
                     </div>
                 </form>
