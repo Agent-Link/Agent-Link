@@ -73,7 +73,7 @@ public class UserController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = usersDao.getById(user.getId());
         model.addAttribute("user", currentUser);
-        List<Review> reviewRatings = reviewsDao.findAllByBuyingUser(currentUser);
+        List<Review> reviewRatings = reviewsDao.findAllByBuyingUserOrderByDateDesc(currentUser);
         boolean hasReviews;
         model.addAttribute("user", currentUser);
         if(!reviewRatings.isEmpty()) {
@@ -111,10 +111,8 @@ public class UserController {
     public String userProfileInfo(@PathVariable long id, Model model) {
         User user = usersDao.getById(id);
         model.addAttribute("user", user);
-        List<Review> reviewsList = reviewsDao.findAllByBuyingUser(user);
-        boolean hasReviews = false;
+        List<Review> reviewsList = reviewsDao.findAllByBuyingUserOrderByDateDesc(user);
         if(!reviewsList.isEmpty()){
-           hasReviews = true;
             int length = reviewsList.size();
             double sum = 0;
             for (Review review : reviewsList){
@@ -124,7 +122,7 @@ public class UserController {
 
             Formatter formatter = new Formatter();
             String ratingFormatted = formatter.format("%.1f", rating).toString();
-            model.addAttribute("hasReviews", hasReviews);
+            model.addAttribute("hasReviews", true);
             model.addAttribute("userRating", ratingFormatted);
             model.addAttribute("reviewsList", reviewsList);
         }

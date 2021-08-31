@@ -1,7 +1,5 @@
 package com.agentlink.agentlink.controllers;
 
-
-import com.agentlink.agentlink.models.House;
 import com.agentlink.agentlink.models.OpenHouseEvent;
 import com.agentlink.agentlink.models.Review;
 import com.agentlink.agentlink.models.User;
@@ -15,10 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 public class ReviewController {
@@ -31,31 +26,6 @@ public class ReviewController {
         this.reviewsDao = reviewsDao;
         this.usersDao = usersDao;
         this.openhouseDao = openhouseDao;
-    }
-
-    // Should probably not be a thing
-    @GetMapping(path = "/reviews")
-    public String getAllReviews(Model model) {
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User user = usersDao.getById(currentUser.getId());
-            model.addAttribute("user", user);
-        }
-        List<Review> reviews = reviewsDao.findAll();
-        model.addAttribute("reviews", reviews);
-        return "reviews/index";
-    }
-
-    //STILL NEED TO CREATE HTML PAGE.
-    @GetMapping("/reviews/{id}")
-    public String singleHouse(@PathVariable long id, Model model){
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User user = usersDao.getById(currentUser.getId());
-            model.addAttribute("user", user);
-        }
-        model.addAttribute("review", reviewsDao.getById(id));
-        return"reviews/show";
     }
 
     @GetMapping("/reviews/{eventId}/create")
