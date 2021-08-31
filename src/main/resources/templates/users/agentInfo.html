@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="col-8 card border border-dark text-center mb-1 mx-auto">
-        <div class="card-header text-dark">
+        <div class="card-header blue-bg text-dark">
             <h3 id="profileName"><span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/></h3>
         </div>
         <div class="card-body text-dark">
@@ -18,9 +18,9 @@
         </div>
     </div>
     <div class="col-8 row mx-auto" th:if="${hasReviews}">
-        <h4 class="text-center">Agent reviews</h4>
-        <div th:each="review : ${reviewsList}" class="card border p-0 border-dark text-center mb-1">
-            <div class="card-header text-dark">
+        <h4 class="text-center mt-2 mb-2">Agent reviews</h4>
+        <div th:each="review : ${reviewsList}" class="card border p-0 border-dark text-center mb-3">
+            <div class="card-header blue-bg text-dark">
                 <h6>Rating: <span th:text="${review.rating}"> out of 5</span></h6>
                 <h5 th:text="${review.title}"/>
             </div>
