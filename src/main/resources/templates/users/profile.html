@@ -48,7 +48,7 @@
 This section sets up the tabs as buttons and allows them to go to the linked data. There are some tabs that are only seen buy buying agents or listing agents
 and there are tabs that are seen by both types of agents.We use boolean checks to make sure which agent can see which data and if there are houses or events
 even saved to be displayed.-->
-
+<div class="container">
 <div class="row flex-wrap">
     <div class="col-12 flex-wrap pr-0">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -211,7 +211,7 @@ even saved to be displayed.-->
                 </div>
             </div>
         </div>
-        <div class="col-3 m-3">
+        <div class="col-4">
             <div class="card">
                 <div class="card-header blue-bg text-center">
                     <h3 id="profileName"><span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/></h3>
@@ -233,6 +233,7 @@ even saved to be displayed.-->
             </div>
         </div>
     </div>
+</div>
 </div>
 <div th:replace="partials/scripts :: scripts"></div>
 <div th:replace="partials/calendarScripts :: calendarScripts"></div>
