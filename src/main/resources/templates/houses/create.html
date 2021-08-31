@@ -10,7 +10,7 @@
         <div class="col-md-6 offset-md-3">
             <div class="houseCreate-form mb-4">
                 <form th:action="@{/houses/create}" method="post" th:object="${house}" class="mt-5 border p-4 bg-light shadow">
-                    <h4 class="mb-5 text-secondary">Create A Listing</h4>
+                    <h4 class="mb-5 text-secondary text-center">Create A Listing</h4>
                     <div class="row">
                         <div class="mb-3 col-md-12 form-group">
                             <label for="address">Address</label><span class="required text-danger"> *</span>
@@ -44,7 +44,7 @@
                         </div>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="filestack">Upload House Picture</label>
-                            <button id="filestack" type="button">Select Image</button>
+                            <button id="filestack" class="btn btn-sm btn-outline-dark" type="button">Select Image</button>
                             <input type="hidden" th:value="${FILESTACK_TOKEN}" class="filestackToken">
                         </div>
                         <input style="color: white; background-color: #24ade3" type="submit" value="Create listing" class="btn btn-block"/>
