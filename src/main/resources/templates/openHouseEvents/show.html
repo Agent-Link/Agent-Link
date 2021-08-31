@@ -53,7 +53,7 @@
         </div>
     </div>
         <div class="row justify-content-around col-12 m-0" sec:authorize="isAuthenticated()" th:if="${!applications.isEmpty() && isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
-            <h3>Applicants</h3>
+            <h3 class="text-center">Applicants</h3>
             <div style="width: 25rem;" class="card text-center p-0 mb-4" th:each="app : ${applications}">
                 <div class="card-header blue-bg text-dark">
                     <p class="m-0">Applicant: <a style="color: white" th:href="@{/profile/{id}(id=${app.user.id})}"> <span th:text="${app.user.firstName}"/> <span th:text="${app.user.lastName}"/></a></p>
