@@ -161,8 +161,8 @@ even saved to be displayed.-->
                                         <p th:if="${openHouseEvent.house.user.id == openHouseEvent.user.id}">You hosted this event by default.</p>
                                     </div>
                                     <div class="text-center">
-                                        <a th:if="${user.id == openHouseEvent.house.user.id && user.id != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" style="color: white; background-color: #24ade3" class="btn btn-width">Review host</a>
-                                        <a th:if="${user.id != openHouseEvent.house.user.id && user.id == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary btn-width">Event feedback</a>
+                                        <a th:if="${user.id == openHouseEvent.house.user.id && user.id != openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.review == null}" th:href="@{/reviews/{id}/create (id=${openHouseEvent.id})}" style="color: white; background-color: #24ade3" class="btn btn-color btn-width">Review Host</a>
+                                        <a th:if="${user.id != openHouseEvent.house.user.id && user.id == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-color btn-width">Event Feedback</a>
                                     </div>
                                 </div>
                             </div>
@@ -172,10 +172,10 @@ even saved to be displayed.-->
     <!--        Here is where we start to fill our Events your set to host tab. This shows the events that a buying agents are set to host after a listing agent sets them to host.
                 We use an array that pulls data from the open house event object to display the address, start date, etcc...-->
                 <div class="tab-pane fade" id="hosting-events" role="tabpanel" aria-labelledby="hosting-events-tab">
-                    <div class="container">
-                        <div style="width: 35rem;" class="card  m-3" th:each="openHouseEvent : ${hostingEvents}">
-                            <div class="row card-body">
-                                <div class="col-7 event">
+                    <div class="row container">
+                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-5 m-3 shadow-lg p-2 mb-5 bg-body rounded" th:each="openHouseEvent : ${hostingEvents}">
+                            <div class="row card-body justify-content-center">
+                                <div class="col-7 event text-center">
                                     <h4 class="card-title event-title"><a th:href="@{/events/{id}(id=${openHouseEvent.id})}"><span th:text="${openHouseEvent.house.address}"></span></a></h4>
                                     <p th:text="${openHouseEvent.house.description}" class="card-text"></p>
                                     <p>Event start and end time</p>
@@ -183,10 +183,6 @@ even saved to be displayed.-->
                                     <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
                                     <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
                                     <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
-                                </div>
-                                <div class="col-5">
-                                    <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-dark btn-width">More Details</a>
-                                    <a th:if="${user.id != openHouseEvent.house.user.id && user.id == openHouseEvent.user.id && currentDateTime.after(openHouseEvent.dateEnd) && openHouseEvent.feedback == null}" th:href="@{/event/feedback/{eventId} (eventId=${openHouseEvent.id})}" class="btn btn-primary btn-width">Event feedback</a>
                                 </div>
                             </div>
                         </div>
@@ -196,10 +192,10 @@ even saved to be displayed.-->
                 This time we use the Application object to go and pull the store open house event data that is tied to each application by a foreign key. We use an array to iterate and
                 display the information we are looking for such as the address, description, etc...-->
                 <div class="tab-pane fade" id="applied-events" role="tabpanel" aria-labelledby="applied-events-tab">
-                    <div class="container">
-                        <div style="width: 35rem;" class="card  m-3" th:each="app : ${appliedEvents}">
-                            <div class="row card-body">
-                                <div class="col-7">
+                    <div class="row container">
+                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-5 m-3 shadow-lg p-2 mb-5 bg-body rounded" th:each="app : ${appliedEvents}">
+                            <div class="row card-body justify-content-center">
+                                <div class="col-7 text-center">
                                     <h4 class="card-title event-title"><a th:href="@{/events/{id}(id=${app.openHouseEvent.id})}"><span th:text="${app.openHouseEvent.house.address}"></span></a></h4>
                                     <p th:text="${app.openHouseEvent.house.description}" class="card-text"></p>
                                     <p>Event start and end time</p>
@@ -207,9 +203,6 @@ even saved to be displayed.-->
                                     <p th:text="${#dates.format(app.openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
                                     <p hidden th:text="${app.openHouseEvent.dateStart}" class="card-text event-start"></p>
                                     <p hidden th:text="${app.openHouseEvent.dateEnd}" class="card-text event-end"></p>
-                                </div>
-                                <div class="col-5">
-                                    <a th:href="@{/events/{id}(id=${app.openHouseEvent.id})}" class="btn btn-dark btn-width">More Details</a>
                                 </div>
                             </div>
                         </div>
