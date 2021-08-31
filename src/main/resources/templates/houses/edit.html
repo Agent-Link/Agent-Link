@@ -14,30 +14,30 @@
                     <form th:action="@{/houses/edit/{id} (id = ${house.id})}" th:object="${house}" method="post">
                         <h4 class="mb-5 text-secondary">Edit Your House</h4>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="address">Address</label>
+                            <label for="address">Address<span class="required text-danger"> *</span></label>
                             <input id="address" name="address" type="text" class="form-control" th:field="*{address}"/>
                             <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="city">City</label>
+                            <label for="city">City<span class="required text-danger"> *</span></label>
                             <input id="city" name="city" type="text" class="form-control" th:field="*{city}"/>
                             <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
                         </div>
-                        <div class="mb-3 col-md-12 form-group">
-                            <label for="state">State</label>
-                            <br>
-                            <select class="form-control" name="state" id="state">
+                        <p class="m-0">State<span class="required text-danger"> *</span></p>
+                        <div class="mb-3 col-md-12 input-group">
+                            <label class="input-group-text" for="state">Select</label>
+                            <select class="form-select" name="state" id="state">
                                 <option th:each="state: ${states}" th:value="${state}" th:text="${state}" th:if="${house.state == state}" selected></option>
                                 <option th:each="state: ${states}" th:value="${state}" th:text="${state}" th:unless="${house.state == state}"></option>
                             </select>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="zipcode">Zipcode</label>
+                            <label for="zipcode">Zipcode<span class="required text-danger"> *</span></label>
                             <input id="zipcode" name="zipcode" type="text" class="form-control" th:field="*{zipcode}"/>
                             <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="description">Description</label>
+                            <label for="description">Description<span class="required text-danger"> *</span></label>
                             <textarea id="description" name="description" class="materialize-textarea form-control" th:field="*{description}"></textarea>
                             <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                         </div>
