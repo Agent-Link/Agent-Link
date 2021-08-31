@@ -25,7 +25,7 @@
                         <div class="mb-3 col-md-12 form-group">
                             <label for="state">State</label><span class="required text-danger"> *</span>
                             <br>
-                            <select name="state" id="state">
+                            <select class="form-control" name="state" id="state">
                                 <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
                             </select>
                         </div>
