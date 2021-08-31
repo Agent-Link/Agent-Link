@@ -11,7 +11,7 @@
         <div class="col-md-6 offset-md-3">
             <div class="openHouseEdit-form mb-4">
                 <form th:action="@{/events/edit/{id}(id=${openHouseEvent.id})}" method="post" th:object="${openHouseEvent}" class="mt-5 border p-4 bg-light shadow">
-                    <h4 class="mb-5 text-secondary">Edit event date/time</h4>
+                    <h4 class="mb-5 text-center text-secondary">Edit event date/time</h4>
                     <div class="row">
                         <div class="mb-3 col-md-12 form-group">
                             <p>Previous event start date <span th:text="${#dates.format(openHouseEvent.dateStart, 'MMM-dd-yyyy h:mm a')}"/></p>
@@ -28,7 +28,7 @@
                             <input id="endDate" name="endDate" type="datetime-local" class="form-control"/>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <input type="submit" value="Edit event" class="btn btn-block btn-info"/>
+                            <input type="submit" value="Edit event" class="btn btn-block btn-color"/>
                         </div>
                     </div>
                 </form>
