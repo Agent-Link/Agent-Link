@@ -28,7 +28,7 @@
                         <p>Listing Agent: <a th:href="@{/profile/{id}(id=${openHouseEvent.house.user.id})}"><span th:text="${openHouseEvent.house.user.firstName}"/> <span th:text="${openHouseEvent.house.user.lastName}"/></a></p>
                         <p th:if="${openHouseEvent.house.user.id != openHouseEvent.user.id}">Host name: <a th:href="@{/profile/{id}(id=${openHouseEvent.user.id})}"><span th:text="${openHouseEvent.user.firstName}"/> <span th:text="${openHouseEvent.user.lastName}"/></a>
                         </p>
-                        <div class="text-center pt-3" th:if="${isEventCreator && openHouseEvent.feedback != null}">
+                        <div sec:authorize="isAuthenticated()" class="text-center pt-3" th:if="${isEventCreator && openHouseEvent.feedback != null}">
                             <h4>Event Feedback</h4>
                             <div>
                                 <p><span th:text="${openHouseEvent.feedback}"/></p>
