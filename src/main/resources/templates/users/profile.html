@@ -183,6 +183,7 @@ even saved to be displayed.-->
                                     <p th:text="${#dates.format(openHouseEvent.dateEnd, 'MMM-dd-yyyy h:mm a')}" class="card-text"></p>
                                     <p hidden th:text="${openHouseEvent.dateStart}" class="card-text event-start"></p>
                                     <p hidden th:text="${openHouseEvent.dateEnd}" class="card-text event-end"></p>
+                                    <p hidden th:text="${openHouseEvent.id}" class="event-id"></p>
                                 </div>
                                 <div class="col-5">
                                     <a th:href="@{/events/{id}(id=${openHouseEvent.id})}" class="btn btn-dark btn-width">More Details</a>
