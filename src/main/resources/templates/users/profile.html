@@ -74,7 +74,7 @@ even saved to be displayed.-->
     </div>
     <!--    So this is the start of the info that displays in each tab!-->
     <!--    First off we have the calendar tab that literally gets filled through the ID in the div. Its filled by the JavaScript that is linked to the calendar ID.-->
-    <div class="row">
+    <div class="row pr-0">
         <div class="col-8">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="calendars" role="tabpanel" aria-labelledby="calendar-tab">
@@ -211,7 +211,7 @@ even saved to be displayed.-->
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-4 p-0">
             <div class="card">
                 <div class="card-header blue-bg text-center">
                     <h3 id="profileName"><span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/></h3>
