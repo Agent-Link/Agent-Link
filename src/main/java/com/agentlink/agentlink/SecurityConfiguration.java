@@ -60,7 +60,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     "/reviews/{eventId}/create",
                     "/profile",
                     "/users/editpassword",
-                    "/profile/edit"
+                    "/profile/edit",
+                    "/events/apply/host/{openHouseId}/{userId}",
+                    "/events/apply/unhost/{openHouseId}/{userId}"
                 )
                 .authenticated()
         ;
