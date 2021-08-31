@@ -44,8 +44,14 @@
                 </li>
             </ul>
             <form class="form-inline" th:action="@{/search}" th:method="get">
-                <input  class="form-inline me-2 rounded" type="search" name="search" id="search" placeholder="Search for events" aria-label="search">
-                <button style="color: white; background-color: #24ade3"  class="btn btn-sm" type="submit">Search</button>
+<!--                <input class="form-inline me-2 rounded" type="search" name="search" id="search" placeholder="Search for events" aria-label="search">-->
+<!--                <button style="color: white; background-color: #24ade3; height:30px !important"  class="btn btn-sm" type="submit">Search</button>-->
+
+                <div class="input-group">
+                    <input type="search" class="form-control" name="search" id="search" placeholder="Search for Events" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button style="color: white; background-color: #24ade3;" class="btn" type="submit" id="button-addon2">Search</button>
+                </div>
+
             </form>
         </div>
     </div>
