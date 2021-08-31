@@ -74,7 +74,9 @@ VALUES('2021-09-18 15:00:00','Hi my name is Oriana, I would like to host your ev
        ('2021-08-21 14:00:00','Hi my name is Oriana, I would like to host your event..',3,6),
        ('2021-08-14 15:20:00','Hi my name is Oriana, I would like to host your event.',5,6),
        ('2021-08-06 10:00:00','Hi my name is Oriana, I would like to host your event.',7,6),
-       ('2021-05-17 12:30:00','Hi my name is Oriana, I would like to host your event.',9,6),
+       ('2021-09-01 12:30:00','Hi my name is Oriana, I would like to host your event.',8,6),
+       ('2021-09-05 12:35:00','Hi my name is Oriana, I would like to host your event.',16,6),
+       ('2021-05-17 12:40:00','Hi my name is Oriana, I would like to host your event.',9,6),
        ('2021-05-14 12:00:00','I am Rami, I want to host your open house!.',11,7),
        ('2021-02-17 12:00:00','Hi my name is Oriana, I would like to host your event.',13,6),
        ('2021-08-17 12:00:00','Hello I am Ryan, I would love to host your event!',14,9);
