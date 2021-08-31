@@ -12,7 +12,7 @@
             <div class="houseEdit-form mb-4">
                 <div class="mt-5 border p-4 bg-light shadow row">
                     <form th:action="@{/houses/edit/{id} (id = ${house.id})}" th:object="${house}" method="post">
-                        <h4 class="mb-5 text-secondary">Edit Your House</h4>
+                        <h4 class="mb-5 text-center text-secondary">Edit Your House</h4>
                         <div class="mb-3 col-md-12 form-group">
                             <label for="address">Address<span class="required text-danger"> *</span></label>
                             <input id="address" name="address" type="text" class="form-control" th:field="*{address}"/>
@@ -46,12 +46,12 @@
                         </div>
                         <div class="form-group mb-2">
                             <label for="filestack">Upload New House Picture</label>
-                            <button id="filestack" type="button">Select Image</button>
+                            <button id="filestack" class="btn btn-sm btn-outline-dark">Select Image</button>
                             <input type="hidden" th:value="${FILESTACK_TOKEN}" class="filestackToken">
                         </div>
                         <br>
                         <div class="mb-3 col-md-12 form-group">
-                            <input type="submit" value="Save Changes" class="btn btn-block btn-info mt-2"/>
+                            <input type="submit" value="Save Changes" class="btn btn-block btn-color mt-2"/>
                         </div>
                         <!--DISPLAY HOUSE IMAGE-->
                         <div th:if="${house.image_url != null}">
