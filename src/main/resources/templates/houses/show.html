@@ -26,9 +26,9 @@
                     <p  id="houseState" th:text="${house.state}" class="card-text text-center"></p>
                     <p  id="houseZipcode" th:text="${house.zipcode}" class="card-text text-center"></p>
                     <br>
-                    <div th:if="${isHouseOwner}" class="row d-flex justify-content-center">
-                        <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-primary btn-width ">Edit</a>
-                        <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post" class=" d-flex justify-content-center">
+                    <div th:if="${isHouseOwner}" class="row justify-content-center">
+                        <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-color btn-width ">Edit</a>
+                        <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post" style="width: 80px;">
                             <input type="submit" class="btn btn-danger btn-width " value="Delete"/>
                         </form>
                     </div>
