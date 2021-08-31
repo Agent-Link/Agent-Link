@@ -5,3 +5,12 @@
 a{
     color: #1172be;
 }
+
+.light-blue-bg {
+    background-color: #24ade3;
+}
+
+.blue-bg {
+    color: #ffffff !important;
+    background-color: #1172be;
+}
