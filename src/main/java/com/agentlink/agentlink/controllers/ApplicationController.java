@@ -94,10 +94,32 @@ public class ApplicationController {
     }
 
     @PostMapping("/events/apply/host/{openHouseId}/{userId}")
-    public String setApplicantToEventHost(@PathVariable Long openHouseId, @PathVariable Long userId) {
-        User applicant = usersDao.getById(userId);
+    public String setApplicantToEventHost(@PathVariable Long openHouseId, @PathVariable Long userId, Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         OpenHouseEvent openHouseEvent = eventsDao.getById(openHouseId);
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser" && currentUser.getId() == openHouseEvent.getHouse().getUser().getId()) {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        } else {
+            return "redirect:/";
+        }
+        User applicant = usersDao.getById(userId);
         openHouseEvent.setUser(applicant);
+        eventsDao.save(openHouseEvent);
+        return "redirect:/events/" + openHouseId;
+    }
+
+    @PostMapping("/events/apply/unhost/{openHouseId}")
+    public String unsetEventHost(@PathVariable Long openHouseId, Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        OpenHouseEvent openHouseEvent = eventsDao.getById(openHouseId);
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser" && currentUser.getId() == openHouseEvent.getHouse().getUser().getId()) {
+            User user = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", user);
+        } else {
+            return "redirect:/";
+        }
+        openHouseEvent.setUser(currentUser);
         eventsDao.save(openHouseEvent);
         return "redirect:/events/" + openHouseId;
     }

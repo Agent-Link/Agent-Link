@@ -35,11 +35,16 @@
                         </div>
                     </div>
                     <div class="row text-center justify-content-center">
-                        <div sec:authorize="isAuthenticated()" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
-                            <div sec:authorize="isAuthenticated()" class="row justify-content-center" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
-                                <a th:href="@{/events/edit/{id}(id=${openHouseEvent.id})}" class="btn btn-color btn-width">Edit</a>
-                                <form style="width:80px;" th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}" method="post">
-                                    <input type="submit" value="Delete" class="btn btn-danger btn-width">
+                        <div class="mb-3" sec:authorize="isAuthenticated()" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
+                            <div style="width: 360px" sec:authorize="isAuthenticated()" class="row mx-auto justify-content-between" th:if="${isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
+                                <form style="width: 108px" class="btn p-0 col-3" th:action="@{/events/edit/{id}(id=${openHouseEvent.id})}" method="get">
+                                    <input style="width: 108px" type="submit" value="Edit" class="btn btn-color">
+                                </form>
+                                <form style="width: 108px" class="btn p-0 col-3" th:if="${openHouseEvent.house.user.id != openHouseEvent.user.id}" th:action="@{/events/apply/unhost/{openHouseId}(openHouseId=${openHouseEvent.id})}" method="post">
+                                    <input style="width: 108px" type="submit" value="Unset Host" class="btn btn-dark">
+                                </form>
+                                <form style="width: 108px" class="btn p-0 col-3" th:action="@{/events/delete/{id}(id=${openHouseEvent.id})}" method="post">
+                                    <input style="width: 108px" type="submit" value="Delete" class="btn btn-danger">
                                 </form>
                             </div>
                         </div>
@@ -52,7 +57,7 @@
             </div>
         </div>
     </div>
-        <div class="row justify-content-around col-12 m-0" sec:authorize="isAuthenticated()" th:if="${!applications.isEmpty() && isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
+        <div class="row justify-content-around col-12 m-0" sec:authorize="isAuthenticated()" th:if="${openHouseEvent.house.user.id == openHouseEvent.user.id && !applications.isEmpty() && isEventCreator && currentDateTime.before(openHouseEvent.dateStart)}">
             <h3 class="text-center">Applicants</h3>
             <div style="width: 25rem;" class="card text-center p-0 mb-4" th:each="app : ${applications}">
                 <div class="card-header blue-bg text-dark">
