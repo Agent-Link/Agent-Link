@@ -99,6 +99,6 @@ public class ApplicationController {
         OpenHouseEvent openHouseEvent = eventsDao.getById(openHouseId);
         openHouseEvent.setUser(applicant);
         eventsDao.save(openHouseEvent);
-        return "redirect:/profile";
+        return "redirect:/events/" + openHouseId;
     }
 }
