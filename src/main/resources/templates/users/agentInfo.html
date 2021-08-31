@@ -7,13 +7,13 @@
 <div class="container">
     <div class="col-8 card border border-dark text-center mb-1 mx-auto">
         <div class="card-header blue-bg text-dark">
-            <h3 id="profileName"><span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/></h3>
+            <h3 id="profileName"><span th:text="${userProfile.firstName}"/> <span th:text="${userProfile.lastName}"/></h3>
         </div>
         <div class="card-body text-dark">
             <h5>Contact Info</h5>
-            <p>Email: <a th:href="@{mailto:{email}(email=${user.email})}" th:text="${user.email}"/></p>
-            <p> Phone Number: <span th:text="${user.phone}"/></p>
-            <p>Agent Team: <span th:text="${user.team}"/></p>
+            <p>Email: <a th:href="@{mailto:{email}(email=${userProfile.email})}" th:text="${userProfile.email}"/></p>
+            <p>Phone Number: <span th:text="${userProfile.phone}"/></p>
+            <p>Agent Team: <span th:text="${userProfile.team}"/></p>
             <p th:if="${hasReviews}">Agent Rating: <span th:text="${userRating}"/> out of 5 </p>
         </div>
     </div>
@@ -21,8 +21,8 @@
         <h4 class="text-center mt-2 mb-2">Agent reviews</h4>
         <div th:each="review : ${reviewsList}" class="card border p-0 border-dark text-center mb-3">
             <div class="card-header blue-bg text-dark">
-                <h6>Rating: <span th:text="${review.rating}"> out of 5</span></h6>
                 <h5 th:text="${review.title}"/>
+                <h6>Rating: <span th:text="${review.rating}"> out of 5</span></h6>
             </div>
             <div class="card-body text-dark">
                 <p th:text="${review.description}"></p>

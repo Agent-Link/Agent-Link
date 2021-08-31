@@ -109,8 +109,13 @@ public class UserController {
 
     @GetMapping("/profile/{id}")
     public String userProfileInfo(@PathVariable long id, Model model) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User userCurrent = usersDao.getById(currentUser.getId());
+            model.addAttribute("user", userCurrent);
+        }
         User user = usersDao.getById(id);
-        model.addAttribute("user", user);
+        model.addAttribute("userProfile", user);
         List<Review> reviewsList = reviewsDao.findAllByBuyingUserOrderByDateDesc(user);
         if(!reviewsList.isEmpty()){
             int length = reviewsList.size();
