@@ -301,9 +301,13 @@ even saved to be displayed.-->
                     <p> Phone Number: <span th:text="${user.phone}"/></p>
                     <p>Agent Team: <span th:text="${user.team}"/></p>
                     <p th:if="${hasReviews}">Agent Rating: <span th:text="${userRating}"/> out of 5 </p>
-                    <a th:href="@{/profile/{userId}(userId=${user.id})}">View Public Profile</a>
-                    <br>
-                    <a th:href="@{/profile/edit}">Edit Your Profile</a>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <a style="color: white; background-color: #24ade3;"  class="btn btn-sm" th:href="@{/profile/{userId}(userId=${user.id})}">View Public Profile</a>
+                    </div>
+                     <br>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <a style="color: white; background-color: #24ade3;"  class="btn btn-sm" th:href="@{/profile/edit}">Edit Your Profile</a>
+                    </div>
                 </div>
             </div>
         </div>
