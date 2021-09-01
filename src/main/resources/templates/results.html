@@ -6,7 +6,7 @@
 <nav th:replace="partials/navbar.html :: navbar"/>
 
 <div class="container">
-    <div class="row container text-center">
+    <div class="row container text-center justify-content-around mb-4 mt-4">
         <h3>Here are your search results for events:</h3>
         <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-5 m-3 ml-0 pl-3 shadow-lg bg-body rounded"
              th:each="openHouseEvent : ${openHouseEventsSearch}">
