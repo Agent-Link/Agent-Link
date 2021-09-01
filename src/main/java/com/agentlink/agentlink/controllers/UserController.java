@@ -39,6 +39,9 @@ public class UserController {
 
     @GetMapping("/sign-up")
     public String showSignupForm(Model model) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            return "redirect:/profile";
+        }
         model.addAttribute("user", new User());
         return "users/sign-up";
     }
