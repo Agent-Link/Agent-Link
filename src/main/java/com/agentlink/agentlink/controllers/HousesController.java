@@ -83,7 +83,7 @@ public class HousesController {
     }
 
     @PostMapping("/houses/create")
-    public String createHouse(@Valid @ModelAttribute House house, BindingResult result, Model model) {
+    public String createHouse(@Valid @ModelAttribute House house, BindingResult result, Model model, @RequestParam(defaultValue = "https://cdn.filestackcontent.com/PegYCiOTcq8FxHmHl4nG") String image_url) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User user = usersDao.getById(currentUser.getId());
@@ -94,6 +94,12 @@ public class HousesController {
         if (result.hasErrors()) {
             return "houses/create";
         }
+
+        // If the house img url value is not the default, then this will set the users uploaded img url as the value.
+        if (!house.getImage_url().equals("https://cdn.filestackcontent.com/PegYCiOTcq8FxHmHl4nG")) {
+            house.setImage_url(image_url);
+        }
+
         // Verifies the current user is a listing agent
         if (usersDao.getById(currentUser.getId()).isListingAgent()) {
             housesDao.save(house);
@@ -173,20 +179,20 @@ public class HousesController {
 //        }
 //        return "redirect:/houses";
 //    }
-
-    @PostMapping("/houses/delete/{id}/image")
-    public String deleteHouseImage(@PathVariable Long id, Model model){
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            User user = usersDao.getById(currentUser.getId());
-            model.addAttribute("user", user);
-        }
-        House houseFromDb = housesDao.getById(id);
-        model.addAttribute("house", houseFromDb);
-        model.addAttribute("states", states);
-        if (currentUser.getId() == houseFromDb.getUser().getId()) {
-            houseFromDb.setImage_url(null);
-        }
-        return "houses/edit";
-    }
+    // Removed ability to delete uploaded images, we only offer the option to upload a new image (overwrite old or default)
+//    @PostMapping("/houses/delete/{id}/image")
+//    public String deleteHouseImage(@PathVariable Long id, Model model){
+//        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+//            User user = usersDao.getById(currentUser.getId());
+//            model.addAttribute("user", user);
+//        }
+//        House houseFromDb = housesDao.getById(id);
+//        model.addAttribute("house", houseFromDb);
+//        model.addAttribute("states", states);
+//        if (currentUser.getId() == houseFromDb.getUser().getId()) {
+//            houseFromDb.setImage_url(null);
+//        }
+//        return "houses/edit";
+//    }
 }

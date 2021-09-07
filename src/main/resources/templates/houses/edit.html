@@ -46,7 +46,7 @@
                         </div>
                         <div class="form-group mb-2">
                             <label for="filestack">Upload New House Picture</label>
-                            <button id="filestack" class="btn btn-sm btn-outline-dark">Select Image</button>
+                            <button id="filestack" class="btn btn-sm btn-outline-dark" type="button">Select Image</button>
                             <input type="hidden" th:value="${FILESTACK_TOKEN}" class="filestackToken">
                         </div>
                         <br>
@@ -54,21 +54,15 @@
                             <input type="submit" value="Save Changes" class="btn btn-block btn-color mt-2"/>
                         </div>
                         <!--DISPLAY HOUSE IMAGE-->
-                        <div th:if="${house.image_url != null}">
+                        <div>
                             <div class="mb-3 col-md-12 form-group">
-                                <h6> Here is your current house:</h6>
+                                <h6> Current house image:</h6>
                             </div>
                             <div class="mb-3 col-md-12 form-group">
                                 <img th:src="${house.image_url}" width="100%" height="100%" alt="House Picture">
                             </div>
                         </div>
                     </form>
-                    <!--HOUSE IMAGE DELETE BUTTON-->
-                    <div th:if="${house.image_url != null}" class="mb-3 col-md-12 form-group">
-                        <form th:action="@{/houses/delete/{id}/image (id = ${house.id})}" th:object="${house}" method="post">
-                            <input type="submit" class="btn btn-danger" value="Delete House Image"/>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
