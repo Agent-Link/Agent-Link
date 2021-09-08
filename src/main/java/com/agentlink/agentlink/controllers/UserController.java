@@ -104,7 +104,7 @@ public class UserController {
         }
 
         model.addAttribute("hostingEvents", eventsDao.findAllByHostedByUserIdAndDateStartAfter(user.getId(), new Date()));
-        model.addAttribute("appliedEvents", appsDao.findAllByUserIdWhereNotHost(user.getId()));
+        model.addAttribute("appliedEvents", appsDao.findAllByUserIdWhereNotHostAndEventHasNotStarted(user.getId(), new Date()));
 
 
         return "users/profile";
