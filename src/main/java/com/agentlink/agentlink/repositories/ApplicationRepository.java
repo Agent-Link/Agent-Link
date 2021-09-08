@@ -12,6 +12,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
     List<Application> findAllByUserId(long id);
 
+    // Finds all applications by user id where the event applied to needs a host and the event has not started.
     @Query("FROM Application A WHERE A.user.id = ?1 AND A.openHouseEvent.user.id <> A.user.id AND A.openHouseEvent.dateStart >= ?2 ORDER BY A.openHouseEvent.dateStart")
     List<Application> findAllByUserIdWhereNotHostAndEventHasNotStarted(long id, Date date);
 
