@@ -13,6 +13,8 @@ public interface HouseRepository extends JpaRepository<House, Long> {
 
     List<House> findAllByUser(User user);
 
+    List<House> findAllByListingActiveTrue();
+
     List<House> findAllByUserAndListingActive(User user, boolean isListingActive);
 
     @Query("FROM House H WHERE H.address LIKE %:query%")

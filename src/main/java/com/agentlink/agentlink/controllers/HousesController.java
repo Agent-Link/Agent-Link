@@ -42,7 +42,7 @@ public class HousesController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        List<House> houses = housesDao.findAll();
+        List<House> houses = housesDao.findAllByListingActiveTrue();
         model.addAttribute("houses", houses);
         model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
         return "houses/index";
