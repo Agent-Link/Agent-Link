@@ -28,7 +28,7 @@
                     <br>
                     <div th:if="${isHouseOwner}" class="row justify-content-center">
                         <a th:href="@{/houses/edit/{id}(id=${house.id})}" class="btn btn-color btn-width ">Edit</a>
-                        <form th:action="@{/houses/delete/{id}(id=${house.id})}" method="post" style="width: 80px;">
+                        <form th:action="@{/houses/deactivate/{id}(id=${house.id})}" method="post" style="width: 80px;">
                             <input type="submit" class="btn btn-danger btn-width " value="Delete"/>
                         </form>
                     </div>

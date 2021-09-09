@@ -98,7 +98,7 @@ even saved to be displayed.-->
                                         <p th:text="${house.description}" class="card-text"></p>
                                         <a style="color: white; background-color: #24ade3" th:href="@{'/houses/edit/' + ${house.id}}" class="btn btn-width">Edit</a>
                                         <form th:action="@{/houses/deactivate/{id}(id=${house.id})}" method="post">
-                                            <input type="submit" class="btn btn-danger btn-width" value="Deactivate"/>
+                                            <input type="submit" class="btn btn-danger btn-width" value="Delete"/>
                                         </form>
                                     </div>
                                     <div class="col-5 mt-0 mb-0 mr-3 p-0 advisor_thumb">
