@@ -253,7 +253,7 @@ public class EventsController {
         if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId() && openHouseEvent.getDateStart().after(new Date())) {
             openHouseEventsDao.delete(openHouseEvent);
         }
-        return "redirect:/events";
+        return "redirect:/profile";
     }
 
 
