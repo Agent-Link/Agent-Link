@@ -1,7 +1,6 @@
 package com.agentlink.agentlink.repositories;
 
 import com.agentlink.agentlink.models.OpenHouseEvent;
-import com.agentlink.agentlink.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,6 +12,10 @@ public interface OpenHouseEventRepository extends JpaRepository<OpenHouseEvent, 
 
     @Query("FROM OpenHouseEvent O WHERE O.house.address LIKE %:query%")
     List<OpenHouseEvent> findAllQuery(String query);
+
+    // Finds all events by house/listing id and start date is before input date
+    @Query("FROM OpenHouseEvent O WHERE O.house.id = ?1 AND O.dateStart >= ?2")
+    List<OpenHouseEvent> findAllByHouseIdAndDateStartBefore(long id, Date date);
 
     // Finds all events without a host that start after the input date
     @Query("FROM OpenHouseEvent O WHERE O.dateStart >= ?1 AND O.user.id = O.house.user.id ORDER BY O.dateStart")
