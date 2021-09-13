@@ -20,12 +20,12 @@ public class ReviewController {
 
     private ReviewRepository reviewsDao;
     private UserRepository usersDao;
-    private OpenHouseEventRepository openhouseDao;
+    private OpenHouseEventRepository eventsDao;
 
-    public ReviewController(ReviewRepository reviewsDao, UserRepository usersDao, OpenHouseEventRepository openhouseDao) {
+    public ReviewController(ReviewRepository reviewsDao, UserRepository usersDao, OpenHouseEventRepository eventsDao) {
         this.reviewsDao = reviewsDao;
         this.usersDao = usersDao;
-        this.openhouseDao = openhouseDao;
+        this.eventsDao = eventsDao;
     }
 
     @GetMapping("/reviews/{eventId}/create")
@@ -35,7 +35,7 @@ public class ReviewController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        OpenHouseEvent openHouseEvent = openhouseDao.getById(eventId);
+        OpenHouseEvent openHouseEvent = eventsDao.getById(eventId);
         // This verifies that the current user should have permission to leave a review
         if (openHouseEvent.getHouse().getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEvent.getUser().getId() && new Date().after(openHouseEvent.getDateEnd()) && openHouseEvent.getReview() == null) {
             model.addAttribute("openHouseEvent", openHouseEvent);
@@ -53,7 +53,7 @@ public class ReviewController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        OpenHouseEvent openHouseEvent = openhouseDao.getById(eventId);
+        OpenHouseEvent openHouseEvent = eventsDao.getById(eventId);
         if (result.hasErrors()) {
             model.addAttribute("openHouseEvent", openHouseEvent);
             model.addAttribute("review", review);
@@ -61,7 +61,7 @@ public class ReviewController {
         }
         // This verifies that the current user should have permission to leave a review on the host of the event and that they cannot review themselves if they were host
         if(openHouseEvent.getHouse().getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEvent.getUser().getId() && new Date().after(openHouseEvent.getDateEnd()) && openHouseEvent.getReview() == null) {
-            User buyingAgent = openhouseDao.getById(eventId).getUser();
+            User buyingAgent = eventsDao.getById(eventId).getUser();
             openHouseEvent.setReview(review);
             review.setOpenHouseEvent(openHouseEvent);
             review.setListingUser(currentUser);
