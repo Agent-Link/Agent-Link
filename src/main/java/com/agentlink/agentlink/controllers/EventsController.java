@@ -25,16 +25,16 @@ public class EventsController {
 
     private final HouseRepository housesDao;
     private final UserRepository usersDao;
-    private final OpenHouseEventRepository openHouseEventsDao;
+    private final OpenHouseEventRepository eventsDao;
     private final ApplicationRepository applicationsDao;
 
     @Value("${MAPBOX_ACCESS_TOKEN}")
     private String MAPBOX_ACCESS_TOKEN;
 
-    public EventsController(HouseRepository housesDao, UserRepository usersDao, OpenHouseEventRepository openHouseEventsDao, ApplicationRepository applicationsDao) {
+    public EventsController(HouseRepository housesDao, UserRepository usersDao, OpenHouseEventRepository eventsDao, ApplicationRepository applicationsDao) {
         this.housesDao = housesDao;
         this.usersDao = usersDao;
-        this.openHouseEventsDao = openHouseEventsDao;
+        this.eventsDao = eventsDao;
         this.applicationsDao = applicationsDao;
     }
 
@@ -45,7 +45,7 @@ public class EventsController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        List<OpenHouseEvent> openHouseEvents = openHouseEventsDao.findAllWithoutHostWhereDateStartAfter(new Date());
+        List<OpenHouseEvent> openHouseEvents = eventsDao.findAllWithoutHostWhereDateStartAfter(new Date());
         model.addAttribute("house", housesDao);
         model.addAttribute("openHouseEvents", openHouseEvents);
         model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
@@ -54,7 +54,7 @@ public class EventsController {
 
     @GetMapping("/events/{id}")
     public String singleEvent(@PathVariable long id, Model model){
-        OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
+        OpenHouseEvent openHouseEvent = eventsDao.getById(id);
         model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
         model.addAttribute("openHouseEvent", openHouseEvent);
         boolean isEventCreator;
@@ -154,7 +154,7 @@ public class EventsController {
         if (isCreatorOfHouse) {
             openHouseEvent.setDateStart(startDateFormatted);
             openHouseEvent.setDateEnd(endDateFormatted);
-            openHouseEventsDao.save(openHouseEvent);
+            eventsDao.save(openHouseEvent);
         } else {
             // If verification is not met redirect; we should eventually add an error message/page here
             return "redirect:/";
@@ -169,7 +169,7 @@ public class EventsController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
+        OpenHouseEvent openHouseEvent = eventsDao.getById(id);
         if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId() && openHouseEvent.getDateStart().after(new Date())) {
             model.addAttribute("openHouseEvent", openHouseEvent);
             return "openHouseEvents/edit";
@@ -185,7 +185,7 @@ public class EventsController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        OpenHouseEvent openHouseEventFromDb = openHouseEventsDao.getById(openHouseEvent.getId());
+        OpenHouseEvent openHouseEventFromDb = eventsDao.getById(openHouseEvent.getId());
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
@@ -233,7 +233,7 @@ public class EventsController {
             openHouseEvent.setDateEnd(endDateFormatted);
             openHouseEvent.setHouse(openHouseEventFromDb.getHouse());
             openHouseEvent.setUser(openHouseEventFromDb.getUser());
-            openHouseEventsDao.save(openHouseEvent);
+            eventsDao.save(openHouseEvent);
         } else {
             // If verification is not met redirect; we should eventually add an error message/page here
             return "redirect:/";
@@ -248,10 +248,10 @@ public class EventsController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        OpenHouseEvent openHouseEvent = openHouseEventsDao.getById(id);
+        OpenHouseEvent openHouseEvent = eventsDao.getById(id);
         // Verifies the current user is the event creator and that the event has not started/passed.
         if (currentUser.getId() == openHouseEvent.getHouse().getUser().getId() && openHouseEvent.getDateStart().after(new Date())) {
-            openHouseEventsDao.delete(openHouseEvent);
+            eventsDao.delete(openHouseEvent);
         }
         return "redirect:/profile";
     }
@@ -264,11 +264,11 @@ public class EventsController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        OpenHouseEvent openHouseEventFromDb = openHouseEventsDao.getById(eventId);
+        OpenHouseEvent openHouseEventFromDb = eventsDao.getById(eventId);
         // This verifies that the current user should have permission to leave feedback on the event and cannot leave feedback on themself if they host the event
         if(openHouseEventFromDb.getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEventFromDb.getHouse().getUser().getId() && new Date().after(openHouseEventFromDb.getDateEnd()) && openHouseEventFromDb.getFeedback() == null) {
 
-            model.addAttribute("openHouseEvent", openHouseEventsDao.getById(eventId));
+            model.addAttribute("openHouseEvent", eventsDao.getById(eventId));
             return "openHouseEvents/createfeedback";
         } else {
             return "redirect:/";
@@ -282,7 +282,7 @@ public class EventsController {
             User user = usersDao.getById(currentUser.getId());
             model.addAttribute("user", user);
         }
-        OpenHouseEvent openHouseEventFromDb = openHouseEventsDao.getById(eventId);
+        OpenHouseEvent openHouseEventFromDb = eventsDao.getById(eventId);
         model.addAttribute("openHouseEvent", openHouseEventFromDb);
         if (feedback.trim().isEmpty()) {
             model.addAttribute("isBlank", true);
@@ -295,7 +295,7 @@ public class EventsController {
         // This verifies that the current user should have permission to leave feedback on the event and cannot leave feedback on themself if they host the event
         if(openHouseEventFromDb.getUser().getId() == currentUser.getId() && currentUser.getId() != openHouseEventFromDb.getHouse().getUser().getId() && new Date().after(openHouseEventFromDb.getDateEnd()) && openHouseEventFromDb.getFeedback() == null) {
             openHouseEventFromDb.setFeedback(feedback);
-            openHouseEventsDao.save(openHouseEventFromDb);
+            eventsDao.save(openHouseEventFromDb);
         } else {
             return "redirect:/";
         }
