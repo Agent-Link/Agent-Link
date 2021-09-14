@@ -40,7 +40,12 @@
         </div>
     </div>
     <!-- End of card -->
+    <div class="row justify-content-center mb-4">
+        <div id='map' style='width: 99%; height: 500px;' class="d-flex"></div>
+        <input type="hidden" th:value="${MAPBOX_ACCESS_TOKEN}" class="mapboxToken">
+    </div>
 </div>
 <div th:replace="partials/scripts.html :: scripts"></div>
+<div th:replace="partials/mapScripts.html :: mapScripts"/>
 </body>
 </html>
