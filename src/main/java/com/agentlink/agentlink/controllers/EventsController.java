@@ -53,12 +53,13 @@ public class EventsController {
     }
 
     @GetMapping("/events/{id}")
-    public String singleEvent(@PathVariable long id, Model model){
+    public String singleEvent(@PathVariable long id, Model model) throws ParseException {
         OpenHouseEvent openHouseEvent = eventsDao.getById(id);
         model.addAttribute("MAPBOX_ACCESS_TOKEN", MAPBOX_ACCESS_TOKEN);
         model.addAttribute("openHouseEvent", openHouseEvent);
         boolean isEventCreator;
         boolean hasNotApplied = true;
+        boolean hasNoEventScheduled = false;
         User currentUser;
 
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
@@ -68,6 +69,13 @@ public class EventsController {
             model.addAttribute("user", user);
         } else {
             return "openHouseEvents/show";
+        }
+
+        SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyy-MM-dd");
+
+        OpenHouseEvent userHasEventScheduled = eventsDao.findByUserIdAndDateStartLike(currentUser.getId(), sdfYMD.format(openHouseEvent.getDateStart()));
+        if (userHasEventScheduled == null) {
+            hasNoEventScheduled = true;
         }
 
         List<Application> applications = applicationsDao.findApplicationsByOpenHouseEventId(id);
@@ -80,6 +88,7 @@ public class EventsController {
         model.addAttribute("applications", applications);
         model.addAttribute("isEventCreator", isEventCreator);
         model.addAttribute("hasNotApplied", hasNotApplied);
+        model.addAttribute("hasNoEventScheduled", hasNoEventScheduled);
         model.addAttribute("currentDateTime", new Date());
         return "openHouseEvents/show";
     }

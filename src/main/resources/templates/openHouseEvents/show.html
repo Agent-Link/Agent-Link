@@ -48,7 +48,9 @@
                                 </form>
                             </div>
                         </div>
-                        <a sec:authorize="isAuthenticated()" th:if="${!isEventCreator && hasNotApplied && currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-color btn-width ">Apply</a>
+                        <a sec:authorize="isAuthenticated()" th:if="${!isEventCreator && hasNotApplied && hasNoEventScheduled && currentDateTime.before(openHouseEvent.dateStart)}" th:href="@{/events/apply/{id}(id=${openHouseEvent.id})}" class="btn btn-color btn-width ">Apply</a>
+                        <p sec:authorize="isAuthenticated()" th:if="${!hasNoEventScheduled}">You're already hosting an event on this day!</p>
+                        <p sec:authorize="isAuthenticated()" th:if="${!hasNotApplied}">You've applied to host this event!</p>
                     </div>
                 </div>
             </div>
