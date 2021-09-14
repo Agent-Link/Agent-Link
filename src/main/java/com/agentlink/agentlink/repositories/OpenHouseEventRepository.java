@@ -10,6 +10,9 @@ import java.util.List;
 
 public interface OpenHouseEventRepository extends JpaRepository<OpenHouseEvent, Long> {
 
+    @Query("FROM OpenHouseEvent O WHERE O.user.id = ?1 AND O.user.id <> O.house.user.id AND DATE_FORMAT(O.dateStart, '%Y-%m-%d') LIKE ?2")
+    OpenHouseEvent findByUserIdAndDateStartLike(long id, String date);
+
     @Query("FROM OpenHouseEvent O WHERE O.house.address LIKE %:query%")
     List<OpenHouseEvent> findAllQuery(String query);
 
