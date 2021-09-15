@@ -80,8 +80,15 @@ public class EventsController {
 
         List<Application> applications = applicationsDao.findApplicationsByOpenHouseEventId(id);
         for (Application application : applications) {
+            OpenHouseEvent applicantEventSchedule = eventsDao.findByUserIdAndDateStartLike(application.getUser().getId(), sdfYMD.format(openHouseEvent.getDateStart()));
+
             if (application.getUser().getId() == currentUser.getId()) {
                 hasNotApplied = false;
+                break;
+            }
+
+            if (applicantEventSchedule != null && application.getUser().getId() != openHouseEvent.getUser().getId()) {
+                applications.remove(application);
                 break;
             }
         }
