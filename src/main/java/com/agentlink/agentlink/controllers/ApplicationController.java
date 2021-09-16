@@ -17,6 +17,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -103,10 +104,19 @@ public class ApplicationController {
         } else {
             return "redirect:/";
         }
+
+        SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyy-MM-dd");
         User applicant = usersDao.getById(userId);
-        openHouseEvent.setUser(applicant);
-        eventsDao.save(openHouseEvent);
-        return "redirect:/events/" + openHouseId;
+
+        OpenHouseEvent applicantEventSchedule = eventsDao.findByUserIdAndDateStartLike(applicant.getId(), sdfYMD.format(openHouseEvent.getDateStart()));
+        // checks to verify the user you are setting host is not hosting another event on the same day
+        if (applicantEventSchedule == null) {
+            openHouseEvent.setUser(applicant);
+            eventsDao.save(openHouseEvent);
+            return "redirect:/events/" + openHouseId;
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/events/apply/unhost/{openHouseId}")
